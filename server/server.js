@@ -48,12 +48,28 @@ const prefix = "/api";
 // GET /cars
 // request: none
 // response:
-//  404 - no car found, empty database
 //  401 - authentication error
 //  200 -  list of car objects:
 //         {id, category, brand, model,
 //         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
 
-// /rental APIs
+// /rentals APIs
+
+// GET /rentals/:rentalId
+
+// to check if a user has a discount
+// and if already has a rental in a certain period of time
+// GET /rentals/:userId
+// request: none
+// response:
+//  200 - list of rental objects:
+//        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
+
+// to check if a car is rented in a period of time
+// GET /rentals/:carId
+// request: none
+// response:
+//  200 - list of rental objects:
+//        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
 
 app.listen(port, () => console.log(`Server running on http://localhost:${port}/`));
