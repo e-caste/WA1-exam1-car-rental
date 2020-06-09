@@ -52,6 +52,12 @@ const prefix = "/api";
 //  200 -  list of car objects:
 //         {id, category, brand, model,
 //         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
+// the filter will be implemented in the front end because:
+//  - it's a simpler implementation, based on the buttons selected at the moment
+//  - it only requires 1 HTTP Request once for all cars, instead of 1 HTTP Request for each filter selection
+// in the case of many more database entries than the ~20 we have in this project, a better solution would be to
+// implement an API which requests results in batch, like Amazon or Google results (e.g. 20 results per "page")
+
 
 // /rentals APIs
 
