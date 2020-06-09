@@ -65,7 +65,9 @@ const prefix = "/api";
 // POST /rentals/:rentalId
 // request: none
 // response:
-// 200 - canceled property toggled
+//  404 - rental not found
+//  401 - authentication error
+//  200 - canceled property toggled
 
 // to check if a user has a discount
 // and if already has a rental in a certain period of time
