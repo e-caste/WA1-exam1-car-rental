@@ -35,7 +35,24 @@ const prefix = "/api";
 //  401 - authentication error
 //  200 - {id, email, name, hash}
 
-// /car APIs
+// /cars APIs
+
+// GET /cars/:carId
+// request: none
+// response:
+//  404 - car not found
+//  401 - authentication error
+//  200 - {id, category, brand, model,
+//         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
+
+// GET /cars
+// request: none
+// response:
+//  404 - no car found, empty database
+//  401 - authentication error
+//  200 -  list of car objects:
+//         {id, category, brand, model,
+//         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
 
 // /rental APIs
 
