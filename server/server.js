@@ -72,4 +72,11 @@ const prefix = "/api";
 //  200 - list of rental objects:
 //        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
 
+// POST /payment
+// request: {fullName, cardNumber, CVV}
+// response:
+//  401 - authentication error
+//  200 - payment successful
+//  XXX - payment failed (no handling required)
+
 app.listen(port, () => console.log(`Server running on http://localhost:${port}/`));
