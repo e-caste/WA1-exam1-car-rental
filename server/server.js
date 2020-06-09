@@ -55,19 +55,23 @@ const prefix = "/api";
 
 // /rentals APIs
 
-// GET /rentals/:rentalId
+// to toggle between canceled and not canceled
+// POST /rentals/:rentalId
+// request: none
+// response:
+// 200 - canceled property toggled
 
 // to check if a user has a discount
 // and if already has a rental in a certain period of time
 // GET /rentals/:userId
-// request: none
+// request: {"type": "user"}
 // response:
 //  200 - list of rental objects:
 //        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
 
 // to check if a car is rented in a period of time
 // GET /rentals/:carId
-// request: none
+// request: {"type": "car"}
 // response:
 //  200 - list of rental objects:
 //        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
