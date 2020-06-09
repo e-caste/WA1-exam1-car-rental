@@ -77,7 +77,7 @@ const prefix = "/api";
 //        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
 
 // POST /payment
-// request: {fullName, cardNumber, CVV}
+// request: {fullName, cardNumber, CVV, amount}
 // response:
 //  401 - authentication error
 //  200 - payment successful
