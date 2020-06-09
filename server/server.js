@@ -17,7 +17,7 @@ const prefix = "/api";
 // /user APIs
 
 // POST /user/login
-// request: {username, password}
+// request: {email, password}
 // response:
 //  404 - user not found
 //  401 - wrong password
