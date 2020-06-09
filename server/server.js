@@ -16,19 +16,24 @@ const prefix = "/api";
 
 // /user APIs
 
-// /user/login
-// POST
+// POST /user/login
 // request: {username, password}
 // response:
 //  404 - user not found
 //  401 - wrong password
 //  200 - login successful
 
-// /user/logout
-// POST
+// POST /user/logout
 // request: none
 // response:
 //  200 - logout successful
+
+// GET /user/:userId
+// request: none
+// response:
+//  404 - user not found
+//  401 - authentication error
+//  200 - {id, email, name, hash}
 
 // /car APIs
 
