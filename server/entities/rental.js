@@ -11,7 +11,9 @@ class Rental {
         driversAge,
         extraDrivers,
         estimatedKilometers,
-        insurance
+        insurance,
+        canceled,
+        amount
         ) {
         this.id = id;
         this.carId = carId;
@@ -23,6 +25,8 @@ class Rental {
         this.extraDrivers = extraDrivers;
         this.estimatedKilometers = estimatedKilometers;
         this.insurance = insurance;
+        this.canceled = canceled;
+        this.amount = amount;
     }
 }
 
