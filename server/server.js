@@ -54,10 +54,16 @@ app.post(prefix + "/user/login", (req, res) => {
         .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
+app.use(cookieParser());
+
 // POST /user/logout
 // request: none
 // response:
 //  200 - logout successful
+app.post(prefix + '/user/logout', (req, res) => {
+        res.clearCookie('token').status(200).end();
+    }
+);
 
 // GET /user/:userId
 // request: none
