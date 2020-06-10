@@ -71,6 +71,23 @@ app.post(prefix + '/user/logout', (req, res) => {
 //  404 - user not found
 //  401 - authentication error
 //  200 - {id, email, name, hash}
+// TODO: forbid access to unauthenticated users with cookies
+app.get(prefix + "/user/:userId", (req, res) => {
+     userDao.getUserById(req.params.userId)
+        .then(user => {
+            if (user === undefined)
+                res.status(404).end();
+            else {
+                res.status(200).json({
+                    "id": user.id,
+                    "name": user.name,
+                    "email": user.email,
+                }).end();
+            }
+        })
+        // delay next try by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
 
 // /cars APIs
 
