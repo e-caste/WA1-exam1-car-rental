@@ -3,7 +3,7 @@
 const db = require("../db");
 const Car = require("../entities/car");
 
-const createCar = row => new Car(row.id, row.brand, row.model,  // required
+const createCar = row => new Car(row.id, row.category, row.brand, row.model,  // required
                                 row.description, row.kilometers, row.year, row.fuel, // optional
                                 row.value, row.kmperlitre, row.passengers, row.stickshift === 1);  // optional
 
@@ -25,6 +25,7 @@ exports.getCar = function (carId) {
     return new Promise((resolve, reject) => {
         const sql = "SELECT * FROM CARS WHERE id = ?";
         db.all(sql, [carId], (err, rows) => {
+            console.log(rows)
             if (err)
                 reject(err);
             else if (rows.length === 0)
