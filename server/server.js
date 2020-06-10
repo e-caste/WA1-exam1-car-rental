@@ -91,6 +91,23 @@ app.get(prefix + "/user/:userId", (req, res) => {
 
 // /cars APIs
 
+function serializeCar(car) {
+    return {
+        "id": car.id,
+        "category": car.category,
+        "brand": car.brand,
+        "model": car.model,
+        "description": car.description,
+        "kilometers": car.kilometers,
+        "year": car.year,
+        "fuel": car.fuel,
+        "value": car.value,
+        "kmperlitre": car.kmperlitre,
+        "passengers": car.passengers,
+        "stickshift": car.stickshift,
+    };
+}
+
 // GET /cars/:carId
 // request: none
 // response:
@@ -106,20 +123,7 @@ app.get(prefix + "/cars/:carId", (req, res) => {
                 res.status(404).end();
             else {
                 // the response body automatically ignores null fields
-                res.status(200).json({
-                    "id": car.id,
-                    "category": car.category,
-                    "brand": car.brand,
-                    "model": car.model,
-                    "description": car.description,
-                    "kilometers": car.kilometers,
-                    "year": car.year,
-                    "fuel": car.fuel,
-                    "value": car.value,
-                    "kmperlitre": car.kmperlitre,
-                    "passengers": car.passengers,
-                    "stickshift": car.stickshift,
-                }).end();
+                res.status(200).json(serializeCar(car)).end();
             }
         })
         // delay next try by 2 seconds
@@ -129,6 +133,7 @@ app.get(prefix + "/cars/:carId", (req, res) => {
 // GET /cars
 // request: none
 // response:
+//  404 - no cars in database
 //  401 - authentication error
 //  200 -  list of car objects:
 //         {id, category, brand, model,
@@ -138,6 +143,19 @@ app.get(prefix + "/cars/:carId", (req, res) => {
 //  - it only requires 1 HTTP Request once for all cars, instead of 1 HTTP Request for each filter selection
 // in the case of many more database entries than the ~20 we have in this project, a better solution would be to
 // implement an API which requests results in batch, like Amazon or Google results (e.g. 20 results per "page")
+// TODO: forbid access to unauthenticated users with cookies
+app.get(prefix + "/cars", (req, res) => {
+    carDao.getCars()
+        .then(cars => {
+            if (cars.length === 0)
+                res.status(404).end();
+            else {
+                res.status(200).json(cars.map(car => serializeCar(car))).end();
+            }
+        })
+        // delay next try by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
 
 
 // /rentals APIs
