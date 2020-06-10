@@ -150,7 +150,17 @@ app.get(prefix + "/cars", (req, res) => {
 //  404 - rental not found
 //  401 - authentication error
 //  200 - canceled property toggled
-
+app.post(prefix + "/rentals/:rentalId", (req, res) => {
+    rentalDao.toggleCanceled(req.params.rentalId)
+        .then(result => {
+            if (result === null)
+                res.status(200).end();
+            else
+                res.status(404).end();
+        })
+        // delay next try by 2 seconds
+        .catch(err => {console.log(err); res.status(401).end();}) //new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
 
 // to check if a user has a discount
 // and if already has a rental in a certain period of time
