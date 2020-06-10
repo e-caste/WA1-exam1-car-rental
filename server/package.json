@@ -9,6 +9,15 @@
   "author": "Web Applications I",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcrypt": "^5.0.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.26.0",
+    "morgan": "^1.10.0",
+    "sqlite3": "^4.2.0"
   }
 }
