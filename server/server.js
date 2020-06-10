@@ -201,7 +201,7 @@ app.post(prefix + "/payment", (req, res) => {
     const {fullName, cardNumber, CVV, amount} = details;
     if (fullName && cardNumber && CVV && amount)
         if (typeof fullName === "string" && typeof cardNumber === "number" && typeof CVV === "number" && typeof amount === "number" &&
-            cardNumber.toString().length === 16 && CVV.toString().length === 3)
+            cardNumber.toString().length === 16 && CVV.toString().length === 3 && amount > 0)
                 paymentDao.pay(details)
                     .then(result => {
                         if (result === null)  // always true, see stub
