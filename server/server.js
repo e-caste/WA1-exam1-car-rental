@@ -150,6 +150,8 @@ app.get(prefix + "/cars", (req, res) => {
 //  404 - rental not found
 //  401 - authentication error
 //  200 - canceled property toggled
+// another solution would have been a PUT API which receives the whole rental object with the canceled property updated,
+// but I've discarded it since it would be harder on the client side and more prone to error
 app.post(prefix + "/rentals/:rentalId", (req, res) => {
     rentalDao.toggleCanceled(req.params.rentalId)
         .then(result => {
