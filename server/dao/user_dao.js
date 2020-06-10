@@ -11,13 +11,13 @@ const createUser = row => new User(row.id, row.name, row.email, row.hash);
 // used to search a user in the database when logging in
 exports.getUser = function (email) {
     return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM USERS WHERE email = ?"
+        const sql = "SELECT * FROM USERS WHERE email = ?";
         db.all(sql, [email], (err, rows) => {
             if (err)
                 reject(err);
             else if (rows.length === 0)
                 resolve(undefined);
-            else{
+            else {
                 const user = createUser(rows[0]);
                 resolve(user);
             }
