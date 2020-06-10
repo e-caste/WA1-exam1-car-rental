@@ -10,24 +10,13 @@ const createRental = row => new Rental(row.id, row.carid, row.userid,  // ids to
 
 exports.toggleCanceled = function (rentalId) {
     return new Promise((resolve, reject) => {
-        // get rental if it exists
-        let rental;
-        let sql = "SELECT * FROM RENTALS WHERE id = ?";
-        db.all(sql, [rentalId], (err, rows) => {
-            if (err)
-                reject(err);
-            else if (rows.length === 0)
-                resolve(undefined);
-            else
-                rental = createRental(rows[0]);
-        });
-        // toggle canceled property and update database
-        sql = "UPDATE RENTALS SET canceled = ? WHERE id = ?";
-        db.run(sql, [!rental.canceled ? 1 : 0, rentalId], (err) => {
+        // use ternary condition with CASE to toggle between 1 and 0 (true and false)
+        const sql = "UPDATE RENTALS SET canceled = CASE WHEN canceled = 0 THEN 1 ELSE 0 END WHERE id = ?";
+        db.run(sql, [rentalId], (err) => {
             if (err)
                 reject(err);
             else
-                resolve(null);  // TODO: check if a different value is needed to verify if function worked
+                resolve(null);
         });
     });
 }
