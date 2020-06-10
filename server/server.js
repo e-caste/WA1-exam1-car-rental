@@ -1,11 +1,18 @@
 'use strict';
 
-const express = require('express');
-const morgan = require('morgan');
+import express from "express";
+import morgan from "morgan";
+import jwt from "express-jwt";
+import jsonwebtoken from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
-const port = 3001;
+const carDao = require("./dao/car_dao");
+const paymentDao = require("./dao/payment_dao_stub");
+const rentalDao = require("./dao/rental_dao");
+const userDao = require("./dao/user_dao");
 
 // setup app dependencies
+const port = 3001;
 const app = express();
 app.use(morgan('tiny'));
 app.use(express.json())
