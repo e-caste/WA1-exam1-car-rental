@@ -65,13 +65,20 @@ app.post(prefix + '/user/logout', (req, res) => {
     }
 );
 
+// For the rest of the code, all APIs require authentication
+app.use(
+    jwt({
+        secret: jwtSecret,
+        getToken: req => req.cookies.token
+    })
+);
+
 // GET /user/:userId
 // request: none
 // response:
 //  404 - user not found
 //  401 - authentication error
 //  200 - {id, email, name, hash}
-// TODO: forbid access to unauthenticated users with cookies
 app.get(prefix + "/user/:userId", (req, res) => {
      userDao.getUserById(req.params.userId)
         .then(user => {
@@ -98,7 +105,6 @@ app.get(prefix + "/user/:userId", (req, res) => {
 //  401 - authentication error
 //  200 - {id, category, brand, model,
 //         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
-// TODO: forbid access to unauthenticated users with cookies
 app.get(prefix + "/cars/:carId", (req, res) => {
     carDao.getCar(req.params.carId)
         .then(car => {
@@ -126,7 +132,6 @@ app.get(prefix + "/cars/:carId", (req, res) => {
 //  - it only requires 1 HTTP Request once for all cars, instead of 1 HTTP Request for each filter selection
 // in the case of many more database entries than the ~20 we have in this project, a better solution would be to
 // implement an API which requests results in batch, like Amazon or Google results (e.g. 20 results per "page")
-// TODO: forbid access to unauthenticated users with cookies
 app.get(prefix + "/cars", (req, res) => {
     carDao.getCars()
         .then(cars => {
