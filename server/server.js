@@ -98,6 +98,33 @@ app.get(prefix + "/user/:userId", (req, res) => {
 //  401 - authentication error
 //  200 - {id, category, brand, model,
 //         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
+// TODO: forbid access to unauthenticated users with cookies
+app.get(prefix + "/cars/:carId", (req, res) => {
+    carDao.getCar(req.params.carId)
+        .then(car => {
+            if (car === undefined)
+                res.status(404).end();
+            else {
+                // the response body automatically ignores null fields
+                res.status(200).json({
+                    "id": car.id,
+                    "category": car.category,
+                    "brand": car.brand,
+                    "model": car.model,
+                    "description": car.description,
+                    "kilometers": car.kilometers,
+                    "year": car.year,
+                    "fuel": car.fuel,
+                    "value": car.value,
+                    "kmperlitre": car.kmperlitre,
+                    "passengers": car.passengers,
+                    "stickshift": car.stickshift,
+                }).end();
+            }
+        })
+        // delay next try by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
 
 // GET /cars
 // request: none
