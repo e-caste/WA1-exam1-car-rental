@@ -1,7 +1,7 @@
 'use strict';
 
-import db from "../db";
-import Car from "../entities/car";
+const db = require("../db");
+const Car = require("../entities/car");
 
 const createCar = row => new Car(row.id, row.brand, row.model,  // required
                                 row.description, row.kilometers, row.year, row.fuel, // optional

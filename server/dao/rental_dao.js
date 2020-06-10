@@ -1,7 +1,7 @@
 'use strict';
 
-import db from "../db";
-import Rental from "../entities/rental";
+const db = require("../db");
+const Rental = require("../entities/rental");
 
 const createRental = row => new Rental(row.id, row.carid, row.userid,  // ids to join tables
                                        row.startingday, row.endday,   // dates
