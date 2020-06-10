@@ -193,7 +193,26 @@ app.get(prefix + "/rentals/:id", (req, res) => {
 // request: {fullName, cardNumber, CVV, amount}
 // response:
 //  401 - authentication error
+//  400 - missing details from request
 //  200 - payment successful
 //  XXX - payment failed (no handling required)
+app.post(prefix + "/payment", (req, res) => {
+    const details = req.body;
+    const {fullName, cardNumber, CVV, amount} = details;
+    if (fullName && cardNumber && CVV && amount)
+        if (typeof fullName === "string" && typeof cardNumber === "number" && typeof CVV === "number" && typeof amount === "number" &&
+            cardNumber.toString().length === 16 && CVV.toString().length === 3)
+                paymentDao.pay(details)
+                    .then(result => {
+                        if (result === null)  // always true, see stub
+                            res.status(200).end();
+                    })
+                    // delay next try by 2 seconds
+                    .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+        else
+            res.status(400).json({"errors": "Payment details wrongly formatted."}).end();
+    else
+        res.status(400).json({"errors": "Missing payment details."}).end();
+});
 
 app.listen(port, () => console.log(`Server running on http://localhost:${port}/`));
