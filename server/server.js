@@ -1,17 +1,17 @@
 'use strict';
 
-import express from "express";
-import morgan from "morgan";
-import jwt from "express-jwt";
-import jsonwebtoken from "jsonwebtoken";
-import cookieParser from "cookie-parser";
+const express = require('express');
+const morgan = require('morgan');
+const jwt = require("express-jwt");
+const jsonwebtoken = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 
 const carDao = require("./dao/car_dao");
 const paymentDao = require("./dao/payment_dao_stub");
 const rentalDao = require("./dao/rental_dao");
 const userDao = require("./dao/user_dao");
 
-import jwtSecret from "./secret";
+const jwtSecret = require("./secret").jwtSecret;
 const expireTime = 300;  // 5 minutes
 
 // setup app dependencies
