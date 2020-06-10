@@ -21,24 +21,10 @@ exports.toggleCanceled = function (rentalId) {
     });
 }
 
-exports.getRentalsByUserId = function (userId) {
+exports.getRentalsById = function (id, type) {
     return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM RENTALS WHERE userid = ?";
-        db.all(sql, [userId], (err, rows) => {
-            if (err)
-                reject(err);
-            else if (rows.length === 0)
-                resolve(undefined);
-            else
-                resolve(rows.map(r => createRental(r)));
-        });
-    });
-}
-
-exports.getRentalsByCarId = function (carId) {
-    return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM RENTALS WHERE carid = ?";
-        db.all(sql, [carId], (err, rows) => {
+        const sql = `SELECT * FROM RENTALS WHERE ${type}id = ?`;
+        db.all(sql, [id], (err, rows) => {
             if (err)
                 reject(err);
             else if (rows.length === 0)
