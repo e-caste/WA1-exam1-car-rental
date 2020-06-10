@@ -161,23 +161,33 @@ app.post(prefix + "/rentals/:rentalId", (req, res) => {
                 res.status(404).end();
         })
         // delay next try by 2 seconds
-        .catch(err => {console.log(err); res.status(401).end();}) //new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
 // to check if a user has a discount
 // and if already has a rental in a certain period of time
 // GET /rentals/:userId
-// request: {"type": "user"}
+// query: ?type=user or ?type=car
+// request: none
 // response:
+//  404 - no rentals found
+//  400 - bad request type not found
 //  200 - list of rental objects:
 //        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
-
-// to check if a car is rented in a period of time
-// GET /rentals/:carId
-// request: {"type": "car"}
-// response:
-//  200 - list of rental objects:
-//        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
+app.get(prefix + "/rentals/:id", (req, res) => {
+    if (req.query.type === "user" || req.query.type === "car")
+        rentalDao.getRentalsById(req.params.id, req.query.type)
+            .then(rentals => {
+                if (rentals)
+                    res.status(200).json(rentals).end();
+                else
+                    res.status(404).end();
+            })
+            // delay next try by 2 seconds
+            .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+    else
+        res.status(400).end();
+});
 
 // POST /payment
 // request: {fullName, cardNumber, CVV, amount}
