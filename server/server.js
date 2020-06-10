@@ -91,23 +91,6 @@ app.get(prefix + "/user/:userId", (req, res) => {
 
 // /cars APIs
 
-function serializeCar(car) {
-    return {
-        "id": car.id,
-        "category": car.category,
-        "brand": car.brand,
-        "model": car.model,
-        "description": car.description,
-        "kilometers": car.kilometers,
-        "year": car.year,
-        "fuel": car.fuel,
-        "value": car.value,
-        "kmperlitre": car.kmperlitre,
-        "passengers": car.passengers,
-        "stickshift": car.stickshift,
-    };
-}
-
 // GET /cars/:carId
 // request: none
 // response:
@@ -123,7 +106,7 @@ app.get(prefix + "/cars/:carId", (req, res) => {
                 res.status(404).end();
             else {
                 // the response body automatically ignores null fields
-                res.status(200).json(serializeCar(car)).end();
+                res.status(200).json(car).end();
             }
         })
         // delay next try by 2 seconds
@@ -150,7 +133,7 @@ app.get(prefix + "/cars", (req, res) => {
             if (cars.length === 0)
                 res.status(404).end();
             else {
-                res.status(200).json(cars.map(car => serializeCar(car))).end();
+                res.status(200).json(cars).end();
             }
         })
         // delay next try by 2 seconds
@@ -167,6 +150,7 @@ app.get(prefix + "/cars", (req, res) => {
 //  404 - rental not found
 //  401 - authentication error
 //  200 - canceled property toggled
+
 
 // to check if a user has a discount
 // and if already has a rental in a certain period of time
