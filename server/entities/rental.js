@@ -1,4 +1,4 @@
-const moment = require("moment");
+// const moment = require("moment");
 
 class Rental {
     constructor(
@@ -18,8 +18,8 @@ class Rental {
         this.id = id;
         this.carId = carId;
         this.userId = userId;
-        this.startingDay = moment(startingDay);
-        this.endDay = moment(endDay);
+        this.startingDay = startingDay; // moment(startingDay);
+        this.endDay = endDay; // moment(endDay);
         this.carCategory = carCategory;
         this.driversAge = driversAge;
         this.extraDrivers = extraDrivers;
