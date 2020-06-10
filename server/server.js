@@ -11,6 +11,9 @@ const paymentDao = require("./dao/payment_dao_stub");
 const rentalDao = require("./dao/rental_dao");
 const userDao = require("./dao/user_dao");
 
+import jwtSecret from "./secret";
+const expireTime = 300;  // 5 minutes
+
 // setup app dependencies
 const port = 3001;
 const app = express();
@@ -29,6 +32,27 @@ const prefix = "/api";
 //  404 - user not found
 //  401 - wrong password
 //  200 - login successful
+app.post(prefix + "/user/login", (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    userDao.getUser(email)
+        .then(user => {
+            if (user === undefined)
+                res.status(404).end();
+            else {
+                if (!userDao.checkPassword(user, password))
+                    res.status(401).end();
+                else {
+                    const token = jsonwebtoken.sign({user: user.id}, jwtSecret, {expiresIn: expireTime});
+                    res.cookie('token', token, {httpOnly: true, sameSite: true, maxAge: 1000 * expireTime});
+                    res.status(200).end();
+                }
+            }
+        })
+        // delay next login by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
 
 // POST /user/logout
 // request: none
