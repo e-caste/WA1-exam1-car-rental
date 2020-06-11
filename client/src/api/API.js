@@ -50,6 +50,19 @@ async function logout(email, password) {
 
 // Car related APIs
 
+async function getAllCars() {
+    return new Promise((resolve, reject) => {
+        fetch(prefix + "/cars")
+            .then(res => {
+                if (res.status === 404)
+                    resolve([]);
+                res.json()
+                    .then(json => resolve(json.map(car => Car.from(car))))
+                    .catch(err => reject("Server error"));
+            })
+            .catch(err => reject("Server unavailable"))
+    });
+}
 
 // Rental related APIs
 
