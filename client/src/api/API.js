@@ -29,6 +29,19 @@ async function login(email, password) {
                 else  // should not happen, but if it does:
                     reject("Server error")
             })
-            .catch(err => reject("Server unavailable"))
+            .catch(err => reject("Server unavailable"));
+    });
+}
+
+async function logout(email, password) {
+    return new Promise((resolve, reject) => {
+        fetch(prefix + "/user/logout", {method: "POST"})
+            .then(res => {
+                if (res.ok)
+                    resolve(null);
+                else // should not happen
+                    reject("Server error")
+            })
+            .catch(err => reject("Server unavailable"));
     });
 }
