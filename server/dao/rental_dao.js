@@ -13,7 +13,6 @@ exports.toggleCanceled = function (rentalId, userId) {
         // check if the given user has made the rental they attempt to modify, if not resolve to undefined to trigger 404
         let sql = "SELECT * FROM RENTALS WHERE id = ? AND userid = ?";
         db.all(sql, [rentalId, userId], (err, rows) => {
-            console.log(rows)
             if (rows.length === 0)
                 resolve(undefined);
         });
