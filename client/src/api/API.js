@@ -3,6 +3,8 @@ import Rental from "../entities/Rental";
 
 const prefix = "/api";
 
+// User related APIs
+
 async function isLoggedIn() {
     const res = await fetch(prefix + "/user");
     const json = await res.json();
@@ -45,3 +47,9 @@ async function logout(email, password) {
             .catch(err => reject("Server unavailable"));
     });
 }
+
+// Car related APIs
+
+
+// Rental related APIs
+
