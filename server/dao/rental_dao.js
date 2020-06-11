@@ -8,12 +8,18 @@ const createRental = row => new Rental(row.id, row.carid, row.userid,  // ids to
                                        row.carcategory, row.driversage, row.extradrivers, row.estimatedkilometers, row.insurance,  // price influencers
                                        row.canceled === 1, row.amount);  // info
 
-exports.toggleCanceled = function (rentalId) {
+exports.toggleCanceled = function (rentalId, userId) {
     return new Promise((resolve, reject) => {
-        // TODO: add condition "AND userid = ?" (where to get the current user's id?)
+        // check if the given user has made the rental they attempt to modify, if not resolve to undefined to trigger 404
+        let sql = "SELECT * FROM RENTALS WHERE id = ? AND userid = ?";
+        db.all(sql, [rentalId, userId], (err, rows) => {
+            console.log(rows)
+            if (rows.length === 0)
+                resolve(undefined);
+        });
         // use ternary condition with CASE to toggle between 1 and 0 (true and false)
-        const sql = "UPDATE RENTALS SET canceled = CASE WHEN canceled = 0 THEN 1 ELSE 0 END WHERE id = ?";
-        db.run(sql, [rentalId], (err) => {
+        sql = "UPDATE RENTALS SET canceled = CASE WHEN canceled = 0 THEN 1 ELSE 0 END WHERE id = ? AND userid = ?";
+        db.run(sql, [rentalId, userId], (err) => {
             if (err)
                 reject(err);
             else
