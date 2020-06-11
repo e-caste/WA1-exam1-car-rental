@@ -173,9 +173,10 @@ app.post(prefix + "/rentals/:rentalId", (req, res) => {
         .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
+// TODO: update with SQL JOIN and unauthorized user prevention (each user can only see their own rentals)
 // to check if a user has a discount
 // and if already has a rental in a certain period of time
-// GET /rentals/:userId
+// GET /rentals/:id
 // query: ?type=user or ?type=car
 // request: none
 // response:
