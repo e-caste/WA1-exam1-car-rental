@@ -29,9 +29,9 @@ exports.toggleCanceled = function (rentalId, userId) {
     });
 }
 
-exports.getRentalsById = function (id, type) {
+exports.getRentalsById = function (id) {
     return new Promise((resolve, reject) => {
-        const sql = `SELECT * FROM RENTALS WHERE ${type}id = ?`;
+        const sql = `SELECT * FROM RENTALS WHERE userid = ?`;
         db.all(sql, [id], (err, rows) => {
             if (err)
                 reject(err);
