@@ -71,13 +71,13 @@ async function getCarById(carId) {
                 if (res.status === 404)
                     reject(`Car with id=${carId} not found`);
                 else if (res.status === 401)
-                    reject("Authentication error")
+                    reject("Authentication error");
                 else if (res.ok)
                     res.json()
-                        .then(resolve(json => Car.from(json)))
+                        .then(json => resolve(Car.from(json)))
                         .catch(err => reject("Server error"));
                 else
-                    reject("Server error")
+                    reject("Server error");
             })
             .catch(err => reject("Server unavailable"));
     });
@@ -85,3 +85,21 @@ async function getCarById(carId) {
 
 // Rental related APIs
 
+async function toggleCanceledByRentalId(rentalId) {
+    return new Promise((resolve, reject) => {
+        fetch(prefix + "/rentals/" + rentalId)
+            .then(res => {
+                if (res.status === 404)
+                    reject(`Rental with id=${rentalId} not found`);
+                else if (res.status === 401)
+                    reject("Authentication error");
+                else if (res.ok)
+                    res.json()
+                        .then(json => resolve(Rental.from(json)))
+                        .catch(err => reject("Server error"));
+                else
+                    reject("Server error");
+            })
+            .catch(err => reject("Server unavailable"));
+    });
+}
