@@ -18,9 +18,10 @@ const expireTime = 300;  // 5 minutes
 const port = 3001;
 const app = express();
 app.use(morgan('tiny'));
-app.use(express.json())
+app.use(express.json());
 
 const prefix = "/api";
+const cookieName = "wa1ExamCarRentalToken";
 
 // REST APIs - always begin with /api
 
@@ -45,7 +46,7 @@ app.post(prefix + "/user/login", (req, res) => {
                     res.status(401).end();
                 else {
                     const token = jsonwebtoken.sign({user: user.id}, jwtSecret, {expiresIn: expireTime});
-                    res.cookie('token', token, {httpOnly: true, sameSite: true, maxAge: 1000 * expireTime});
+                    res.cookie(cookieName, token, {httpOnly: true, sameSite: true, maxAge: 1000 * expireTime});
                     res.status(200).end();
                 }
             }
@@ -61,7 +62,7 @@ app.use(cookieParser());
 // response:
 //  200 - logout successful
 app.post(prefix + '/user/logout', (req, res) => {
-        res.clearCookie('token').status(200).end();
+        res.clearCookie(cookieName).status(200).end();
     }
 );
 
@@ -95,7 +96,7 @@ app.get(prefix + "/cars", (req, res) => {
 app.use(
     jwt({
         secret: jwtSecret,
-        getToken: req => req.cookies.token
+        getToken: req => req.cookies[cookieName]
     })
 );
 
