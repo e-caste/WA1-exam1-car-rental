@@ -122,3 +122,33 @@ async function getRentalsByUserId(userId) {
             .catch(err => reject("Server unavailable"));
     });
 }
+
+// Payment related APIs
+
+async function pay(details) {
+    return new Promise((resolve, reject) => {
+        const {fullName, cardNumber, CVV, amount} = details;
+        fetch(prefix + "/payment",
+            {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    fullName: fullName,
+                    cardNumber: cardNumber,
+                    CVV: CVV,
+                    amount: amount,
+                })
+            })
+            .then(res => {
+                if (res.status === 401)
+                    reject("Authentication error");
+                else if (res.status === 400)
+                    reject(res.body.errors)
+                else if (res.ok)
+                    resolve(null)
+                else
+                    reject("Server error");
+            })
+            .catch(err => reject("Server unavailable"));
+    });
+}
