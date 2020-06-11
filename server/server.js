@@ -161,7 +161,8 @@ app.get(prefix + "/cars/:carId", (req, res) => {
 // another solution would have been a PUT API which receives the whole rental object with the canceled property updated,
 // but I've discarded it since it would be harder on the client side and more prone to error
 app.post(prefix + "/rentals/:rentalId", (req, res) => {
-    rentalDao.toggleCanceled(req.params.rentalId)
+    const userId = req.user && req.user.userId;
+    rentalDao.toggleCanceled(req.params.rentalId, userId)
         .then(result => {
             if (result === null)
                 res.status(200).end();
