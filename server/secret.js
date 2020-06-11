@@ -1,0 +1,1 @@
+exports.jwtSecret = "H94UAzO5inoz6gIICVTynxOEEdn5yrsH94UAzO5inoz6gIICVTynxOEEdn5yrs77";
