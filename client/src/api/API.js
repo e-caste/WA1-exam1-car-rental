@@ -103,3 +103,22 @@ async function toggleCanceledByRentalId(rentalId) {
             .catch(err => reject("Server unavailable"));
     });
 }
+
+async function getRentalsByUserId(userId) {
+    return new Promise((resolve, reject) => {
+        fetch(prefix + "/rentals/" + userId)
+            .then(res => {
+                if (res.status === 404)
+                    reject(`No rental for user with id=${userId} found`);
+                else if (res.status === 401)
+                    reject("Authentication error");
+                else if (res.ok)
+                    res.json()
+                        .then(json => resolve(json.map(rental => Rental.from(rental))))
+                        .catch(err => reject("Server error"));
+                else
+                    reject("Server error");
+            })
+            .catch(err => reject("Server unavailable"));
+    });
+}
