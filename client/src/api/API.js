@@ -87,7 +87,7 @@ async function getCarById(carId) {
 
 async function toggleCanceledByRentalId(rentalId) {
     return new Promise((resolve, reject) => {
-        fetch(prefix + "/rentals/" + rentalId)
+        fetch(prefix + "/rentals/" + rentalId, {method: "POST"})
             .then(res => {
                 if (res.status === 404)
                     reject(`Rental with id=${rentalId} not found`);
