@@ -10,6 +10,7 @@ const createRental = row => new Rental(row.id, row.carid, row.userid,  // ids to
 
 exports.toggleCanceled = function (rentalId) {
     return new Promise((resolve, reject) => {
+        // TODO: add condition "AND userid = ?" (where to get the current user's id?)
         // use ternary condition with CASE to toggle between 1 and 0 (true and false)
         const sql = "UPDATE RENTALS SET canceled = CASE WHEN canceled = 0 THEN 1 ELSE 0 END WHERE id = ?";
         db.run(sql, [rentalId], (err) => {
