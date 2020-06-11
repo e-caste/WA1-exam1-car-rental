@@ -65,6 +65,32 @@ app.post(prefix + '/user/logout', (req, res) => {
     }
 );
 
+// GET /cars
+// request: none
+// response:
+//  404 - no cars in database
+//  401 - authentication error
+//  200 -  list of car objects:
+//         {id, category, brand, model,
+//         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
+// the filter will be implemented in the front end because:
+//  - it's a simpler implementation, based on the buttons selected at the moment
+//  - it only requires 1 HTTP Request once for all cars, instead of 1 HTTP Request for each filter selection
+// in the case of many more database entries than the ~20 we have in this project, a better solution would be to
+// implement an API which requests results in batch, like Amazon or Google results (e.g. 20 results per "page")
+app.get(prefix + "/cars", (req, res) => {
+    carDao.getCars()
+        .then(cars => {
+            if (cars.length === 0)
+                res.status(404).end();
+            else {
+                res.status(200).json(cars).end();
+            }
+        })
+        // delay next try by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
+
 // For the rest of the code, all APIs require authentication
 app.use(
     jwt({
@@ -113,32 +139,6 @@ app.get(prefix + "/cars/:carId", (req, res) => {
             else {
                 // the response body automatically ignores null fields
                 res.status(200).json(car).end();
-            }
-        })
-        // delay next try by 2 seconds
-        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
-});
-
-// GET /cars
-// request: none
-// response:
-//  404 - no cars in database
-//  401 - authentication error
-//  200 -  list of car objects:
-//         {id, category, brand, model,
-//         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
-// the filter will be implemented in the front end because:
-//  - it's a simpler implementation, based on the buttons selected at the moment
-//  - it only requires 1 HTTP Request once for all cars, instead of 1 HTTP Request for each filter selection
-// in the case of many more database entries than the ~20 we have in this project, a better solution would be to
-// implement an API which requests results in batch, like Amazon or Google results (e.g. 20 results per "page")
-app.get(prefix + "/cars", (req, res) => {
-    carDao.getCars()
-        .then(cars => {
-            if (cars.length === 0)
-                res.status(404).end();
-            else {
-                res.status(200).json(cars).end();
             }
         })
         // delay next try by 2 seconds
