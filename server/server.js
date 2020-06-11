@@ -45,7 +45,8 @@ app.post(prefix + "/user/login", (req, res) => {
                 if (!userDao.checkPassword(user, password))
                     res.status(401).end();
                 else {
-                    const token = jsonwebtoken.sign({user: user.id}, jwtSecret, {expiresIn: expireTime});
+                    // IMPORTANT: save userId in cookie signature to use it in next API calls
+                    const token = jsonwebtoken.sign({userId: user.id}, jwtSecret, {expiresIn: expireTime});
                     res.cookie(cookieName, token, {httpOnly: true, sameSite: true, maxAge: 1000 * expireTime});
                     res.status(200).end();
                 }
@@ -100,27 +101,28 @@ app.use(
     })
 );
 
-// GET /user/:userId
+// GET /user
 // request: none
 // response:
 //  404 - user not found
 //  401 - authentication error
-//  200 - {id, email, name, hash}
-app.get(prefix + "/user/:userId", (req, res) => {
-     userDao.getUserById(req.params.userId)
-        .then(user => {
-            if (user === undefined)
-                res.status(404).end();
-            else {
-                res.status(200).json({
-                    "id": user.id,
-                    "name": user.name,
-                    "email": user.email,
-                }).end();
-            }
-        })
-        // delay next try by 2 seconds
-        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+//  200 - {id, name, email}
+app.get(prefix + "/user", (req, res) => {
+    const id = req.user && req.user.userId;
+    userDao.getUserById(id)
+       .then(user => {
+           if (user === undefined)
+               res.status(404).end();
+           else {
+               res.status(200).json({
+                   "id": user.id,
+                   "name": user.name,
+                   "email": user.email,
+               }).end();
+           }
+       })
+       // delay next try by 2 seconds
+       .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
 // /cars APIs
