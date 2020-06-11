@@ -60,7 +60,26 @@ async function getAllCars() {
                     .then(json => resolve(json.map(car => Car.from(car))))
                     .catch(err => reject("Server error"));
             })
-            .catch(err => reject("Server unavailable"))
+            .catch(err => reject("Server unavailable"));
+    });
+}
+
+async function getCarById(carId) {
+    return new Promise((resolve, reject) => {
+        fetch(prefix + "/cars/" + carId)
+            .then(res => {
+                if (res.status === 404)
+                    reject(`Car with id=${carId} not found`);
+                else if (res.status === 401)
+                    reject("Authentication error")
+                else if (res.ok)
+                    res.json()
+                        .then(resolve(json => Car.from(json)))
+                        .catch(err => reject("Server error"));
+                else
+                    reject("Server error")
+            })
+            .catch(err => reject("Server unavailable"));
     });
 }
 
