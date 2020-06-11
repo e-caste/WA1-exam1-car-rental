@@ -173,30 +173,25 @@ app.post(prefix + "/rentals/:rentalId", (req, res) => {
         .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
-// TODO: update with SQL JOIN and unauthorized user prevention (each user can only see their own rentals)
 // to check if a user has a discount
 // and if already has a rental in a certain period of time
-// GET /rentals/:id
-// query: ?type=user or ?type=car
+// GET /rentals/:userId
 // request: none
 // response:
 //  404 - no rentals found
 //  400 - bad request type not found
 //  200 - list of rental objects:
 //        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
-app.get(prefix + "/rentals/:id", (req, res) => {
-    if (req.query.type === "user" || req.query.type === "car")
-        rentalDao.getRentalsById(req.params.id, req.query.type)
-            .then(rentals => {
-                if (rentals)
-                    res.status(200).json(rentals).end();
-                else
-                    res.status(404).end();
-            })
-            // delay next try by 2 seconds
-            .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
-    else
-        res.status(400).end();
+app.get(prefix + "/rentals/:userId", (req, res) => {
+    rentalDao.getRentalsById(req.params.userId)
+        .then(rentals => {
+            if (rentals)
+                res.status(200).json(rentals).end();
+            else
+                res.status(404).end();
+        })
+        // delay next try by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
 // POST /payment
