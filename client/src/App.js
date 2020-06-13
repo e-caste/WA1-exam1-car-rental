@@ -5,6 +5,7 @@ import {Route, Redirect} from "react-router-dom";
 import API from "./api/API";
 import Header from "./components/Header";
 import {AuthContext} from "./auth/AuthContext";
+import CarsList from "./components/CarsList";
 
 
 const App = () => {
@@ -30,7 +31,9 @@ const App = () => {
                 <Container fluid>
                     <Switch>
                         <Route path={"/"}>
-
+                            <CarsList
+                                cars={cars}
+                            />
                         </Route>
                         <Route path={"/login"}>
 
