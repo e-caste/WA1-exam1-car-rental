@@ -20,6 +20,17 @@ const App = () => {
     useEffect(() => {
         API.isLoggedIn()
             .then(user => setAuthUser(user))
+            .catch(err => {
+                switch (err) {
+                    case "Server unavailable":
+                    case "Server error":
+                        console.error(err);
+                        break;
+                    default:
+                    case "Authentication error":
+                        break;
+                }
+            })
     }, []);
 
     useEffect(() => {
