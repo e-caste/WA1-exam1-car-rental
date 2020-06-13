@@ -9,7 +9,7 @@ const createCar = row => new Car(row.id, row.category, row.brand, row.model,  //
 
 exports.getCars = function () {
     return new Promise((resolve, reject) => {
-        const sql = "SELECT * FROM CARS";
+        const sql = "SELECT * FROM CARS ORDER BY CATEGORY, BRAND, MODEL";
         db.all(sql, [], (err, rows) => {
             if (err)
                 reject(err);
