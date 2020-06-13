@@ -1,12 +1,36 @@
-import React, {useState} from "react";
-import {Button, ButtonGroup, ButtonToolbar, Dropdown, Jumbotron, ListGroup, Spinner, Table} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Col, Jumbotron, Spinner, Row, Table} from "react-bootstrap";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
 import Car from "./carslist/Car";
-import DropdownButton from "react-bootstrap/DropdownButton";
 
 const CarsList = props => {
 
+    // state variables
     const [brands, setBrands] = useState([]);
     const [categories, setCategories] = useState([]);
+
+    // options variables used in Select component
+    const [brandOptions, setBrandOptions] = useState([]);
+    const [categoryOptions, setCategoryOptions] = useState([]);
+
+    // set brands and categories on change of props.cars
+    useEffect(() => {
+        setBrands([...new Set(props.cars.map(car => car.brand))].sort());
+    }, [props.cars]);
+
+    useEffect(() => {
+        setCategories([...new Set(props.cars.map(car => car.category))].sort());
+    }, [props.cars]);
+
+    // update options every time the objects on which they depend are updated
+    useEffect(() => {
+        setBrandOptions(brands.map(br => Object.assign({value: br, label: br})));
+    }, [brands]);
+
+    useEffect(() => {
+        setCategoryOptions(categories.map(cat => Object.assign({value: cat, label: cat})));
+    }, [categories]);
 
     return (
         <div id={"CarsList"}>
@@ -18,16 +42,15 @@ const CarsList = props => {
             }
             {props.cars &&
                 <div id={"CarsView"}>
-                    <DropdownButton title={"Select categories"} variant={"warning"} as={ButtonGroup} id={"select-categories-dropdown"}>
-                            {/*use the Set to get only distinct categories*/}
-                            {[...new Set(props.cars.map(car => car.category))].sort()
-                                .map((cat, idx) => <Dropdown.Item key={idx} variant={"warning"}>{cat}</Dropdown.Item>)}
-                    </DropdownButton>
-                    <DropdownButton title={"Select brands"} variant={"warning"} as={ButtonGroup} className={"ml-2"} id={"select-brands-dropdown"}>
-                            {/*use the Set to get only distinct brands*/}
-                            {[...new Set(props.cars.map(car => car.brand))].sort()
-                                .map((br, idx) => <Dropdown.Item key={idx} variant={"warning"}>{br}</Dropdown.Item>)}
-                    </DropdownButton>
+                    <Row>
+                        {/*see docs at https://react-select.com/home*/}
+                        <Col>
+                            <Select placeholder={"Select brands..."} options={brandOptions} isMulti name={"brands"} components={makeAnimated()} />
+                        </Col>
+                        <Col>
+                            <Select placeholder={"Select categories..."} options={categoryOptions} isMulti name={"categories"} components={makeAnimated()} />
+                        </Col>
+                    </Row>
                     {/*TODO: use cards, add fields from db*/}
                     <Table responsive striped borderless >
                         <thead>
