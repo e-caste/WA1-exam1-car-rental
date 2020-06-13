@@ -3,7 +3,7 @@ import {Navbar} from "react-bootstrap";
 
 const ResetPasswordForm = props =>
     <div id={"ResetPasswordForm"} className={"text-center  ml-6 mr-6"}>
-        <img src={"sloth.svg"} height={200} />
+        <img src={"sloth.svg"} height={200} alt={""} />
         <h4>You may be interested in the <a href={"https://www.top10homeremedies.com/home-remedies/home-remedies-improve-memory.html"}>
                  top 10 home remedies to improve memory</a>.
         </h4>
