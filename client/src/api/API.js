@@ -160,3 +160,6 @@ async function pay(details) {
             .catch(err => reject("Server unavailable"));
     });
 }
+
+const API = {isLoggedIn, login, logout, getAllCars, getCarById, toggleCanceledByRentalId, getRentalsByUserId, pay};
+export default API;
