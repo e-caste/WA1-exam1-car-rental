@@ -13,6 +13,7 @@ import ResetPasswordForm from "./components/ResetPasswordForm";
 const App = () => {
 
     const [authUser, setAuthUser] = useState(null);
+    const [authErr, setAuthErr] = useState(null);
     const [cars, setCars] = useState([]);
 
     // initial API calls, note deps=[] to only call once like componentDidMount
@@ -26,9 +27,18 @@ const App = () => {
             .then(cars => setCars(cars))
     }, []);
 
+    const handleLogin = (email, password) => {
+        API.login(email, password)
+            .then(user => setAuthUser(user))
+            .catch(err => setAuthErr(err));
+    }
+
     return (
         <div className="App">
-            <AuthContext.Provider value={{authUser: authUser}}>
+            <AuthContext.Provider value={{
+                authUser: authUser,
+                handleLogin,
+            }}>
                 <Header/>
                 <Container fluid>
                     <Switch>
