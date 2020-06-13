@@ -51,7 +51,7 @@ const CarsList = props => {
         if (shownCategories.length > 0)
             result = result.filter(car => shownCategories.includes(car.category));
         setShownCars(result);
-    }, [shownBrands, shownCategories]);
+    }, [shownBrands, shownCategories, props.cars]);
 
     return (
         <div id={"CarsList"}>
