@@ -6,11 +6,12 @@ import API from "./api/API";
 import Header from "./components/Header";
 import {AuthContext} from "./auth/AuthContext";
 import CarsList from "./components/CarsList";
+import LoginForm from "./components/LoginForm";
 
 
 const App = () => {
 
-    const [authUser, setAuthUser] = useState({});
+    const [authUser, setAuthUser] = useState(null);
     const [cars, setCars] = useState([]);
 
     // initial API calls, note deps=[] to only call once like componentDidMount
@@ -30,13 +31,13 @@ const App = () => {
                 <Header/>
                 <Container fluid>
                     <Switch>
-                        <Route path={"/"}>
+                        <Route exact path={"/"}>
                             <CarsList
                                 cars={cars}
                             />
                         </Route>
                         <Route path={"/login"}>
-
+                            <LoginForm />
                         </Route>
                         <Route path={"/rent"}>
 
@@ -46,9 +47,6 @@ const App = () => {
                         </Route>
                         <Route path={"/rentals"}>
 
-                        </Route>
-                        <Route>
-                            <Redirect to={"/"} />
                         </Route>
                     </Switch>
                 </Container>
