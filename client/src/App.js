@@ -22,11 +22,11 @@ const App = () => {
     }, []);
 
     return (
-    <div className="App">
-        <AuthContext.Provider value={{authUser: authUser}}>
-            <Header/>
-        </AuthContext.Provider>
-    </div>
+        <div className="App">
+            <AuthContext.Provider value={{authUser: authUser}}>
+                <Header/>
+            </AuthContext.Provider>
+        </div>
     );
 }
 
