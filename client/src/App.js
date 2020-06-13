@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {Container, Switch} from "react-bootstrap";
+import {Route, Redirect} from "react-router-dom";
 
 import API from "./api/API";
 import Header from "./components/Header";
@@ -25,6 +27,28 @@ const App = () => {
         <div className="App">
             <AuthContext.Provider value={{authUser: authUser}}>
                 <Header/>
+                <Container fluid>
+                    <Switch>
+                        <Route path={"/"}>
+
+                        </Route>
+                        <Route path={"/login"}>
+
+                        </Route>
+                        <Route path={"/rent"}>
+
+                        </Route>
+                        <Route path={"/payment"}>
+
+                        </Route>
+                        <Route path={"/rentals"}>
+
+                        </Route>
+                        <Route>
+                            <Redirect to={"/"} />
+                        </Route>
+                    </Switch>
+                </Container>
             </AuthContext.Provider>
         </div>
     );
