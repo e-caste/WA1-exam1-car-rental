@@ -19,7 +19,7 @@ const Header = props =>
                         }
                         {context.authUser &&
                             <Nav>
-                                <NavDropdown title={`Welcome ${context.authUser.name || "user"}!`}>
+                                <NavDropdown title={`Welcome ${context.authUser.name || "user"}!`} id={"UserDropdown"}>
                                     <NavDropdown.Item href={"/rent"}>Rent a car</NavDropdown.Item>
                                     <NavDropdown.Item href={"/rentals"}>Your rentals</NavDropdown.Item>
                                     <NavDropdown.Divider />
@@ -28,7 +28,6 @@ const Header = props =>
                             </Nav>
                         }
                     </div>
-
             </Navbar>
         )}
     </AuthContext.Consumer>
