@@ -10,8 +10,7 @@ async function isLoggedIn() {
         fetch(prefix + "/user")
             .then(res => {
                 if (res.ok)
-                    res.json()
-                        .then(json => resolve(json))
+                    resolve(res.json());
                 else if (res.status === 401)
                     reject("Authentication error");
                 else
@@ -31,7 +30,7 @@ async function login(email, password) {
             })
             .then(res => {
                 if (res.ok)
-                    res.json().then(user => resolve(user));
+                    resolve(res.json());
                 else if (res.status === 404)
                     reject("Email not found")
                 else if (res.status === 401)
