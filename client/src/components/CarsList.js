@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import {Button, ButtonGroup, ButtonToolbar, Jumbotron, ListGroup, Spinner, Table} from "react-bootstrap";
+import {Button, ButtonGroup, ButtonToolbar, Dropdown, Jumbotron, ListGroup, Spinner, Table} from "react-bootstrap";
 import Car from "./carslist/Car";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 const CarsList = props => {
 
@@ -17,20 +18,16 @@ const CarsList = props => {
             }
             {props.cars &&
                 <div id={"CarsView"}>
-                    <ButtonToolbar>
-                        <ButtonGroup>
-                            Select categories
+                    <DropdownButton title={"Select categories"} variant={"warning"} as={ButtonGroup}>
                             {/*use the Set to get only distinct categories*/}
                             {[...new Set(props.cars.map(car => car.category))]
-                                .map((cat, idx) => <Button key={idx} variant={"warning"}>{cat}</Button>)}
-                        </ButtonGroup>
-                        <ButtonGroup>
-                            Select brands
+                                .map((cat, idx) => <Dropdown.Item key={idx} variant={"warning"}>{cat}</Dropdown.Item>)}
+                    </DropdownButton>
+                    <DropdownButton title={"Select brands"} variant={"warning"} as={ButtonGroup} className={"ml-2"}>
                             {/*use the Set to get only distinct brands*/}
                             {[...new Set(props.cars.map(car => car.brand))]
-                                .map((br, idx) => <Button key={idx} variant={"warning"}>{br}</Button>)}
-                        </ButtonGroup>
-                    </ButtonToolbar>
+                                .map((br, idx) => <Dropdown.Item key={idx} variant={"warning"}>{br}</Dropdown.Item>)}
+                    </DropdownButton>
                     {/*TODO: use cards, add fields from db*/}
                     <Table responsive striped borderless >
                         <thead>
