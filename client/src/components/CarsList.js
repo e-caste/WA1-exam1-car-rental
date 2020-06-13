@@ -18,12 +18,12 @@ const CarsList = props => {
             }
             {props.cars &&
                 <div id={"CarsView"}>
-                    <DropdownButton title={"Select categories"} variant={"warning"} as={ButtonGroup}>
+                    <DropdownButton title={"Select categories"} variant={"warning"} as={ButtonGroup} id={"select-categories-dropdown"}>
                             {/*use the Set to get only distinct categories*/}
                             {[...new Set(props.cars.map(car => car.category))]
                                 .map((cat, idx) => <Dropdown.Item key={idx} variant={"warning"}>{cat}</Dropdown.Item>)}
                     </DropdownButton>
-                    <DropdownButton title={"Select brands"} variant={"warning"} as={ButtonGroup} className={"ml-2"}>
+                    <DropdownButton title={"Select brands"} variant={"warning"} as={ButtonGroup} className={"ml-2"} id={"select-brands-dropdown"}>
                             {/*use the Set to get only distinct brands*/}
                             {[...new Set(props.cars.map(car => car.brand))]
                                 .map((br, idx) => <Dropdown.Item key={idx} variant={"warning"}>{br}</Dropdown.Item>)}
