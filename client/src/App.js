@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import {AuthContext} from "./auth/AuthContext";
 import CarsList from "./components/CarsList";
 import LoginForm from "./components/LoginForm";
+import ResetPasswordForm from "./components/ResetPasswordForm";
 
 
 const App = () => {
@@ -38,6 +39,9 @@ const App = () => {
                         </Route>
                         <Route path={"/login"}>
                             <LoginForm />
+                        </Route>
+                        <Route path={"/resetpassword"}>
+                            <ResetPasswordForm />
                         </Route>
                         <Route path={"/rent"}>
 
