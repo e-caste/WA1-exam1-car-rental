@@ -253,5 +253,5 @@ async function pay(details) {
     });
 }
 
-const API = {isLoggedIn, login, logout, getAllCars, getCarById, toggleCanceledByRentalId, getRentalsByUserId, pay};
+const API = {isLoggedIn, login, logout, getAllCars, getCarById, toggleCanceledByRentalId, saveRental, getRentalsByUserId, getAllRentals, pay};
 export default API;
