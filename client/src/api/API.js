@@ -130,6 +130,25 @@ async function getRentalsByUserId(userId) {
     });
 }
 
+async function getAllRentals() {
+    return new Promise((resolve, reject) => {
+        fetch(prefix + "/rentals")
+            .then(res => {
+                if (res.status === 404)
+                    reject("No rentals in database");
+                else if (res.status === 401)
+                    reject("Authentication error");
+                else if (res.ok)
+                    res.json()
+                        .then(json => resolve(json.map(rental => Rental.from(rental))))
+                        .catch(err => reject("Server error"));
+                else
+                    reject("Server error");
+            })
+            .catch(err => reject("Server unavailable"));
+    });
+}
+
 // Payment related APIs
 
 async function pay(details) {
