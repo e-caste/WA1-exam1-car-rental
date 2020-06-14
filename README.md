@@ -40,7 +40,7 @@
 
 ## Test users
 
-* username, password
+* jd@sacredheart.com, ImNoSuperman (frequent customer)
 * username, password
 * username, password (frequent customer)
 * username, password
