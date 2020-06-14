@@ -32,7 +32,7 @@ const cookieName = "wa1ExamCarRentalToken";
 // response:
 //  404 - user not found
 //  401 - wrong password
-//  200 - login successful
+//  200 - login successful {id, name, email}
 app.post(prefix + "/user/login", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -48,7 +48,11 @@ app.post(prefix + "/user/login", (req, res) => {
                     // IMPORTANT: save userId in cookie signature to use it in next API calls
                     const token = jsonwebtoken.sign({userId: user.id}, jwtSecret, {expiresIn: expireTime});
                     res.cookie(cookieName, token, {httpOnly: true, sameSite: true, maxAge: 1000 * expireTime});
-                    res.status(200).end();
+                    res.status(200).json({
+                        "id": user.id,
+                        "name": user.name,
+                        "email": user.email,
+                    }).end();
                 }
             }
         })
