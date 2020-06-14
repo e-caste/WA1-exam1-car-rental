@@ -14,13 +14,13 @@ const ConfiguratorForm = props => {
     const [endDay, setEndDay] = useState("");
     const [driversAge, setDriversAge] = useState("");
     const [kmPerDay, setKmPerDay] = useState("");  // not stored in database
-    const [estimatedKilometers, setEstimatedKilometers] = useState(-1);  // = kmPerDay * days
     const [extraDrivers, setExtraDrivers] = useState(false);
     const [insurance, setInsurance] = useState(false);
 
     // output variables
     const [userErrors, setUserErrors] = useState([]);
     const [amount, setAmount] = useState(-1);
+    const [car, setCar] = useState(null);
 
     // context variables
     const {authUser, rental, setRental} = useContext(AuthContext);
@@ -295,7 +295,20 @@ const ConfiguratorForm = props => {
                                     "it-IT",
                                     {style: "currency", currency: "EUR"})}
                             </Alert>
-                            <Button href={"/payment"} variant={"primary"} block>
+                            <Button href={"/payment"} variant={"primary"} block onClick={
+                                setRental({
+                                    startingDay,
+                                    endDay,
+                                    category,
+                                    driversAge,
+                                    extraDrivers,
+                                    kmPerDay,
+                                    insurance,
+                                    carId: car.id,
+                                    userId: authUser.id,
+                                    canceled: false,
+                                    amount: amount.toPrecision(2),
+                            })}>
                                 Rent!
                             </Button>
                         </Col>
