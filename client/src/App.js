@@ -16,6 +16,7 @@ const App = () => {
     // context values managed as App state
     const [authUser, setAuthUser] = useState(null);
     const [authErr, setAuthErr] = useState(null);
+    const [rental, setRental] = useState(null);
 
     // state variables
     const [cars, setCars] = useState([]);
@@ -65,8 +66,9 @@ const App = () => {
             authErr,
             handleLogin,
             handleLogout,
+            setRental,
         }
-    }, [authUser, authErr]);
+    }, [authUser, authErr, rental]);
 
     return (
         <div className="App">
@@ -87,7 +89,7 @@ const App = () => {
                             <ResetPasswordForm />
                         </Route>
                         <Route path={"/rent"}>
-                            <ConfiguratorForm />
+                            <ConfiguratorForm cars={cars} />
                         </Route>
                         <Route path={"/payment"}>
 
