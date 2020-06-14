@@ -1,5 +1,6 @@
 import Car from "../entities/Car";
 import Rental from "../entities/Rental";
+import {map} from "react-bootstrap/cjs/ElementChildren";
 
 const prefix = "/api";
 
@@ -106,6 +107,79 @@ async function toggleCanceledByRentalId(rentalId) {
                         .catch(err => reject("Server error"));
                 else
                     reject("Server error");
+            })
+            .catch(err => reject("Server unavailable"));
+    });
+}
+
+async function saveRental(rental) {
+    let {
+        startingDay,
+        endDay,
+        carCategory,
+        driversAge,
+        extraDrivers,
+        estimatedKilometers,
+        insurance,
+        carId,
+        userId,
+        amount,
+    } = rental;
+    // convert tri-state and boolean values to acceptable SQLite int values
+    switch (driversAge) {
+        case "under 25":
+            driversAge = 0;
+            break;
+        case "between 26 and 64":
+            driversAge = 1;
+            break;
+        case "over 65":
+            driversAge = 2;
+            break;
+        default:
+            break;
+    }
+    extraDrivers = extraDrivers ? 1 : 0;
+    switch (estimatedKilometers) {
+        case "less than 50 km":
+            estimatedKilometers = 0;
+            break;
+        case "between 50 and 150 km":
+            estimatedKilometers = 1;
+            break;
+        case "over 150 km":
+            estimatedKilometers = 2;
+            break;
+        default:
+            break;
+    }
+    insurance = insurance ? 1 : 0;
+    return new Promise((resolve, reject) => {
+        fetch(prefix + "/rentals", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                startingDay,
+                endDay,
+                carCategory,
+                driversAge,
+                extraDrivers,
+                estimatedKilometers,
+                insurance,
+                carId,
+                userId,
+                amount,
+            })
+        })
+            .then(res => {
+                if (res.status === 400)
+                    reject("Missing parameter from request body");
+                else if (res.status === 401)
+                    reject("Authentication error");
+                else if (res.status === 500)
+                    reject("Server error");
+                else
+                    resolve(res.body.id);
             })
             .catch(err => reject("Server unavailable"));
     });
