@@ -59,7 +59,6 @@ const ConfiguratorForm = props => {
         let userErrorsTmp = [];
         const startingDayDate = moment(startingDay, "YYYY-MM-DD");
         const endDayDate = moment(endDay, "YYYY-MM-DD");
-        console.log(startingDayDate, endDayDate, endDayDate.isBefore(startingDayDate))
         if (endDayDate.isBefore(startingDayDate))
             userErrorsTmp.push("The last day should come after the first day. Please fix your date selection.")
 
@@ -83,7 +82,7 @@ const ConfiguratorForm = props => {
                 let fewCategoryVehiclesRemainingMultiplier;
                 let frequentCustomerMultiplier;
 
-                durationMultiplier = endDayDate.diff(startingDayDate, "days");
+                durationMultiplier = endDayDate.diff(startingDayDate, "days") + 1;
 
                 switch (category) {
                     case "A":
