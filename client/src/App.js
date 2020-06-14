@@ -75,9 +75,7 @@ const App = () => {
                 <Container fluid>
                     <Switch>
                         <Route exact path={"/"}>
-                            <CarsList
-                                cars={cars}
-                            />
+                            <CarsList cars={cars} />
                         </Route>
                         <Route path={"/login"}>
                             <LoginForm />
