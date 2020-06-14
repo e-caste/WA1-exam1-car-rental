@@ -42,7 +42,7 @@ async function login(email, password) {
     });
 }
 
-async function logout(email, password) {
+async function logout() {
     return new Promise((resolve, reject) => {
         fetch(prefix + "/user/logout", {method: "POST"})
             .then(res => {
