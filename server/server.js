@@ -199,10 +199,9 @@ app.post(prefix + "/rentals", (req, res) => {
         insurance,
         carId,
         userId,
-        canceled,
         amount,
     } = rental;
-    if (!rental || !startingDay || !endDay || !carCategory || !driversAge || !extraDrivers || !estimatedKilometers || !insurance || !carId || !userId || !canceled || !amount)
+    if (!rental || !startingDay || !endDay || !carCategory || !driversAge || !extraDrivers || !estimatedKilometers || !insurance || !carId || !userId || !amount)
         res.status(400).end();
     else
         rentalDao.saveRental(rental)

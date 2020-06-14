@@ -44,7 +44,6 @@ exports.saveRental = function (rental) {
             insurance,
             carId,
             userId,
-            canceled,
             amount,
         } = rental;
         db.run(sql, [
@@ -57,7 +56,7 @@ exports.saveRental = function (rental) {
             insurance,
             carId,
             userId,
-            canceled,
+            0,
             amount,
         ], (err) => {
             if (err)
