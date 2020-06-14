@@ -186,6 +186,7 @@ const ConfiguratorForm = props => {
                                 value={category}
                                 required
                             >
+                                <option selected disabled value={""}>Select category</option>
                                 <option>A</option>
                                 <option>B</option>
                                 <option>C</option>
@@ -249,6 +250,7 @@ const ConfiguratorForm = props => {
                                 as={"select"}
                                 value={driversAge}
                             >
+                                <option selected disabled value={""}>Select age range</option>
                                 <option>under 25</option>
                                 <option>between 26 and 64</option>
                                 <option>over 65</option>
@@ -262,6 +264,7 @@ const ConfiguratorForm = props => {
                                 as={"select"}
                                 value={kmPerDay}
                             >
+                                <option selected disabled value={""}>Select kilometers range</option>
                                 <option>less than 50 km</option>
                                 <option>between 50 and 150 km</option>
                                 <option>over 150 km</option>
