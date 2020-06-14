@@ -10,7 +10,7 @@ const LoginForm = props => {
     const [password, setPassword] = useState("");
 
     // context variables
-    const {authUser, authErr, handleLogin} = useContext(AuthContext);
+    const {authUser, handleLogin} = useContext(AuthContext);
 
     const handleChange = event => {
         const t = event.target;
