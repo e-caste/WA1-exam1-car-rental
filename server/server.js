@@ -176,6 +176,40 @@ app.post(prefix + "/rentals/:rentalId", (req, res) => {
         .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
+// to make a reservation
+// POST /rentals
+// request: {startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId, canceled, amount}
+// response:
+//  500 - server error
+//  401 - authentication error
+//  400 - bad request, missing parameters
+//  200 - {newId}
+app.post(prefix + "/rentals", (req, res) => {
+    const cookieUserId = req.user && req.user.userId;
+    if (!cookieUserId)
+        res.status(401).end();
+    const rental = req.body;
+    const {
+        startingDay,
+        endDay,
+        carCategory,
+        driversAge,
+        extraDrivers,
+        estimatedKilometers,
+        insurance,
+        carId,
+        userId,
+        canceled,
+        amount,
+    } = rental;
+    if (!rental || !startingDay || !endDay || !carCategory || !driversAge || !extraDrivers || !estimatedKilometers || !insurance || !carId || !userId || !canceled || !amount)
+        res.status(400).end();
+    else
+        rentalDao.saveRental(rental)
+            .then(id => res.status(200).json({id}).end())
+            .catch(err => res.status(500).end());
+});
+
 // to check if a user has a discount
 // GET /rentals/:userId
 // request: none
@@ -196,6 +230,7 @@ app.get(prefix + "/rentals/:userId", (req, res) => {
         .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
+// to determine if a new rental is possible and if +10% fee is applied
 // GET /rentals
 // request: none
 // response:
