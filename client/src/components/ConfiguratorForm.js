@@ -77,7 +77,9 @@ const ConfiguratorForm = props => {
         const endDayDate = moment(endDayTmp, "YYYY-MM-DD");
         if (endDayDate.isBefore(startingDayDate))
             userErrorsTmp.push("The last day should coincide with or come after the first day. " +
-                               "Please fix your date selection.")
+                               "Please fix your date selection.");
+        if (startingDayDate.isBefore(moment()))
+            userErrorsTmp.push("The first day cannot be in the past. Please set the first day in the future.");
 
         // show errors
         setUserErrors(userErrorsTmp);
