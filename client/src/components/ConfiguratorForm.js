@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {Redirect} from "react-router-dom";
-import {Alert, Col, Form, Jumbotron, Row} from "react-bootstrap";
+import {Alert, Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
 import moment from "moment";
 
 import {AuthContext} from "../auth/AuthContext";
@@ -292,11 +292,22 @@ const ConfiguratorForm = props => {
                 userErrors.map(err => <Alert variant={"danger"}>{err}</Alert>)
             }
             {userErrors.length === 0 && amount !== -1 &&
-                <Alert variant={"info"}>Your rental's price:
-                    {amount.toLocaleString(
-                        "it-IT",
-                        {style: "currency", currency: "EUR"})}
-                </Alert>
+                <div id={"calculated-price"}>
+                    <Row className={"mt-3"}>
+                        <Col />
+                        <Col>
+                            <Alert variant={"info"}>Your rental's price: {amount
+                                .toLocaleString(
+                                    "it-IT",
+                                    {style: "currency", currency: "EUR"})}
+                            </Alert>
+                            <Button href={"/payment"} variant={"primary"} block>
+                                Rent!
+                            </Button>
+                        </Col>
+                        <Col />
+                    </Row>
+                </div>
             }
         </div>
     );
