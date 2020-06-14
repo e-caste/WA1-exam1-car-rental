@@ -292,7 +292,11 @@ const ConfiguratorForm = props => {
                 userErrors.map(err => <Alert variant={"danger"}>{err}</Alert>)
             }
             {userErrors.length === 0 && amount !== -1 &&
-                <h4>Your rental's price: {amount}</h4>
+                <Alert variant={"info"}>Your rental's price:
+                    {amount.toLocaleString(
+                        "it-IT",
+                        {style: "currency", currency: "EUR"})}
+                </Alert>
             }
         </div>
     );
