@@ -12,8 +12,11 @@ import ResetPasswordForm from "./components/ResetPasswordForm";
 
 const App = () => {
 
+    // context values managed as App state
     const [authUser, setAuthUser] = useState(null);
     const [authErr, setAuthErr] = useState(null);
+
+    // state variables
     const [cars, setCars] = useState([]);
 
     // initial API calls, note deps=[] to only call once like componentDidMount
@@ -44,11 +47,20 @@ const App = () => {
             .catch(err => setAuthErr(err));
     }
 
+    const handleLogout = () => {
+        API.logout()
+            .catch(err => console.error(err));
+        setAuthUser(null);
+        setAuthErr(null);
+    }
+
     return (
         <div className="App">
             <AuthContext.Provider value={{
-                authUser: authUser,
+                authUser,
+                authErr,
                 handleLogin,
+                handleLogout,
             }}>
                 <Header/>
                 <Container fluid>
@@ -60,6 +72,9 @@ const App = () => {
                         </Route>
                         <Route path={"/login"}>
                             <LoginForm />
+                        </Route>
+                        <Route path={"/logout"} >
+                            <Redirect to={"/"} />
                         </Route>
                         <Route path={"/resetpassword"}>
                             <ResetPasswordForm />
