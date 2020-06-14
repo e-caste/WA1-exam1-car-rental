@@ -29,6 +29,45 @@ exports.toggleCanceled = function (rentalId, userId) {
     });
 }
 
+exports.saveRental = function (rental) {
+    return new Promise((resolve, reject) => {
+        const sql = "INSERT INTO " +
+            "RENTALS(startingday, endday, carcategory, driversage, extradrivers, estimatedkilometers, insurance, carid, userid, canceled, amount) " +
+            "VALUES (? ? ? ? ? ? ? ? ? ? ?)";
+        const {
+            startingDay,
+            endDay,
+            carCategory,
+            driversAge,
+            extraDrivers,
+            estimatedKilometers,
+            insurance,
+            carId,
+            userId,
+            canceled,
+            amount,
+        } = rental;
+        db.run(sql, [
+            startingDay,
+            endDay,
+            carCategory,
+            driversAge,
+            extraDrivers,
+            estimatedKilometers,
+            insurance,
+            carId,
+            userId,
+            canceled,
+            amount,
+        ], (err) => {
+            if (err)
+                reject(err);
+            else
+                resolve(this.lastID);
+        });
+    });
+}
+
 exports.getRentalsById = function (id) {
     return new Promise((resolve, reject) => {
         const sql = `SELECT * FROM RENTALS WHERE userid = ?`;
