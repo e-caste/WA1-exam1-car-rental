@@ -6,7 +6,7 @@ import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 
 const Header = props => {
 
-    const {authUser, authErr, handleLogin, handleLogout} = useContext(AuthContext);
+    const {authUser, handleLogout} = useContext(AuthContext);
 
     return (
         <Navbar bg={"warning"} collapseOnSelect expand={"md"} sticky={"top"}>
