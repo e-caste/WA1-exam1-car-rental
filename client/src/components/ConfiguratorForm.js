@@ -74,6 +74,7 @@ const ConfiguratorForm = props => {
             if (userErrorsTmp.length > 0)
                 setUserErrors(userErrorsTmp);
             else {  // calculate and show price
+                let durationMultiplier;
                 let categoryMultiplier;
                 let kmPerDayMultiplier;
                 let driversAgeMultiplier;
@@ -81,6 +82,8 @@ const ConfiguratorForm = props => {
                 let insuranceMultiplier;
                 let fewCategoryVehiclesRemainingMultiplier;
                 let frequentCustomerMultiplier;
+
+                durationMultiplier = endDayDate.diff(startingDayDate, "days");
 
                 switch (category) {
                     case "A":
@@ -143,6 +146,7 @@ const ConfiguratorForm = props => {
                     .then(rentals => rentals.length) >= 3 ? 0.90 : 1.0;
 
                 setAmount(
+                    durationMultiplier *
                     categoryMultiplier *
                     kmPerDayMultiplier *
                     driversAgeMultiplier *
