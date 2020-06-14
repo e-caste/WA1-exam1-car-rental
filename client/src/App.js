@@ -8,6 +8,7 @@ import {AuthContext} from "./auth/AuthContext";
 import CarsList from "./components/CarsList";
 import LoginForm from "./components/LoginForm";
 import ResetPasswordForm from "./components/ResetPasswordForm";
+import ConfiguratorForm from "./components/ConfiguratorForm";
 
 
 const App = () => {
@@ -80,7 +81,7 @@ const App = () => {
                             <ResetPasswordForm />
                         </Route>
                         <Route path={"/rent"}>
-
+                            <ConfiguratorForm />
                         </Route>
                         <Route path={"/payment"}>
 
