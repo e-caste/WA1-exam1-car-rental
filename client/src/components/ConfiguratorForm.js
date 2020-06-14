@@ -13,11 +13,11 @@ const ConfiguratorForm = props => {
     const [category, setCategory] = useState("");
     const [startingDay, setStartingDay] = useState("");
     const [endDay, setEndDay] = useState("");
-    const [driversAge, setDriversAge] = useState(-1);
-    const [kmPerDay, setKmPerDay] = useState(-1);  // not stored in database
+    const [driversAge, setDriversAge] = useState("");
+    const [kmPerDay, setKmPerDay] = useState("");  // not stored in database
     const [estimatedKilometers, setEstimatedKilometers] = useState(-1);  // = kmPerDay * days
-    const [extraDrivers, setExtraDrivers] = useState(null);
-    const [insurance, setInsurance] = useState(null);
+    const [extraDrivers, setExtraDrivers] = useState(false);
+    const [insurance, setInsurance] = useState(false);
 
     // output variables
     const [userErrors, setUserErrors] = useState([]);
@@ -58,10 +58,8 @@ const ConfiguratorForm = props => {
             category !== "" &&
             startingDay !== "" &&
             endDay !== "" &&
-            driversAge !== -1 &&
-            kmPerDay !== -1 &&
-            extraDrivers !== null &&
-            insurance !== null
+            driversAge !== "" &&
+            kmPerDay !== ""
         ) {
             // check for user errors
             const userErrorsTmp = [];
@@ -142,7 +140,7 @@ const ConfiguratorForm = props => {
                 // TODO: set based on cars and rentals
                 fewCategoryVehiclesRemainingMultiplier = 1.0;
 
-                frequentCustomerMultiplier = API.getRentalsByUserId(authUser.id)
+                frequentCustomerMultiplier = API.getRentalsByUserId(1)  // TODO: set to authUser.id
                     .then(rentals => rentals.length) >= 3 ? 0.90 : 1.0;
 
                 setAmount(
