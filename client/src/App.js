@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {Container, Switch} from "react-bootstrap";
 import {Route, Redirect} from "react-router-dom";
 
@@ -42,27 +42,35 @@ const App = () => {
             .then(cars => setCars(cars))
     }, []);
 
-    const handleLogin = (email, password) => {
-        API.login(email, password)
-            .then(user => setAuthUser(user))
-            .catch(err => setAuthErr(err));
-    }
+    // prevent context value always updating
+    const value = useMemo(() => {
 
-    const handleLogout = () => {
-        API.logout()
-            .catch(err => console.error(err));
-        setAuthUser(null);
-        setAuthErr(null);
-    }
+        // the following functions need to be here to prevent warning
+        // saying they change at every render
+        const handleLogin = (email, password) => {
+            API.login(email, password)
+                .then(user => setAuthUser(user))
+                .catch(err => setAuthErr(err));
+        }
+
+        const handleLogout = () => {
+            API.logout()
+                .catch(err => console.error(err));
+            setAuthUser(null);
+            setAuthErr(null);
+        }
+
+        return {
+            authUser,
+            authErr,
+            handleLogin,
+            handleLogout,
+        }
+    }, [authUser, authErr]);
 
     return (
         <div className="App">
-            <AuthContext.Provider value={{
-                authUser,
-                authErr,
-                handleLogin,
-                handleLogout,
-            }}>
+            <AuthContext.Provider value={value}>
                 <Header/>
                 <Container fluid>
                     <Switch>
