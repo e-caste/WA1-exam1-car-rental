@@ -54,24 +54,26 @@ const ConfiguratorForm = props => {
                 console.error("Unexpected event.target.id in ConfiguratorForm.handleChange");
                 break;
         }
-        if ( // if all inputs are set
-            category !== "" &&
-            startingDay !== "" &&
-            endDay !== "" &&
-            driversAge !== "" &&
-            kmPerDay !== ""
-        ) {
-            // check for user errors
-            const userErrorsTmp = [];
-            const startingDayDate = moment(startingDay, "YYYY-MM-DD");
-            const endDayDate = moment(endDay, "YYYY-MM-DD");
-            if (endDayDate.isBefore(startingDayDate))
-                userErrorsTmp.concat("The last day should come after the first day. Please fix your date selection.")
 
-            // show errors
-            if (userErrorsTmp.length > 0)
-                setUserErrors(userErrorsTmp);
-            else {  // calculate and show price
+        // check for user errors
+        let userErrorsTmp = [];
+        const startingDayDate = moment(startingDay, "YYYY-MM-DD");
+        const endDayDate = moment(endDay, "YYYY-MM-DD");
+        console.log(startingDayDate, endDayDate, endDayDate.isBefore(startingDayDate))
+        if (endDayDate.isBefore(startingDayDate))
+            userErrorsTmp.push("The last day should come after the first day. Please fix your date selection.")
+
+        // show errors
+        if (userErrorsTmp.length > 0)
+            setUserErrors(userErrorsTmp);
+        else {  // calculate and show price
+            if ( // if all inputs are set
+                category !== "" &&
+                startingDay !== "" &&
+                endDay !== "" &&
+                driversAge !== "" &&
+                kmPerDay !== ""
+            ) {
                 let durationMultiplier;
                 let categoryMultiplier;
                 let kmPerDayMultiplier;
