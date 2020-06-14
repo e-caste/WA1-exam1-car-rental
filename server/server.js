@@ -71,6 +71,29 @@ app.post(prefix + '/user/logout', (req, res) => {
     }
 );
 
+// /cars APIs
+
+// GET /cars/:carId
+// request: none
+// response:
+//  404 - car not found
+//  401 - authentication error
+//  200 - {id, category, brand, model,
+//         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
+app.get(prefix + "/cars/:carId", (req, res) => {
+    carDao.getCar(req.params.carId)
+        .then(car => {
+            if (car === undefined)
+                res.status(404).end();
+            else {
+                // the response body automatically ignores null fields
+                res.status(200).json(car).end();
+            }
+        })
+        // delay next try by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
+
 // GET /cars
 // request: none
 // response:
@@ -128,30 +151,6 @@ app.get(prefix + "/user", (req, res) => {
        // delay next try by 2 seconds
        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
-
-// /cars APIs
-
-// GET /cars/:carId
-// request: none
-// response:
-//  404 - car not found
-//  401 - authentication error
-//  200 - {id, category, brand, model,
-//         optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}
-app.get(prefix + "/cars/:carId", (req, res) => {
-    carDao.getCar(req.params.carId)
-        .then(car => {
-            if (car === undefined)
-                res.status(404).end();
-            else {
-                // the response body automatically ignores null fields
-                res.status(200).json(car).end();
-            }
-        })
-        // delay next try by 2 seconds
-        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
-});
-
 
 // /rentals APIs
 
