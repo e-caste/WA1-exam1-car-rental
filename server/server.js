@@ -196,6 +196,25 @@ app.get(prefix + "/rentals/:userId", (req, res) => {
         .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
 });
 
+// GET /rentals
+// request: none
+// response:
+//  404 - no rentals found
+//  401 - unauthorized
+//  200 - list of rental objects:
+//        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
+app.get(prefix + "/rentals", (req, res) => {
+    rentalDao.getRentals()
+        .then(rentals => {
+            if (rentals)
+                res.status(200).json(rentals).end();
+            else
+                res.status(404).end();
+        })
+        // delay next try by 2 seconds
+        .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+});
+
 // POST /payment
 // request: {fullName, cardNumber, CVV, amount}
 // response:
