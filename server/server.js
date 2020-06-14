@@ -177,7 +177,6 @@ app.post(prefix + "/rentals/:rentalId", (req, res) => {
 });
 
 // to check if a user has a discount
-// and if already has a rental in a certain period of time
 // GET /rentals/:userId
 // request: none
 // response:
