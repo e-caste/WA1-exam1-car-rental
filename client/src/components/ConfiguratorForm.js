@@ -142,7 +142,11 @@ const ConfiguratorForm = props => {
                 fewCategoryVehiclesRemainingMultiplier = 1.0;
 
                 frequentCustomerMultiplier = API.getRentalsByUserId(1)  // TODO: set to authUser.id
-                    .then(rentals => rentals.length) >= 3 ? 0.90 : 1.0;
+                    .then(rentals => rentals.length >= 3 ? 0.90 : 1.0)
+                    .catch(err => {
+                        console.error(err);
+                        return 1.0;
+                    });
 
                 setAmount(
                     durationMultiplier *
