@@ -39,9 +39,11 @@
 ![Configurator Screenshot](./img/screenshot.jpg)
 
 ## Test users
+Format: email, password (is frequent customer)  
 
 * jd@sacredheart.com, ImNoSuperman (frequent customer)
-* username, password
-* username, password (frequent customer)
-* username, password
-* username, password (frequent customer)
+* elliot.reid@gmail.com, blond3d0ctor
+* chocolate.bear@yahoo.com, Izzie2008
+* carla.espinoza@hotmail.com, dominican35
+* percival.ulysses.cox@icloud.com, Jackie
+* b.kelso@sacredheart.com, Johnny1942
