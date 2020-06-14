@@ -174,11 +174,6 @@ const ConfiguratorForm = props => {
         }
     }
 
-    // configurator must be interactive, hence no submit button
-    // const handleSubmit = (event, setRental) => {
-    //
-    // }
-
     return (
         // TODO: enable authentication check
         // !authUser ?
@@ -190,7 +185,6 @@ const ConfiguratorForm = props => {
             <Form
                 method={"POST"}
                 onChange={handleChange}
-                // onSubmit={event => handleSubmit(event, setRental)}
             >
                 <Row>
                     <Col>
