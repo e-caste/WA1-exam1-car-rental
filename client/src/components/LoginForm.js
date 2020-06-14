@@ -9,8 +9,8 @@ const LoginForm = props => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // context variable
-    const context = useContext(AuthContext);
+    // context variables
+    const {authUser, authErr, handleLogin} = useContext(AuthContext);
 
     const handleChange = event => {
         const t = event.target;
@@ -32,54 +32,51 @@ const LoginForm = props => {
         handleLogin(email, password);
     }
 
-    return(<div>
-            {context.authUser ?
-                <Redirect to={"/"}/> :
-                (<div id={"LoginForm"}>
-                    <Jumbotron>
-                        <h1>Login</h1>
-                    </Jumbotron>
-                    <Form
-                        method={"POST"}
-                        onChange={handleChange}
-                        onSubmit={event => handleSubmit(event, context.handleLogin)}
-                    >
-                        <Form.Group controlId="form-email">
-                            <Form.Control
-                                type="email"
-                                placeholder="Email"
-                                value={email}
-                                required
-                                autoFocus
-                            />
-                            <Form.Text className="text-muted">
-                                We'll never share your email with anyone else.
-                            </Form.Text>
-                        </Form.Group>
-                        <Form.Group controlId="form-password">
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                value={password}
-                                required
-                            />
-                        </Form.Group>
-                        <Row>
-                            <Col>
-                                <Button variant="primary" type="submit" className={"pl-10"}>
-                                    Login
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button href={"/resetpassword"} variant={"link"}>
-                                    Forgot your password?
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Form>
-                </div>)
-            }
-        </div>
+    return(authUser ?
+            <Redirect to={"/"}/> :
+            (<div id={"LoginForm"}>
+                <Jumbotron>
+                    <h1>Login</h1>
+                </Jumbotron>
+                <Form
+                    method={"POST"}
+                    onChange={handleChange}
+                    onSubmit={event => handleSubmit(event, handleLogin)}
+                >
+                    <Form.Group controlId="form-email">
+                        <Form.Control
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            required
+                            autoFocus
+                        />
+                        <Form.Text className="text-muted">
+                            We'll never share your email with anyone else.
+                        </Form.Text>
+                    </Form.Group>
+                    <Form.Group controlId="form-password">
+                        <Form.Control
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            required
+                        />
+                    </Form.Group>
+                    <Row>
+                        <Col>
+                            <Button variant="primary" type="submit" className={"pl-10"}>
+                                Login
+                            </Button>
+                        </Col>
+                        <Col>
+                            <Button href={"/resetpassword"} variant={"link"}>
+                                Forgot your password?
+                            </Button>
+                        </Col>
+                    </Row>
+                </Form>
+            </div>)
     );
 }
 
