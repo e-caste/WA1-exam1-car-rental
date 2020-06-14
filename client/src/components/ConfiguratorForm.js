@@ -27,28 +27,45 @@ const ConfiguratorForm = props => {
     const {authUser, rental, setRental} = useContext(AuthContext);
 
     const handleChange = event => {
+        // clone state variables
+        let categoryTmp = category;
+        let startingDayTmp = startingDay;
+        let endDayTmp = endDay;
+        let driversAgeTmp = driversAge;
+        let kmPerDayTmp = kmPerDay;
+        let extraDriversTmp = extraDrivers;
+        let insuranceTmp = insurance;
+
+        // update variable which triggered change both locally and in state
         const t = event.target;
         switch (t.id) {
             case "form-category":
                 setCategory(t.value);
+                categoryTmp = t.value;
                 break;
             case "form-startingday":
                 setStartingDay(t.value);
+                startingDayTmp = t.value;
                 break;
             case "form-endday":
                 setEndDay(t.value);
+                endDayTmp = t.value;
                 break;
             case "form-driversage":
                 setDriversAge(t.value);
+                driversAgeTmp = t.value;
                 break;
             case "form-kmperday":
                 setKmPerDay(t.value);
+                kmPerDayTmp = t.value;
                 break;
             case "form-extradrivers":
                 setExtraDrivers(t.checked);
+                extraDriversTmp = t.checked;
                 break;
             case "form-insurance":
                 setInsurance(t.checked);
+                insuranceTmp = t.checked;
                 break;
             default:
                 console.error("Unexpected event.target.id in ConfiguratorForm.handleChange");
@@ -57,21 +74,20 @@ const ConfiguratorForm = props => {
 
         // check for user errors
         let userErrorsTmp = [];
-        const startingDayDate = moment(startingDay, "YYYY-MM-DD");
-        const endDayDate = moment(endDay, "YYYY-MM-DD");
+        const startingDayDate = moment(startingDayTmp, "YYYY-MM-DD");
+        const endDayDate = moment(endDayTmp, "YYYY-MM-DD");
         if (endDayDate.isBefore(startingDayDate))
             userErrorsTmp.push("The last day should come after the first day. Please fix your date selection.")
 
         // show errors
-        if (userErrorsTmp.length > 0)
-            setUserErrors(userErrorsTmp);
-        else {  // calculate and show price
+        setUserErrors(userErrorsTmp);
+        if (userErrorsTmp.length === 0) {  // calculate and show price
             if ( // if all inputs are set
-                category !== "" &&
-                startingDay !== "" &&
-                endDay !== "" &&
-                driversAge !== "" &&
-                kmPerDay !== ""
+                categoryTmp !== "" &&
+                startingDayTmp !== "" &&
+                endDayTmp !== "" &&
+                driversAgeTmp !== "" &&
+                kmPerDayTmp !== ""
             ) {
                 let durationMultiplier;
                 let categoryMultiplier;
@@ -84,7 +100,7 @@ const ConfiguratorForm = props => {
 
                 durationMultiplier = endDayDate.diff(startingDayDate, "days") + 1;
 
-                switch (category) {
+                switch (categoryTmp) {
                     case "A":
                         categoryMultiplier = 80;
                         break;
@@ -105,7 +121,7 @@ const ConfiguratorForm = props => {
                         break;
                 }
 
-                switch (kmPerDay) {
+                switch (kmPerDayTmp) {
                     case "less than 50 km":
                         kmPerDayMultiplier = 0.95;
                         break;
@@ -120,7 +136,7 @@ const ConfiguratorForm = props => {
                         break;
                 }
 
-                switch (driversAge) {
+                switch (driversAgeTmp) {
                     case "under 25":
                         driversAgeMultiplier = 1.05;
                         break;
@@ -135,8 +151,8 @@ const ConfiguratorForm = props => {
                         break;
                 }
 
-                extraDriversMultiplier = extraDrivers ? 1.15 : 1.0;
-                insuranceMultiplier = insurance ? 1.20 : 1.0;
+                extraDriversMultiplier = extraDriversTmp ? 1.15 : 1.0;
+                insuranceMultiplier = insuranceTmp ? 1.20 : 1.0;
 
                 // TODO: set based on cars and rentals
                 fewCategoryVehiclesRemainingMultiplier = 1.0;
