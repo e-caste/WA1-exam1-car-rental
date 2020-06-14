@@ -1,7 +1,6 @@
 import React, {useContext, useState} from "react";
 import {Redirect} from "react-router-dom";
-import {Form, Jumbotron, Row} from "react-bootstrap";
-import Col from "react-bootstrap/Col";
+import {Alert, Col, Form, Jumbotron, Row} from "react-bootstrap";
 import moment from "moment";
 
 import {AuthContext} from "../auth/AuthContext";
@@ -77,7 +76,8 @@ const ConfiguratorForm = props => {
         const startingDayDate = moment(startingDayTmp, "YYYY-MM-DD");
         const endDayDate = moment(endDayTmp, "YYYY-MM-DD");
         if (endDayDate.isBefore(startingDayDate))
-            userErrorsTmp.push("The last day should come after the first day. Please fix your date selection.")
+            userErrorsTmp.push("The last day should coincide with or come after the first day. " +
+                               "Please fix your date selection.")
 
         // show errors
         setUserErrors(userErrorsTmp);
@@ -289,7 +289,7 @@ const ConfiguratorForm = props => {
                 </Row>
             </Form>
             {userErrors.length > 0 &&
-                userErrors.map(err => <h4 className={"text-danger"}>{err}</h4>)
+                userErrors.map(err => <Alert variant={"danger"}>{err}</Alert>)
             }
             {userErrors.length === 0 && amount !== -1 &&
                 <h4>Your rental's price: {amount}</h4>
