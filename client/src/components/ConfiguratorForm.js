@@ -197,7 +197,27 @@ const ConfiguratorForm = props => {
                             </Form.Text>
                         </Form.Group>
                     </Col>
-                    <Col />
+                    <Col>
+                        <Form.Group>
+                            <Form.Label className={"mb-3"}>Options:</Form.Label>
+                            <div className={"inline-checkbox"}>
+                                <Form.Check
+                                    id={"form-extradrivers"}
+                                    type={"checkbox"}
+                                    label={"More than one driver"}
+                                    checked={extraDrivers}
+                                    inline
+                                />
+                                <Form.Check
+                                    id={"form-insurance"}
+                                    type={"checkbox"}
+                                    label={"Additional insurance"}
+                                    checked={insurance}
+                                    inline
+                                />
+                            </div>
+                        </Form.Group>
+                    </Col>
                 </Row>
                 <Row>
                     <Col>
@@ -249,20 +269,6 @@ const ConfiguratorForm = props => {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Form.Group controlId={"form-extradrivers"}>
-                    <Form.Check
-                        type={"checkbox"}
-                        label={"More than one driver"}
-                        checked={extraDrivers}
-                    />
-                </Form.Group>
-                <Form.Group controlId={"form-insurance"}>
-                    <Form.Check
-                        type={"checkbox"}
-                        label={"Additional insurance"}
-                        checked={insurance}
-                    />
-                </Form.Group>
             </Form>
             {userErrors.length > 0 &&
                 userErrors.map(err => <h4 className={"text-danger"}>{err}</h4>)
