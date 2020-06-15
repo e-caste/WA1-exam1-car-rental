@@ -9,6 +9,7 @@ import CarsList from "./components/CarsList";
 import LoginForm from "./components/LoginForm";
 import ResetPasswordForm from "./components/ResetPasswordForm";
 import ConfiguratorForm from "./components/ConfiguratorForm";
+import PaymentForm from "./components/PaymentForm";
 
 
 const App = () => {
@@ -66,6 +67,7 @@ const App = () => {
             authErr,
             handleLogin,
             handleLogout,
+            rental,
             setRental,
         }
     }, [authUser, authErr, rental]);
@@ -92,7 +94,7 @@ const App = () => {
                             <ConfiguratorForm cars={cars} />
                         </Route>
                         <Route path={"/payment"}>
-
+                            <PaymentForm />
                         </Route>
                         <Route path={"/rentals"}>
 
