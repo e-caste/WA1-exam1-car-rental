@@ -99,6 +99,10 @@ const App = () => {
                         <Route path={"/rentals"}>
                             <RentalsList />
                         </Route>
+                        {/*redirect all other routes to the root page*/}
+                        <Route path={"/"}>
+                            <Redirect to={"/"} />
+                        </Route>
                     </Switch>
                 </Container>
             </AuthContext.Provider>
