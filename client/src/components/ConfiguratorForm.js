@@ -6,7 +6,7 @@ import moment from "moment";
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
 
-const RentalForm = props => {
+const ConfiguratorForm = props => {
 
     // context variables
     const {authUser, rental, setRental} = useContext(AuthContext);
@@ -29,7 +29,7 @@ const RentalForm = props => {
 
 
     const handleChange = async event => {
-        // clone state variables
+        // clone state variables to immediately show relevant errors
         let categoryTmp = category;
         let startingDayTmp = startingDay;
         let endDayTmp = endDay;
@@ -169,14 +169,14 @@ const RentalForm = props => {
                 frequentCustomerMultiplier = userRentals.length >= 3 ? 0.90 : 1.0;
 
                 setAmount(
-                    durationMultiplier *
                     categoryMultiplier *
-                    kmPerDayMultiplier *
-                    driversAgeMultiplier *
-                    extraDriversMultiplier *
-                    insuranceMultiplier *
-                    fewCategoryVehiclesRemainingMultiplier *
-                    frequentCustomerMultiplier
+                    (durationMultiplier +
+                    kmPerDayMultiplier +
+                    driversAgeMultiplier +
+                    extraDriversMultiplier +
+                    insuranceMultiplier +
+                    fewCategoryVehiclesRemainingMultiplier +
+                    frequentCustomerMultiplier)
                 );
             }
         }
@@ -328,4 +328,4 @@ const RentalForm = props => {
     );
 }
 
-export default RentalForm;
+export default ConfiguratorForm;
