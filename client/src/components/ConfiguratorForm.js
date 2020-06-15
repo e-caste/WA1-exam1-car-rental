@@ -156,11 +156,14 @@ const ConfiguratorForm = props => {
                 extraDriversMultiplier = extraDriversTmp ? 1.15 : 1.0;
                 insuranceMultiplier = insuranceTmp ? 1.20 : 1.0;
 
-                // TODO: set based on cars and rentals
+                // TODO: set based on cars and rentals - use fetch
+                const cars = props.cars.filter(car => car.category === categoryTmp);
+                const rentals = await API.getAllRentals();
+                console.log(cars, rentals)
                 fewCategoryVehiclesRemainingMultiplier = 1.0;
 
-                const rentals = await API.getRentalsByUserId(1);  // TODO: set to authUser.id
-                frequentCustomerMultiplier = rentals.length >= 3 ? 0.90 : 1.0;
+                const userRentals = await API.getRentalsByUserId(1);  // TODO: set to authUser.id
+                frequentCustomerMultiplier = userRentals.length >= 3 ? 0.90 : 1.0;
 
                 setAmount(
                     durationMultiplier *
@@ -306,7 +309,7 @@ const ConfiguratorForm = props => {
                                     extraDrivers,
                                     kmPerDay,
                                     insurance,
-                                    carId: car.id,
+                                    // carId: car.id,
                                     userId: authUser.id,
                                     canceled: false,
                                     amount: amount.toPrecision(2),
