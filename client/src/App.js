@@ -10,6 +10,7 @@ import LoginForm from "./components/LoginForm";
 import ResetPasswordForm from "./components/ResetPasswordForm";
 import ConfiguratorForm from "./components/ConfiguratorForm";
 import PaymentForm from "./components/PaymentForm";
+import RentalsList from "./components/RentalsList";
 
 
 const App = () => {
@@ -96,7 +97,7 @@ const App = () => {
                             <PaymentForm />
                         </Route>
                         <Route path={"/rentals"}>
-
+                            <RentalsList />
                         </Route>
                     </Switch>
                 </Container>
