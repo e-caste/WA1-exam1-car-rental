@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {Container, Switch} from "react-bootstrap";
-import {Route, Redirect} from "react-router-dom";
+import {Container} from "react-bootstrap";
+import {Route, Redirect, Switch} from "react-router-dom";
 
 import API from "./api/API";
 import Header from "./components/Header";
@@ -67,7 +67,6 @@ const App = () => {
             authErr,
             handleLogin,
             handleLogout,
-            rental,
             setRental,
         }
     }, [authUser, authErr, rental]);
