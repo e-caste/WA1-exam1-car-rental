@@ -6,7 +6,11 @@ import moment from "moment";
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
 
-const ConfiguratorForm = props => {
+const RentalForm = props => {
+
+    // context variables
+    const {authUser, rental, setRental} = useContext(AuthContext);
+    // const authUser = props.pippo;
 
     // state variables
     const [category, setCategory] = useState("");
@@ -22,8 +26,7 @@ const ConfiguratorForm = props => {
     const [amount, setAmount] = useState(-1);
     const [car, setCar] = useState(null);
 
-    // context variables
-    const {authUser, rental, setRental} = useContext(AuthContext);
+
 
     const handleChange = async event => {
         // clone state variables
@@ -181,9 +184,9 @@ const ConfiguratorForm = props => {
 
     return (
         // TODO: enable authentication check
-        // !authUser ?
-        // <Redirect to={"/"} /> :
-        <div id={"ConfiguratorForm"}>
+        authUser === null ?
+        <Redirect to={"/"} /> :
+        <div id={"ConfiguratorForm"} key={authUser}>
             <Jumbotron>
                 <h1>Configure</h1>
             </Jumbotron>
@@ -325,4 +328,4 @@ const ConfiguratorForm = props => {
     );
 }
 
-export default ConfiguratorForm;
+export default RentalForm;
