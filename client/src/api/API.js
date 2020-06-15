@@ -102,9 +102,7 @@ async function toggleCanceledByRentalId(rentalId) {
                 else if (res.status === 401)
                     reject("Authentication error");
                 else if (res.ok)
-                    res.json()
-                        .then(json => resolve(Rental.from(json)))
-                        .catch(err => reject("Server error"));
+                    resolve(null);
                 else
                     reject("Server error");
             })
