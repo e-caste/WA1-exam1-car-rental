@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 import {Alert, Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
 import moment from "moment";
-import {Link} from "react-router-dom";
 
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
