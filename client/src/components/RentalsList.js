@@ -4,6 +4,7 @@ import API from "../api/API";
 import {Alert, Button, Jumbotron, Spinner, Table} from "react-bootstrap";
 import moment from "moment";
 import Rental from "./rentalslist/Rental";
+import {Redirect} from "react-router-dom";
 
 const RentalsList = props => {
 
@@ -94,7 +95,8 @@ const RentalsList = props => {
     }
 
     return (
-        // TODO: add authUser check
+        !authUser ?
+        <Redirect to={"/"} /> :
         <div id={"RentalsList"}>
             <Jumbotron>
                 <h1>Your rentals</h1>
