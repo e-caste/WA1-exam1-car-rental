@@ -12,6 +12,7 @@ const ConfiguratorForm = props => {
     const {authUser, rental, setRental} = useContext(AuthContext);
 
     // state variables
+    const [rentals, setRentals] = useState([]);
     // set to previous rental data if coming back from payment
     const [category, setCategory] = useState(rental && rental.category || "");
     const [startingDay, setStartingDay] = useState(rental && rental.startingDay || "");
@@ -26,7 +27,14 @@ const ConfiguratorForm = props => {
     const [amount, setAmount] = useState(rental && rental.amount || -1);
     const [car, setCar] = useState(null);
 
-    const handleChange = async event => {
+    // load rentals at componentDidMount
+    useEffect(() => {
+        API.getAllRentals()
+            .then(rentals => setRentals(rentals))
+            .catch(err => console.error(err));
+    }, []);
+
+    const handleChange = event => {
         // clone state variables to immediately show relevant errors
         let categoryTmp = category;
         let startingDayTmp = startingDay;
@@ -157,13 +165,9 @@ const ConfiguratorForm = props => {
                 extraDriversMultiplier = extraDriversTmp ? 1.15 : 1.0;
                 insuranceMultiplier = insuranceTmp ? 1.20 : 1.0;
 
-                // TODO: set based on cars and rentals - use fetch
                 const cars = props.cars.filter(car => car.category === categoryTmp);
-                const rentals = await API.getAllRentals();
-                console.log(cars, rentals)
                 fewCategoryVehiclesRemainingMultiplier = 1.0;
 
-                const userRentals = await API.getRentalsByUserId(authUser.id);
                 frequentCustomerMultiplier = userRentals.length >= 3 ? 0.90 : 1.0;
 
                 setAmount(
