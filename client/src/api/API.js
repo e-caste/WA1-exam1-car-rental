@@ -177,7 +177,7 @@ async function saveRental(rental) {
                 else if (res.status === 500)
                     reject("Server error");
                 else
-                    resolve(res.body.id);
+                    resolve(res);
             })
             .catch(err => reject("Server unavailable"));
     });
