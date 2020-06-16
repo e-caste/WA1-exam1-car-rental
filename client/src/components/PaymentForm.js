@@ -13,7 +13,9 @@ const PaymentForm = props => {
     const [cvv, setCvv] = useState("");
 
     const [userErrors, setUserErrors] = useState([]);
-    const [rentalSuccessful, setRentalSuccessful] = useState(null);
+    const [apiErrors, setApiErrors] = useState([]);
+    const [paymentSuccessful, setPaymentSuccessful] = useState(null);
+    const [saveSuccessful, setSaveSuccessful] = useState(null);
 
     // context variables
     const {authUser, rental} = useContext(AuthContext);
@@ -81,29 +83,39 @@ const PaymentForm = props => {
         cvv.length === 3 &&
         !isNaN(cvv);
 
-    const handleSubmit = event => {
+    const handleSubmit = async event => {
         event.preventDefault();
+        let apiErrorsTmp = [];
+
         // do payment
         // use +number to convert string to number
-        const paymentSuccessful = API.pay({
-            fullName: `${name} ${surname}`,
-            cardNumber: +creditCard,
-            CVV: +cvv,
-            amount: rental.amount,
-        })
-            .catch(err => -1)
-        === null;
+        try {
+            const payRes = await API.pay({
+                fullName: `${name} ${surname}`,
+                cardNumber: +creditCard,
+                CVV: +cvv,
+                amount: +rental.amount,
+            });
+            setPaymentSuccessful(payRes === null);
+        } catch (err) {
+            setPaymentSuccessful(false);
+            apiErrorsTmp.push("There was an issue with your payment. Please try again.")
+            console.error(err);
+        }
 
         // save rental in database
-        const saveSuccessful = API.saveRental(rental)
-            .then(res => {
-                res.json()
-                    .then(json => json.id)
-            })
-            .catch(err => -1)
-        === authUser.id;
+        try {
+            const saveRes = await API.saveRental(rental);
+            const saveJson = await saveRes.json();
+            setSaveSuccessful(saveJson && saveJson.id && !isNaN(saveJson.id));  // id of the newly added rental
+        } catch (err) {
+            setSaveSuccessful(false);
+            apiErrorsTmp.push("There was an issue while making your reservation. Please try again.")
+            console.error(err);
+        }
 
-        setRentalSuccessful(paymentSuccessful && saveSuccessful);
+        if (apiErrorsTmp.length > 0)
+            setApiErrors(apiErrorsTmp);
     }
 
     return (
@@ -161,7 +173,7 @@ const PaymentForm = props => {
                     </Col>
                 </Form.Row>
                 <Button
-                    variant={"secondary"}
+                    variant={"outline-secondary"}
                     className={"mr-3"}
                 >
                     <Link to={"/rent"}>Back to configurator</Link>
@@ -180,10 +192,12 @@ const PaymentForm = props => {
                     </div>
                 }
             </Form>
-            {rentalSuccessful !== null && (
-                rentalSuccessful ?
+            {paymentSuccessful !== null && saveSuccessful !== null && (
+                paymentSuccessful && saveSuccessful ?
                 <Redirect to={"/rentals"} /> :
-                <Alert variant={"danger"} className={"mt-4"}>There was a problem submitting your payment. Please try again.</Alert>
+                <div className={"mt-4"}>
+                    {apiErrors.map(err => <Alert variant={"danger"} className={"mt-4"}>{err}</Alert>)}
+                </div>
             )}
         </div>
     );
