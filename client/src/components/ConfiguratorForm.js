@@ -16,7 +16,7 @@ const ConfiguratorForm = props => {
     const [startingDay, setStartingDay] = useState("");
     const [endDay, setEndDay] = useState("");
     const [driversAge, setDriversAge] = useState("");
-    const [kmPerDay, setKmPerDay] = useState("");  // not stored in database
+    const [kmPerDay, setKmPerDay] = useState("");
     const [extraDrivers, setExtraDrivers] = useState(false);
     const [insurance, setInsurance] = useState(false);
 
@@ -162,7 +162,7 @@ const ConfiguratorForm = props => {
                 console.log(cars, rentals)
                 fewCategoryVehiclesRemainingMultiplier = 1.0;
 
-                const userRentals = await API.getRentalsByUserId(1);  // TODO: set to authUser.id
+                const userRentals = await API.getRentalsByUserId(authUser.id);
                 frequentCustomerMultiplier = userRentals.length >= 3 ? 0.90 : 1.0;
 
                 setAmount(
@@ -299,8 +299,8 @@ const ConfiguratorForm = props => {
                                     "it-IT",
                                     {style: "currency", currency: "EUR"})}
                             </Alert>
-                            <Button variant={"primary"} block onClick={
-                                setRental({
+                            <Button variant={"outline-primary"} block onClick={
+                                () => setRental({
                                     startingDay,
                                     endDay,
                                     category,
