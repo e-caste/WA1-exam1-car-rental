@@ -335,7 +335,7 @@ const ConfiguratorForm = props => {
                                     extraDrivers,
                                     kmPerDay,
                                     insurance,
-                                    // carId: car.id,
+                                    carId: car.id,
                                     userId: authUser.id,
                                     canceled: false,
                                     amount
