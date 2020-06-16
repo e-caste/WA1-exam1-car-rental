@@ -330,15 +330,15 @@ const ConfiguratorForm = props => {
                                 () => setRental({
                                     startingDay,
                                     endDay,
-                                    category,
+                                    carCategory: category,
                                     driversAge,
                                     extraDrivers,
-                                    kmPerDay,
+                                    estimatedKilometers: kmPerDay,
                                     insurance,
                                     carId: car.id,
                                     userId: authUser.id,
                                     canceled: false,
-                                    amount
+                                    amount: amount.toFixed(2),
                             })}>
                                 <Link to={"/payment"}>Rent!</Link>
                             </Button>
