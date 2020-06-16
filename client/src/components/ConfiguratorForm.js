@@ -168,7 +168,10 @@ const ConfiguratorForm = props => {
                 const cars = props.cars.filter(car => car.category === categoryTmp);
                 fewCategoryVehiclesRemainingMultiplier = 1.0;
 
-                frequentCustomerMultiplier = userRentals.length >= 3 ? 0.90 : 1.0;
+                frequentCustomerMultiplier = rentals
+                    .filter(r => r.userId === authUser.id)
+                    .filter(r => moment(r.endDay).isBefore(moment()))
+                    .length >= 3 ? 0.90 : 1.0;
 
                 setAmount(
                     categoryMultiplier *
