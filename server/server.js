@@ -216,7 +216,10 @@ app.post(prefix + "/rentals", (req, res) => {
     else
         rentalDao.saveRental(rental)
             .then(id => res.status(200).json({id}).end())
-            .catch(err => res.status(500).end());
+            .catch(err => {
+                console.error(err);
+                res.status(500).end();
+            });
 });
 
 // to check if a user has a discount
