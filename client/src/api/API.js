@@ -232,9 +232,9 @@ async function pay(details) {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
                     fullName: fullName,
-                    cardNumber: cardNumber,
-                    CVV: CVV,
-                    amount: amount,
+                    cardNumber: +cardNumber,
+                    CVV: +CVV,
+                    amount: +amount,
                 })
             })
             .then(res => {
