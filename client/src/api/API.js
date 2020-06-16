@@ -166,7 +166,7 @@ async function saveRental(rental) {
                 insurance,
                 carId,
                 userId,
-                amount,
+                amount: +amount,
             })
         })
             .then(res => {
