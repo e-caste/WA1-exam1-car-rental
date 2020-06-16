@@ -18,7 +18,7 @@ const PaymentForm = props => {
     const [saveSuccessful, setSaveSuccessful] = useState(null);
 
     // context variables
-    const {authUser, rental} = useContext(AuthContext);
+    const {authUser, rental, setRental} = useContext(AuthContext);
 
     const handleChange = event => {
         // clone state variable to immediately show relevant errors
@@ -182,6 +182,7 @@ const PaymentForm = props => {
                 <Button
                     type={"submit"}
                     variant={"primary"}
+                    onClick={() => paymentSuccessful && saveSuccessful && setRental(null)}
                 >
                     Pay now
                 </Button>
