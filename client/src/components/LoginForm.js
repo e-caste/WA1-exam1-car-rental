@@ -2,6 +2,7 @@ import React, {useContext, useState} from "react";
 import {Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {AuthContext} from "../auth/AuthContext";
+import {Link} from "react-router-dom";
 
 const LoginForm = props => {
 
@@ -70,8 +71,10 @@ const LoginForm = props => {
                             </Button>
                         </Col>
                         <Col>
-                            <Button href={"/resetpassword"} variant={"link"}>
-                                Forgot your password?
+                            <Button variant={"link"}>
+                                <Link to={"/resetpassword"}>
+                                    Forgot your password?
+                                </Link>
                             </Button>
                         </Col>
                     </Row>
