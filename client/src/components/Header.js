@@ -25,10 +25,10 @@ const Header = props => {
                 {authUser &&
                 <Nav>
                     <NavDropdown title={`Welcome ${authUser.name || "user"}!`} id={"UserDropdown"}>
-                        <NavDropdown.Item href={"/rent"}>Rent a car</NavDropdown.Item>
-                        <NavDropdown.Item href={"/rentals"}>Your rentals</NavDropdown.Item>
+                        <NavDropdown.Item><Link to={"/rent"}>Rent a car</Link></NavDropdown.Item>
+                        <NavDropdown.Item><Link to={"/rentals"}>Your rentals</Link></NavDropdown.Item>
                         <NavDropdown.Divider/>
-                        <NavDropdown.Item href={"/logout"} onClick={handleLogout}>Logout</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleLogout}><Link to={"/logout"}>Logout</Link></NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
                 }
