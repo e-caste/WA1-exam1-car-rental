@@ -25,7 +25,7 @@ const ConfiguratorForm = props => {
     // output variables
     const [userErrors, setUserErrors] = useState([]);
     const [amount, setAmount] = useState(rental && rental.amount || -1);
-    const [car, setCar] = useState(null);
+    const [car, setCar] = useState(rental && rental.car || null);
 
     // load rentals at componentDidMount
     useEffect(() => {
@@ -165,6 +165,7 @@ const ConfiguratorForm = props => {
                 extraDriversMultiplier = extraDriversTmp ? 1.15 : 1.0;
                 insuranceMultiplier = insuranceTmp ? 1.20 : 1.0;
 
+                // TODO: fix cars are assigned more than once in the same period
                 const categoryCars = props.cars.filter(car => car.category === categoryTmp);
                 const bookedCarIdsInSelectedPeriod = [...new Set(rentals
                     .filter(r => r.category === categoryTmp)
@@ -335,6 +336,7 @@ const ConfiguratorForm = props => {
                                     extraDrivers,
                                     estimatedKilometers: kmPerDay,
                                     insurance,
+                                    car,  // to maintain carId and carCategory
                                     carId: car.id,
                                     userId: authUser.id,
                                     canceled: false,
