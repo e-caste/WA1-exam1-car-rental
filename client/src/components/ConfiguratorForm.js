@@ -168,13 +168,13 @@ const ConfiguratorForm = props => {
 
                 setAmount(
                     categoryMultiplier *
-                    ((durationMultiplier +
-                    kmPerDayMultiplier +
+                    durationMultiplier *
+                    ((kmPerDayMultiplier +
                     driversAgeMultiplier +
                     extraDriversMultiplier +
                     insuranceMultiplier +
                     fewCategoryVehiclesRemainingMultiplier +
-                    frequentCustomerMultiplier) / 7)
+                    frequentCustomerMultiplier) / 6)
                 );
             }
         }
