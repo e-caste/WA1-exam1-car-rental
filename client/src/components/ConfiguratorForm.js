@@ -1,7 +1,8 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Redirect} from "react-router-dom";
 import {Alert, Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
@@ -10,7 +11,6 @@ const ConfiguratorForm = props => {
 
     // context variables
     const {authUser, rental, setRental} = useContext(AuthContext);
-    // const authUser = props.pippo;
 
     // state variables
     const [category, setCategory] = useState("");
@@ -25,8 +25,6 @@ const ConfiguratorForm = props => {
     const [userErrors, setUserErrors] = useState([]);
     const [amount, setAmount] = useState(-1);
     const [car, setCar] = useState(null);
-
-
 
     const handleChange = async event => {
         // clone state variables to immediately show relevant errors
@@ -183,10 +181,9 @@ const ConfiguratorForm = props => {
     }
 
     return (
-        // TODO: enable authentication check
-        authUser === null ?
+        !authUser ?
         <Redirect to={"/"} /> :
-        <div id={"ConfiguratorForm"} key={authUser}>
+        <div id={"ConfiguratorForm"}>
             <Jumbotron>
                 <h1>Configure</h1>
             </Jumbotron>
@@ -303,7 +300,7 @@ const ConfiguratorForm = props => {
                                     "it-IT",
                                     {style: "currency", currency: "EUR"})}
                             </Alert>
-                            <Button href={"/payment"} variant={"primary"} block onClick={
+                            <Button variant={"primary"} block onClick={
                                 setRental({
                                     startingDay,
                                     endDay,
@@ -317,7 +314,7 @@ const ConfiguratorForm = props => {
                                     canceled: false,
                                     amount: amount.toPrecision(2),
                             })}>
-                                Rent!
+                                <Link to={"/payment"}>Rent!</Link>
                             </Button>
                         </Col>
                         <Col />
