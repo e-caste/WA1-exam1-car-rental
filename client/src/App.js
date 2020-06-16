@@ -68,6 +68,7 @@ const App = () => {
             authErr,
             handleLogin,
             handleLogout,
+            rental,
             setRental,
         }
     }, [authUser, authErr, rental]);
@@ -78,31 +79,15 @@ const App = () => {
                 <Header/>
                 <Container fluid>
                     <Switch>
-                        <Route exact path={"/"}>
-                            <CarsList cars={cars} />
-                        </Route>
-                        <Route path={"/login"}>
-                            <LoginForm />
-                        </Route>
-                        <Route path={"/logout"} >
-                            <Redirect to={"/"} />
-                        </Route>
-                        <Route path={"/resetpassword"}>
-                            <ResetPasswordForm />
-                        </Route>
-                        <Route path={"/rent"}>
-                            <ConfiguratorForm cars={cars} />
-                        </Route>
-                        <Route path={"/payment"}>
-                            <PaymentForm />
-                        </Route>
-                        <Route path={"/rentals"}>
-                            <RentalsList />
-                        </Route>
+                        <Route exact path={"/"} render={() => <CarsList cars={cars}/>}/>
+                        <Route path={"/login"} render={() => <LoginForm/>}/>
+                        <Route path={"/logout"} render={() => <Redirect to={"/"} />}/>
+                        <Route path={"/resetpassword"} render={() => <ResetPasswordForm />}/>
+                        <Route path={"/rent"} render={() => <ConfiguratorForm cars={cars} />}/>
+                        <Route path={"/payment"} render={() => <PaymentForm />}/>
+                        <Route path={"/rentals"} render={() => <RentalsList />}/>
                         {/*redirect all other routes to the root page*/}
-                        <Route path={"/"}>
-                            <Redirect to={"/"} />
-                        </Route>
+                        <Route path={"/"} render={() => <Redirect to={"/"} />}/>
                     </Switch>
                 </Container>
             </AuthContext.Provider>
