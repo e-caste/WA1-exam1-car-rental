@@ -166,7 +166,18 @@ const ConfiguratorForm = props => {
                 insuranceMultiplier = insuranceTmp ? 1.20 : 1.0;
 
                 const cars = props.cars.filter(car => car.category === categoryTmp);
-                fewCategoryVehiclesRemainingMultiplier = 1.0;
+                fewCategoryVehiclesRemainingMultiplier = [...new Set(rentals
+                    .filter(r => r.category === categoryTmp)
+                    .filter(r => {
+                        const start = moment(startingDayTmp);
+                        const end = moment(endDayTmp);
+                        const initialOverlap = moment(r.endDay).isBetween(start, end);
+                        const middleOverlap = moment(r.startingDay).isSameOrBefore(start) && moment(r.endDay).isSameOrAfter(end);
+                        const endingOverlap = moment(r.startingDay).isBetween(start, end);
+                        return initialOverlap || middleOverlap || endingOverlap;
+                    })
+                    .map(r => r.carId))]
+                    .length > (0.9 * cars.length) ? 1.10 : 1.0;
 
                 frequentCustomerMultiplier = rentals
                     .filter(r => r.userId === authUser.id)
