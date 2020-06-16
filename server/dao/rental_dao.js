@@ -32,8 +32,8 @@ exports.toggleCanceled = function (rentalId, userId) {
 exports.saveRental = function (rental) {
     return new Promise((resolve, reject) => {
         const sql = "INSERT INTO " +
-            "RENTALS(startingday, endday, carcategory, driversage, extradrivers, estimatedkilometers, insurance, carid, userid, canceled, amount) " +
-            "VALUES (? ? ? ? ? ? ? ? ? ? ?)";
+            "RENTALS ('id', 'startingday', 'endday', 'carcategory', 'driversage', 'extradrivers', 'estimatedkilometers', 'insurance', 'carid', 'userid', 'canceled', 'amount') " +
+            "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         const {
             startingDay,
             endDay,
@@ -58,7 +58,7 @@ exports.saveRental = function (rental) {
             userId,
             0,
             amount,
-        ], (err) => {
+        ], function (err) {
             if (err)
                 reject(err);
             else
