@@ -21,7 +21,7 @@ const RentalsList = props => {
 
     // load rentals of currently logged user at component mount
     useEffect(() => {
-        API.getRentalsByUserId(1)  // TODO: set to authUser.id
+        API.getRentalsByUserId(authUser.id)
             .then(rentals => setRentals(rentals));
     }, []);
 
