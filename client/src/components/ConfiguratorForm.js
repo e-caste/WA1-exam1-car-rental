@@ -12,17 +12,18 @@ const ConfiguratorForm = props => {
     const {authUser, rental, setRental} = useContext(AuthContext);
 
     // state variables
-    const [category, setCategory] = useState("");
-    const [startingDay, setStartingDay] = useState("");
-    const [endDay, setEndDay] = useState("");
-    const [driversAge, setDriversAge] = useState("");
-    const [kmPerDay, setKmPerDay] = useState("");
-    const [extraDrivers, setExtraDrivers] = useState(false);
-    const [insurance, setInsurance] = useState(false);
+    // set to previous rental data if coming back from payment
+    const [category, setCategory] = useState(rental && rental.category || "");
+    const [startingDay, setStartingDay] = useState(rental && rental.startingDay || "");
+    const [endDay, setEndDay] = useState(rental && rental.endDay || "");
+    const [driversAge, setDriversAge] = useState(rental && rental.driversAge || "");
+    const [kmPerDay, setKmPerDay] = useState(rental && rental.kmPerDay || "");
+    const [extraDrivers, setExtraDrivers] = useState(rental && rental.extraDrivers || false);
+    const [insurance, setInsurance] = useState(rental && rental.insurance || false);
 
     // output variables
     const [userErrors, setUserErrors] = useState([]);
-    const [amount, setAmount] = useState(-1);
+    const [amount, setAmount] = useState(rental && rental.amount || -1);
     const [car, setCar] = useState(null);
 
     const handleChange = async event => {
@@ -311,7 +312,7 @@ const ConfiguratorForm = props => {
                                     // carId: car.id,
                                     userId: authUser.id,
                                     canceled: false,
-                                    amount: amount.toPrecision(2),
+                                    amount
                             })}>
                                 <Link to={"/payment"}>Rent!</Link>
                             </Button>
