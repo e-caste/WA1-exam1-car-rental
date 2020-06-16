@@ -3,6 +3,7 @@
 import React, {useContext} from "react";
 import {AuthContext} from "../auth/AuthContext";
 import {Navbar, Nav, NavDropdown} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const Header = props => {
 
@@ -10,14 +11,16 @@ const Header = props => {
 
     return (
         <Navbar bg={"warning"} collapseOnSelect expand={"md"} sticky={"top"}>
-            <Navbar.Brand href={"/"}>
-                <img src={"back-to-the-rental.svg"} width={30} height={30} alt={"logo"}/>
+            <Navbar.Brand>
+                <Link to={"/"}>
+                    <img src={"back-to-the-rental.svg"} width={30} height={30} alt={"logo"}/>
+                </Link>
                 {' '}Back to the rental
             </Navbar.Brand>
 
             <div className="ml-auto">
                 {!authUser &&
-                <Nav.Link href={"/login"}>Login</Nav.Link>
+                <Link to={"/login"}>Login</Link>
                 }
                 {authUser &&
                 <Nav>
