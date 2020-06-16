@@ -1,8 +1,8 @@
 import React, {useContext, useState} from "react";
 import {AuthContext} from "../auth/AuthContext";
-import {Alert, Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
+import {Alert, Button, Col, Form, Jumbotron} from "react-bootstrap";
 import API from "../api/API";
-import {Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 
 const PaymentForm = props => {
 
@@ -107,9 +107,8 @@ const PaymentForm = props => {
     }
 
     return (
-        // TODO: add authUser check
-        // !authUser ?
-        // <Redirect to={"/"} /> :
+        !authUser ?
+        <Redirect to={"/"} /> :
         <div id={"PaymentForm"}>
             <Jumbotron>
                 <h1>Rent</h1>
@@ -118,7 +117,6 @@ const PaymentForm = props => {
                 method={"POST"}
                 onChange={handleChange}
                 onSubmit={handleSubmit}
-                className={"ml-10 mr-10"}
             >
                 <Form.Label>Please enter your credit card information</Form.Label>
                 <Form.Row className={"mb-3"}>
@@ -163,11 +161,10 @@ const PaymentForm = props => {
                     </Col>
                 </Form.Row>
                 <Button
-                    href={"/rent"}
                     variant={"secondary"}
                     className={"mr-3"}
                 >
-                    Back to configurator
+                    <Link to={"/rent"}>Back to configurator</Link>
                 </Button>
                 {formValidated() && userErrors.length === 0 &&
                 <Button
