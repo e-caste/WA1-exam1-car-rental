@@ -165,8 +165,8 @@ const ConfiguratorForm = props => {
                 extraDriversMultiplier = extraDriversTmp ? 1.15 : 1.0;
                 insuranceMultiplier = insuranceTmp ? 1.20 : 1.0;
 
-                const cars = props.cars.filter(car => car.category === categoryTmp);
-                fewCategoryVehiclesRemainingMultiplier = [...new Set(rentals
+                const categoryCars = props.cars.filter(car => car.category === categoryTmp);
+                const bookedCarIdsInSelectedPeriod = [...new Set(rentals
                     .filter(r => r.category === categoryTmp)
                     .filter(r => {
                         const start = moment(startingDayTmp);
@@ -176,24 +176,32 @@ const ConfiguratorForm = props => {
                         const endingOverlap = moment(r.startingDay).isBetween(start, end);
                         return initialOverlap || middleOverlap || endingOverlap;
                     })
-                    .map(r => r.carId))]
-                    .length > (0.9 * cars.length) ? 1.10 : 1.0;
+                    .map(r => r.carId))];
+                fewCategoryVehiclesRemainingMultiplier = bookedCarIdsInSelectedPeriod.length > (0.9 * categoryCars.length) ? 1.10 : 1.0;
 
                 frequentCustomerMultiplier = rentals
                     .filter(r => r.userId === authUser.id)
                     .filter(r => moment(r.endDay).isBefore(moment()))
                     .length >= 3 ? 0.90 : 1.0;
 
-                setAmount(
-                    categoryMultiplier *
-                    durationMultiplier *
-                    ((kmPerDayMultiplier +
-                    driversAgeMultiplier +
-                    extraDriversMultiplier +
-                    insuranceMultiplier +
-                    fewCategoryVehiclesRemainingMultiplier +
-                    frequentCustomerMultiplier) / 6)
-                );
+                // at least 1 car available
+                if (bookedCarIdsInSelectedPeriod.length < categoryCars.length) {
+                    setCar(categoryCars.filter(c => !bookedCarIdsInSelectedPeriod.includes(c.id))[0]);
+                    setAmount(
+                        categoryMultiplier *
+                        durationMultiplier *
+                        ((kmPerDayMultiplier +
+                            driversAgeMultiplier +
+                            extraDriversMultiplier +
+                            insuranceMultiplier +
+                            fewCategoryVehiclesRemainingMultiplier +
+                            frequentCustomerMultiplier) / 6)
+                    );
+                } else {  // no car remaining in the selected period
+                    userErrorsTmp.push("No available cars of selected category in selected time period. " +
+                        "Please change either category or rental period.")
+                    setUserErrors(userErrorsTmp);
+                }
             }
         }
     }
