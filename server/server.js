@@ -201,7 +201,17 @@ app.post(prefix + "/rentals", (req, res) => {
         userId,
         amount,
     } = rental;
-    if (!rental || !startingDay || !endDay || !carCategory || !driversAge || !extraDrivers || !estimatedKilometers || !insurance || !carId || !userId || !amount)
+    if (!rental ||
+        !startingDay ||
+        !endDay ||
+        !carCategory || !["A", "B", "C", "D", "E"].includes(carCategory) ||
+        ![0, 1, 2].includes(driversAge) ||
+        ![0, 1].includes(extraDrivers) ||
+        ![0, 1, 2].includes(estimatedKilometers) ||
+        ![0, 1].includes(insurance) ||
+        !carId ||
+        !userId ||
+        !amount)
         res.status(400).end();
     else
         rentalDao.saveRental(rental)
