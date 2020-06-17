@@ -195,7 +195,9 @@ app.post(prefix + "/rentals", (req, res) => {
         endDay,
         carCategory,
         driversAge,
+        driversAgeSpecific,
         extraDrivers,
+        extraDriversSpecific,
         estimatedKilometers,
         insurance,
         carId,
@@ -207,7 +209,9 @@ app.post(prefix + "/rentals", (req, res) => {
         !endDay ||
         !carCategory || !["A", "B", "C", "D", "E"].includes(carCategory) ||
         ![0, 1, 2].includes(driversAge) ||
+        !driversAgeSpecific ||
         ![0, 1].includes(extraDrivers) ||
+        !extraDriversSpecific ||
         ![0, 1, 2].includes(estimatedKilometers) ||
         ![0, 1].includes(insurance) ||
         !carId ||
