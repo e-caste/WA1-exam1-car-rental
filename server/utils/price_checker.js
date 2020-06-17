@@ -57,13 +57,13 @@ exports.priceCheck = async (amount, rental) => {
     }
 
     switch (rental.driversAge) {
-        case "under 25":
+        case 0:
             driversAgeMultiplier = 0.05;
             break;
-        case "between 26 and 64":
+        case 1:
             driversAgeMultiplier = 0;
             break;
-        case "over 65":
+        case 2:
             driversAgeMultiplier = 0.10;
             break;
         default:
@@ -71,7 +71,7 @@ exports.priceCheck = async (amount, rental) => {
             break;
     }
 
-    extraDriversMultiplier = rental.extraDrivers ? 0.15 : 0;
+    extraDriversMultiplier = rental.extraDrivers === 1 ? 0.15 : 0;
     insuranceMultiplier = rental.insurance ? 0.20 : 0;
 
     const categoryCars = cars.filter(car => car.category === rental.carCategory);
