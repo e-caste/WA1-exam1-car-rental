@@ -287,7 +287,7 @@ app.post(prefix + "/payment", (req, res) => {
                             // delay next try by 2 seconds
                             .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
                     else
-                        res.status(418).json({"errors": "Your coffee is ready but your rental is not. You tried to change the price!"})
+                        res.status(418).json({"errors": "Your coffee is ready but your rental is not. You tried to change the price!"}).end();
                 });
         else
             res.status(400).json({"errors": "Payment details wrongly formatted."}).end();
