@@ -174,7 +174,6 @@ const ConfiguratorForm = props => {
                         break;
                 }
 
-                // TODO: use integer here and in API
                 if (driversAgeSpecificTmp <= 25) {
                     setDriversAge(0);
                     setDriversAgeMsg(driversAgeLUT.under25);
