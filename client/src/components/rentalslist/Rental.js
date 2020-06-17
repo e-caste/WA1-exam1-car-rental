@@ -41,7 +41,8 @@ const Rental = props => {
             <td>{props.rental.extraDrivers === 1 ? "Yes" : "No"}</td>
             <td>{convertEstimatedKilometers(props.rental.estimatedKilometers)}</td>
             <td>{props.rental.insurance === 1 ? "Yes" : "No"}</td>
-            <td>{props.rental.amount}</td>
+            <td>{props.rental.amount.toLocaleString("it-IT",
+                {style: "currency", currency: "EUR"})}</td>
             {props.cancel &&
             (!props.rental.canceled ?
             <td>
