@@ -19,6 +19,7 @@ const App = () => {
     const [authUser, setAuthUser] = useState(null);
     const [authErr, setAuthErr] = useState(null);
     const [rental, setRental] = useState(null);
+    const [details, setDetails] = useState(null);
 
     // state variables
     const [cars, setCars] = useState([]);
@@ -70,8 +71,10 @@ const App = () => {
             handleLogout,
             rental,
             setRental,
+            details,
+            setDetails,
         }
-    }, [authUser, authErr, rental]);
+    }, [authUser, authErr, rental, details]);
 
     return (
         <div className="App">
