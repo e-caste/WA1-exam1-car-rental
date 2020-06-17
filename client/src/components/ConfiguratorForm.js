@@ -134,13 +134,13 @@ const ConfiguratorForm = props => {
 
                 switch (kmPerDayTmp) {
                     case "less than 50 km":
-                        kmPerDayMultiplier = 0.95;
+                        kmPerDayMultiplier = -0.05;
                         break;
                     case "between 50 and 150 km":
-                        kmPerDayMultiplier = 1.0;
+                        kmPerDayMultiplier = 0;
                         break;
                     case "over 150 km":
-                        kmPerDayMultiplier = 1.05;
+                        kmPerDayMultiplier = 0.05;
                         break;
                     default:
                         console.error("Unexpected kmPerDay in ConfiguratorForm.handleChange");
@@ -149,21 +149,21 @@ const ConfiguratorForm = props => {
 
                 switch (driversAgeTmp) {
                     case "under 25":
-                        driversAgeMultiplier = 1.05;
+                        driversAgeMultiplier = 0.05;
                         break;
                     case "between 26 and 64":
-                        driversAgeMultiplier = 1.0;
+                        driversAgeMultiplier = 0;
                         break;
                     case "over 65":
-                        driversAgeMultiplier = 1.10;
+                        driversAgeMultiplier = 0.10;
                         break;
                     default:
                         console.error("Unexpected driversAge in ConfiguratorForm.handleChange");
                         break;
                 }
 
-                extraDriversMultiplier = extraDriversTmp ? 1.15 : 1.0;
-                insuranceMultiplier = insuranceTmp ? 1.20 : 1.0;
+                extraDriversMultiplier = extraDriversTmp ? 0.15 : 0;
+                insuranceMultiplier = insuranceTmp ? 0.20 : 0;
 
                 // TODO: fix cars are assigned more than once in the same period
                 const categoryCars = props.cars.filter(car => car.category === categoryTmp);
@@ -178,12 +178,27 @@ const ConfiguratorForm = props => {
                         return initialOverlap || middleOverlap || endingOverlap;
                     })
                     .map(r => r.carId))];
-                fewCategoryVehiclesRemainingMultiplier = bookedCarIdsInSelectedPeriod.length > (0.9 * categoryCars.length) ? 1.10 : 1.0;
+                fewCategoryVehiclesRemainingMultiplier = bookedCarIdsInSelectedPeriod.length > (0.9 * categoryCars.length) ? 0.10 : 0;
 
                 frequentCustomerMultiplier = rentals
                     .filter(r => r.userId === authUser.id)
                     .filter(r => moment(r.endDay).isBefore(moment()))
-                    .length >= 3 ? 0.90 : 1.0;
+                    .length >= 3 ? -0.10 : 0;
+
+                const debugLog = () => {
+                    console.log()  // separate info blocks
+                    console.log("Duration: " + durationMultiplier + " days")
+                    console.log("Category: " + categoryTmp, "Multi: " + categoryMultiplier)
+                    console.log("KmPerDay: " + kmPerDayTmp, "Multi: " + kmPerDayMultiplier)
+                    console.log("Age: " + driversAgeTmp, "Multi: " + driversAgeMultiplier)
+                    console.log("Extra drivers: " + extraDriversTmp, "Multi: " + extraDriversMultiplier)
+                    console.log("Insurance: " + insuranceTmp, "Multi: " + insuranceMultiplier)
+                    console.log("Vehicles: " + bookedCarIdsInSelectedPeriod, "Multi: " + fewCategoryVehiclesRemainingMultiplier)
+                    console.log("Frequent: " + frequentCustomerMultiplier)
+                    console.log("Price without multi: " + durationMultiplier * categoryMultiplier)
+                    console.log("Final multi: " + (1 + kmPerDayMultiplier + driversAgeMultiplier + extraDriversMultiplier + insuranceMultiplier + fewCategoryVehiclesRemainingMultiplier + frequentCustomerMultiplier))
+                }
+                true && debugLog();
 
                 // at least 1 car available
                 if (bookedCarIdsInSelectedPeriod.length < categoryCars.length) {
@@ -191,12 +206,12 @@ const ConfiguratorForm = props => {
                     setAmount(
                         categoryMultiplier *
                         durationMultiplier *
-                        ((kmPerDayMultiplier +
+                        (1 + (kmPerDayMultiplier +
                             driversAgeMultiplier +
                             extraDriversMultiplier +
                             insuranceMultiplier +
                             fewCategoryVehiclesRemainingMultiplier +
-                            frequentCustomerMultiplier) / 6)
+                            frequentCustomerMultiplier))
                     );
                 } else {  // no car remaining in the selected period
                     userErrorsTmp.push("No available cars of selected category in selected time period. " +
