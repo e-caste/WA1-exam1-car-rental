@@ -5,6 +5,8 @@ import moment from "moment";
 
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
+import {driversAgeLUT, kmPerDayLUT} from "./utils/luts";
+
 
 const ConfiguratorForm = props => {
 
@@ -18,12 +20,15 @@ const ConfiguratorForm = props => {
     const [startingDay, setStartingDay] = useState((rental && rental.startingDay) || "");
     const [endDay, setEndDay] = useState((rental && rental.endDay) || "");
     const [driversAge, setDriversAge] = useState((rental && rental.driversAge) || "");
+    const [driversAgeSpecific, setDriversAgeSpecific] = useState((rental && rental.driversAgeSpecific) || "18");
     const [kmPerDay, setKmPerDay] = useState((rental && rental.estimatedKilometers) || "");
     const [extraDrivers, setExtraDrivers] = useState((rental && rental.extraDrivers) || false);
+    const [extraDriversSpecific, setExtraDriversSpecific] = useState((rental && rental.extraDriversSpecific) || "0");
     const [insurance, setInsurance] = useState((rental && rental.insurance) || false);
 
     // output variables
     const [userErrors, setUserErrors] = useState([]);
+    const [driversAgeMsg, setDriversAgeMsg] = useState("");
     const [amount, setAmount] = useState((rental && +rental.amount) || -1);
     const [car, setCar] = useState((rental && rental.car) || null);
 
@@ -35,13 +40,13 @@ const ConfiguratorForm = props => {
     }, []);
 
     const handleChange = event => {
-        // clone state variables to immediately show relevant errors
+        // clone state variables to immediately show relevant errors and output
         let categoryTmp = category;
         let startingDayTmp = startingDay;
         let endDayTmp = endDay;
-        let driversAgeTmp = driversAge;
+        let driversAgeSpecificTmp = driversAgeSpecific;
         let kmPerDayTmp = kmPerDay;
-        let extraDriversTmp = extraDrivers;
+        let extraDriversSpecificTmp = extraDriversSpecific;
         let insuranceTmp = insurance;
 
         // update variable which triggered change both locally and in state
@@ -60,16 +65,16 @@ const ConfiguratorForm = props => {
                 endDayTmp = t.value;
                 break;
             case "form-driversage":
-                setDriversAge(t.value);
-                driversAgeTmp = t.value;
+                setDriversAgeSpecific(t.value);
+                driversAgeSpecificTmp = t.value;
                 break;
             case "form-kmperday":
                 setKmPerDay(t.value);
                 kmPerDayTmp = t.value;
                 break;
             case "form-extradrivers":
-                setExtraDrivers(t.checked);
-                extraDriversTmp = t.checked;
+                setExtraDriversSpecific(t.value);
+                extraDriversSpecificTmp = t.value;
                 break;
             case "form-insurance":
                 setInsurance(t.checked);
@@ -89,15 +94,37 @@ const ConfiguratorForm = props => {
                                "Please fix your date selection.");
         if (startingDayDate.isBefore(moment()))
             userErrorsTmp.push("The first day cannot be in the past. Please set the first day in the future.");
+        if (driversAgeSpecificTmp !== "") {
+            if (isNaN(driversAgeSpecificTmp))
+                userErrorsTmp.push("The driver's age should be a number.")
+            else {
+                if (driversAgeSpecificTmp < 18 || driversAgeSpecificTmp > 100)
+                    userErrorsTmp.push("The driver's age should be a positive number greater than 18 and smaller than 100.")
+                if (driversAgeSpecificTmp.indexOf('.') !== -1 || driversAgeSpecificTmp.indexOf(',') !== -1)
+                    userErrorsTmp.push("The driver's age should be an integer number.")
+            }
+        }
+        if (extraDriversSpecificTmp !== "") {
+            if (isNaN(extraDriversSpecificTmp))
+                userErrorsTmp.push("The extra drivers fields should contain a number.")
+            else {
+                if (extraDriversSpecificTmp < 0 || extraDriversSpecificTmp > 5)
+                    userErrorsTmp.push("The extra drivers field should be a positive number smaller than 5.")
+                if (extraDriversSpecificTmp.indexOf('.') !== -1 || extraDriversSpecificTmp.indexOf(',') !== -1)
+                    userErrorsTmp.push("The extra drivers field should be an integer number.")
+            }
+        }
 
         // show errors
         setUserErrors(userErrorsTmp);
-        if (userErrorsTmp.length === 0) {  // calculate and show price
+        // calculate and show price
+        if (userErrorsTmp.length === 0) {
             if ( // if all inputs are set
                 categoryTmp !== "" &&
                 startingDayTmp !== "" &&
                 endDayTmp !== "" &&
-                driversAgeTmp !== "" &&
+                driversAgeSpecificTmp !== "" &&
+                extraDriversSpecificTmp !== "" &&
                 kmPerDayTmp !== ""
             ) {
                 let durationMultiplier;
@@ -133,13 +160,13 @@ const ConfiguratorForm = props => {
                 }
 
                 switch (kmPerDayTmp) {
-                    case "less than 50 km":
+                    case kmPerDayLUT.under50:
                         kmPerDayMultiplier = -0.05;
                         break;
-                    case "between 50 and 150 km":
+                    case kmPerDayLUT.between50and150:
                         kmPerDayMultiplier = 0;
                         break;
-                    case "over 150 km":
+                    case kmPerDayLUT.over150:
                         kmPerDayMultiplier = 0.05;
                         break;
                     default:
@@ -147,22 +174,28 @@ const ConfiguratorForm = props => {
                         break;
                 }
 
-                switch (driversAgeTmp) {
-                    case "under 25":
-                        driversAgeMultiplier = 0.05;
-                        break;
-                    case "between 26 and 64":
-                        driversAgeMultiplier = 0;
-                        break;
-                    case "over 65":
-                        driversAgeMultiplier = 0.10;
-                        break;
-                    default:
-                        console.error("Unexpected driversAge in ConfiguratorForm.handleChange");
-                        break;
+                // TODO: use integer here and in API
+                if (driversAgeSpecificTmp <= 25) {
+                    setDriversAge(0);
+                    setDriversAgeMsg(driversAgeLUT.under25);
+                    driversAgeMultiplier = 0.05;
                 }
+                else if (driversAgeSpecificTmp > 25 && driversAgeSpecificTmp < 65) {
+                    setDriversAge(1);
+                    setDriversAgeMsg(driversAgeLUT.between26and64);
+                    driversAgeMultiplier = 0;
+                }
+                else if (driversAgeSpecificTmp >= 65) {
+                    setDriversAge(2);
+                    setDriversAgeMsg(driversAgeLUT.over65);
+                    driversAgeMultiplier = 0.10;
+                }
+                else console.error("Unexpected driversAgeSpecific in ConfiguratorForm.handleChange");
+                setDriversAgeSpecific(driversAgeSpecificTmp)
 
-                extraDriversMultiplier = extraDriversTmp ? 0.15 : 0;
+                setExtraDrivers(extraDriversSpecificTmp > 0 ? 1 : 0);
+
+                extraDriversMultiplier = extraDriversSpecificTmp > 0 ? 0.15 : 0;
                 insuranceMultiplier = insuranceTmp ? 0.20 : 0;
 
                 const categoryCars = props.cars.filter(car => car.category === categoryTmp);
@@ -190,8 +223,8 @@ const ConfiguratorForm = props => {
                     console.log("Category: " + categoryTmp, "Multi: " + categoryMultiplier)
                     console.log("Cars of that category: " + categoryCars.length)
                     console.log("KmPerDay: " + kmPerDayTmp, "Multi: " + kmPerDayMultiplier)
-                    console.log("Age: " + driversAgeTmp, "Multi: " + driversAgeMultiplier)
-                    console.log("Extra drivers: " + extraDriversTmp, "Multi: " + extraDriversMultiplier)
+                    console.log("Age: " + driversAgeSpecificTmp, "Multi: " + driversAgeMultiplier)
+                    console.log("Extra drivers: " + extraDriversSpecificTmp, "Multi: " + extraDriversMultiplier)
                     console.log("Insurance: " + insuranceTmp, "Multi: " + insuranceMultiplier)
                     console.log("Vehicles: " + freeCarIdsInSelectedPeriod || "none", "Multi: " + fewCategoryVehiclesRemainingMultiplier)
                     console.log("Frequent: " + frequentCustomerMultiplier)
@@ -255,24 +288,17 @@ const ConfiguratorForm = props => {
                         </Form.Group>
                     </Col>
                     <Col>
-                        <Form.Group>
-                            <Form.Label className={"mb-3"}>Options:</Form.Label>
-                            <div className={"inline-checkbox"}>
-                                <Form.Check
-                                    id={"form-extradrivers"}
-                                    type={"checkbox"}
-                                    label={"More than one driver"}
-                                    checked={extraDrivers}
-                                    inline
-                                />
-                                <Form.Check
-                                    id={"form-insurance"}
-                                    type={"checkbox"}
-                                    label={"Additional insurance"}
-                                    checked={insurance}
-                                    inline
-                                />
-                            </div>
+                        <Form.Group controlId={"form-kmperday"}>
+                            <Form.Label>Estimated kilometers per day:</Form.Label>
+                            <Form.Control
+                                as={"select"}
+                                value={kmPerDay}
+                            >
+                                <option selected disabled value={""}>Select kilometers range</option>
+                                <option>{kmPerDayLUT.under50}</option>
+                                <option>{kmPerDayLUT.between50and150}</option>
+                                <option>{kmPerDayLUT.over150}</option>
+                            </Form.Control>
                         </Form.Group>
                     </Col>
                 </Row>
@@ -303,30 +329,37 @@ const ConfiguratorForm = props => {
                         <Form.Group controlId={"form-driversage"}>
                             <Form.Label>Driver's age:</Form.Label>
                             <Form.Control
-                                as={"select"}
-                                value={driversAge}
-                            >
-                                <option selected disabled value={""}>Select age range</option>
-                                <option>under 25</option>
-                                <option>between 26 and 64</option>
-                                <option>over 65</option>
-                            </Form.Control>
+                                type={"number"}
+                                value={driversAgeSpecific}
+                                placeholder={"Enter a number"}
+                                required
+                            />
+                            {driversAgeMsg && <Form.Text className={"text-muted"}>{driversAgeMsg}</Form.Text>}
                         </Form.Group>
                     </Col>
                     <Col>
-                        <Form.Group controlId={"form-kmperday"}>
-                            <Form.Label>Estimated kilometers per day:</Form.Label>
+                        <Form.Group controlId={"form-extradrivers"}>
+                            <Form.Label>Number of extra drivers:</Form.Label>
                             <Form.Control
-                                as={"select"}
-                                value={kmPerDay}
-                            >
-                                <option selected disabled value={""}>Select kilometers range</option>
-                                <option>less than 50 km</option>
-                                <option>between 50 and 150 km</option>
-                                <option>over 150 km</option>
-                            </Form.Control>
+                                type={"number"}
+                                value={extraDriversSpecific}
+                                placeholder={"Enter a number"}
+                                required
+                            />
                         </Form.Group>
                     </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form.Check
+                            id={"form-insurance"}
+                            type={"checkbox"}
+                            label={"Additional insurance"}
+                            checked={insurance}
+                            className={"mb-3"}
+                        />
+                    </Col>
+                    <Col />
                 </Row>
             </Form>
             {userErrors.length > 0 &&
@@ -348,7 +381,9 @@ const ConfiguratorForm = props => {
                                     endDay,
                                     carCategory: category,
                                     driversAge,
+                                    driversAgeSpecific,
                                     extraDrivers,
+                                    extraDriversSpecific,
                                     estimatedKilometers: kmPerDay,
                                     insurance,
                                     car,  // to maintain carId and carCategory
