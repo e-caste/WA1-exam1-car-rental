@@ -330,7 +330,7 @@ const ConfiguratorForm = props => {
                 </Row>
             </Form>
             {userErrors.length > 0 &&
-                userErrors.map(err => <Alert variant={"danger"}>{err}</Alert>)
+                userErrors.map((err, idx) => <Alert key={idx} variant={"danger"}>{err}</Alert>)
             }
             {userErrors.length === 0 && amount !== -1 &&
                 <div id={"calculated-price"}>
