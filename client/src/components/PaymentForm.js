@@ -6,19 +6,19 @@ import {Redirect, Link} from "react-router-dom";
 
 const PaymentForm = props => {
 
+    // context variables
+    const {authUser, rental, setRental, details, setDetails} = useContext(AuthContext);
+
     // state variables
-    const [name, setName] = useState("");
-    const [surname, setSurname] = useState("");
-    const [creditCard, setCreditCard] = useState("");
-    const [cvv, setCvv] = useState("");
+    const [name, setName] = useState((details && details.name) || "");
+    const [surname, setSurname] = useState((details && details.surname ) || "");
+    const [creditCard, setCreditCard] = useState((details && details.creditCard) || "");
+    const [cvv, setCvv] = useState((details && details.cvv) || "");
 
     const [userErrors, setUserErrors] = useState([]);
     const [apiErrors, setApiErrors] = useState([]);
     const [paymentSuccessful, setPaymentSuccessful] = useState(null);
     const [saveSuccessful, setSaveSuccessful] = useState(null);
-
-    // context variables
-    const {authUser, rental, setRental} = useContext(AuthContext);
 
     const handleChange = event => {
         // clone state variable to immediately show relevant errors
@@ -66,6 +66,13 @@ const PaymentForm = props => {
                 userErrorsTmp.push("Please enter a valid number in the CVV field.")
             setUserErrors(userErrorsTmp);
         }
+
+        setDetails({
+            name: nameTmp,
+            surname: surnameTmp,
+            creditCard: creditCardTmp,
+            cvv: cvvTmp,
+        });
     }
 
     const formFilled = () =>
@@ -129,7 +136,9 @@ const PaymentForm = props => {
         setApiErrors(apiErrorsTmp);
         setPaymentSuccessful(paymentSuccessfulTmp);
         setSaveSuccessful(saveSuccessfulTmp);
-        paymentSuccessfulTmp && saveSuccessfulTmp && setRental(null);
+        if (paymentSuccessfulTmp && saveSuccessfulTmp)
+            setRental(null);
+            setDetails(null);
     }
 
     return (
