@@ -22,7 +22,7 @@ const RentalsList = props => {
 
     // load rentals of currently logged user at component mount
     useEffect(() => {
-        API.getRentalsByUserId(authUser.id)
+        authUser && API.getRentalsByUserId(authUser.id)
             .then(rentals => setRentals(rentals));
     }, [authUser]);
 
