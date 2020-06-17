@@ -211,7 +211,7 @@ const PaymentForm = props => {
                 }
                 {userErrors.length > 0 &&
                     <div className={"mt-4"}>
-                        {userErrors.map(err => <Alert variant={"danger"}>{err}</Alert>)}
+                        {userErrors.map((err, idx) => <Alert key={idx} variant={"danger"}>{err}</Alert>)}
                     </div>
                 }
             </Form>
@@ -219,7 +219,7 @@ const PaymentForm = props => {
                 paymentSuccessful && saveSuccessful ?
                 <Redirect to={"/rentals"} /> :
                 <div className={"mt-4"}>
-                    {apiErrors.map(err => <Alert variant={"danger"} className={"mt-4"}>{err}</Alert>)}
+                    {apiErrors.map((err, idx) => <Alert key={idx} variant={"danger"} className={"mt-4"}>{err}</Alert>)}
                 </div>
             )}
         </div>
