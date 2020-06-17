@@ -93,11 +93,23 @@ const PaymentForm = props => {
         // use +number to convert string to number
         try {
             const payRes = await API.pay({
-                fullName: `${name} ${surname}`,
-                cardNumber: +creditCard,
-                CVV: +cvv,
-                amount: +rental.amount,
-            });
+                details: {
+                    fullName: `${name.trim()} ${surname.trim()}`,
+                    cardNumber: +creditCard,
+                    CVV: +cvv,
+                    amount: +rental.amount,
+                },
+                rental: {
+                    startingDay: rental.startingDay,
+                    endDay: rental.endDay,
+                    carCategory: rental.carCategory,
+                    driversAge: rental.driversAge,
+                    extraDrivers: rental.extraDrivers,
+                    estimatedKilometers: rental.estimatedKilometers,
+                    insurance: rental.insurance,
+                    userId: rental.userId,
+                }
+        });
             paymentSuccessfulTmp = payRes === null;
         } catch (err) {
             apiErrorsTmp.push("There was an issue with your payment. Please try again.")
