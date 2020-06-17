@@ -14,17 +14,17 @@ const ConfiguratorForm = props => {
     // state variables
     const [rentals, setRentals] = useState([]);
     // set to previous rental data if coming back from payment
-    const [category, setCategory] = useState(rental && rental.category || "");
+    const [category, setCategory] = useState(rental && rental.carCategory || "");
     const [startingDay, setStartingDay] = useState(rental && rental.startingDay || "");
     const [endDay, setEndDay] = useState(rental && rental.endDay || "");
     const [driversAge, setDriversAge] = useState(rental && rental.driversAge || "");
-    const [kmPerDay, setKmPerDay] = useState(rental && rental.kmPerDay || "");
+    const [kmPerDay, setKmPerDay] = useState(rental && rental.estimatedKilometers || "");
     const [extraDrivers, setExtraDrivers] = useState(rental && rental.extraDrivers || false);
     const [insurance, setInsurance] = useState(rental && rental.insurance || false);
 
     // output variables
     const [userErrors, setUserErrors] = useState([]);
-    const [amount, setAmount] = useState(rental && rental.amount || -1);
+    const [amount, setAmount] = useState(rental && +rental.amount || -1);
     const [car, setCar] = useState(rental && rental.car || null);
 
     // load rentals at componentDidMount
