@@ -10,9 +10,10 @@ const carDao = require("./dao/car_dao");
 const paymentDao = require("./dao/payment_dao_stub");
 const rentalDao = require("./dao/rental_dao");
 const userDao = require("./dao/user_dao");
+const priceChecker = require("./utils/price_checker")
 
 const jwtSecret = require("./secret").jwtSecret;
-const expireTime = 300;  // 5 minutes
+const expireTime = 30000;  // 5 minutes  // TODO: change to 300
 
 // setup app dependencies
 const port = 3001;
@@ -270,18 +271,24 @@ app.get(prefix + "/rentals", (req, res) => {
 //  200 - payment successful
 //  XXX - payment failed (no handling required)
 app.post(prefix + "/payment", (req, res) => {
-    const details = req.body;
-    const {fullName, cardNumber, CVV, amount} = details;
-    if (fullName && cardNumber && CVV && amount)
+    const data = req.body;
+    const {fullName, cardNumber, CVV, amount} = data.details;
+    if (data && data.details && data.rental && fullName && cardNumber && CVV && amount)
         if (typeof fullName === "string" && typeof cardNumber === "number" && typeof CVV === "number" && typeof amount === "number" &&
             fullName.length > 0 && cardNumber.toString().length === 16 && CVV.toString().length === 3 && amount > 0)
-                paymentDao.pay(details)
-                    .then(result => {
-                        if (result === null)  // always true, see stub
-                            res.status(200).end();
-                    })
-                    // delay next try by 2 seconds
-                    .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+            priceChecker.priceCheck(amount, data.rental)
+                .then(priceOk => {
+                    if (priceOk)
+                        paymentDao.pay(data.details)
+                            .then(result => {
+                                if (result === null)  // always true, see stub
+                                    res.status(200).end();
+                            })
+                            // delay next try by 2 seconds
+                            .catch(err => new Promise((resolve) => {setTimeout(resolve, 2000)}).then(() => res.status(401).end()));
+                    else
+                        res.status(418).json({"errors": "Your coffee is ready but your rental is not. You tried to change the price!"})
+                });
         else
             res.status(400).json({"errors": "Payment details wrongly formatted."}).end();
     else
