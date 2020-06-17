@@ -13,7 +13,7 @@ const Rental = props => {
             case 2:
                 return "over 65";
             default:
-                console.error("Unexpected driversAge value in carslist.Car");
+                console.error("Unexpected driversAge value in rentalslist.Rental");
                 break;
         }
     }
@@ -27,7 +27,7 @@ const Rental = props => {
             case 2:
                 return "> 150 km";
             default:
-                console.error("Unexpected kmPerDay value in carslist.Car");
+                console.error("Unexpected kmPerDay value in rentalslist.Rental");
                 break;
         }
     }
