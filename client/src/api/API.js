@@ -223,24 +223,18 @@ async function getAllRentals() {
 
 // Payment related APIs
 
-async function pay(details) {
+async function pay(data) {
     return new Promise((resolve, reject) => {
-        const {fullName, cardNumber, CVV, amount} = details;
         fetch(prefix + "/payment",
             {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    fullName: fullName,
-                    cardNumber: +cardNumber,
-                    CVV: +CVV,
-                    amount: +amount,
-                })
+                body: JSON.stringify(data),  // {details, rental}
             })
             .then(res => {
                 if (res.status === 401)
                     reject("Authentication error");
-                else if (res.status === 400)
+                else if (res.status === 400 || res.status === 418)
                     reject(res.body.errors)
                 else if (res.ok)
                     resolve(null)
