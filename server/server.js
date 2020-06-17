@@ -211,7 +211,7 @@ app.post(prefix + "/rentals", (req, res) => {
         ![0, 1, 2].includes(driversAge) ||
         !driversAgeSpecific ||
         ![0, 1].includes(extraDrivers) ||
-        !extraDriversSpecific ||
+        ![0, 1, 2, 3, 4, 5].includes(extraDriversSpecific) ||
         ![0, 1, 2].includes(estimatedKilometers) ||
         ![0, 1].includes(insurance) ||
         !carId ||
