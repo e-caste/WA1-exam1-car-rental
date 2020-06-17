@@ -96,6 +96,16 @@ const RentalsList = props => {
             });
     }
 
+    // sort date strings
+    const dateSorter = (r1, r2) => {
+        if (r1.startingDay < r2.startingDay) return 1;
+        if (r1.startingDay > r2.startingDay) return -1;
+        if (r1.startingDay === r2.startingDay)
+            if (r1.endDay < r2.endDay) return 1;
+            if (r1.endDay > r2.endDay) return -1;
+            if (r1.endDay === r2.endDay) return 0;
+    }
+
     return (
         !authUser ?
         <Redirect to={"/"} /> :
@@ -110,19 +120,19 @@ const RentalsList = props => {
                 {future.length > 0 &&
                     <RentalsTable
                         title={"Future"}
-                        rentals={future.map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
+                        rentals={future.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
                     />
                 }
                 {current.length > 0 &&
                     <RentalsTable
                         title={"Current"}
-                        rentals={current.map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                        rentals={current.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
                     />
                 }
                 {past.length > 0 &&
                     <RentalsTable
                         title={"History"}
-                        rentals={past.map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                        rentals={past.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
                     />
                 }
             </div>
