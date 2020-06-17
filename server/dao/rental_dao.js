@@ -5,7 +5,7 @@ const Rental = require("../entities/rental");
 
 const createRental = row => new Rental(row.id, row.carid, row.userid,  // ids to join tables
                                        row.startingday, row.endday,   // dates
-                                       row.carcategory, row.driversage, row.extradrivers, row.estimatedkilometers, row.insurance,  // price influencers
+                                       row.carcategory, row.driversage, row.driversagespecific, row.extradrivers, row.extradriversspecific, row.estimatedkilometers, row.insurance,  // price influencers
                                        row.canceled === 1, row.amount);  // info
 
 exports.toggleCanceled = function (rentalId, userId) {
@@ -32,14 +32,16 @@ exports.toggleCanceled = function (rentalId, userId) {
 exports.saveRental = function (rental) {
     return new Promise((resolve, reject) => {
         const sql = "INSERT INTO " +
-            "RENTALS ('id', 'startingday', 'endday', 'carcategory', 'driversage', 'extradrivers', 'estimatedkilometers', 'insurance', 'carid', 'userid', 'canceled', 'amount') " +
-            "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            "RENTALS ('id', 'startingday', 'endday', 'carcategory', 'driversage', 'driversagespecific', 'extradrivers', 'extradriversspecific', 'estimatedkilometers', 'insurance', 'carid', 'userid', 'canceled', 'amount') " +
+            "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         const {
             startingDay,
             endDay,
             carCategory,
             driversAge,
+            driversAgeSpecific,
             extraDrivers,
+            extraDriversSpecific,
             estimatedKilometers,
             insurance,
             carId,
@@ -51,7 +53,9 @@ exports.saveRental = function (rental) {
             endDay,
             carCategory,
             driversAge,
+            driversAgeSpecific,
             extraDrivers,
+            extraDriversSpecific,
             estimatedKilometers,
             insurance,
             carId,
