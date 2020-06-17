@@ -88,7 +88,12 @@ const RentalsList = props => {
         </Alert>;
 
         API.toggleCanceledByRentalId(rentalId)
-            .then(() => setAlert(successAlert))
+            .then(() => {
+                const rentalsTmp = rentals;
+                rentalsTmp.find(r => r.id === rentalId).canceled = true;
+                setRentals(rentalsTmp);
+                setAlert(successAlert);
+            })
             .catch(err => {
                 setAlert(errorAlert);
                 console.error(err);
