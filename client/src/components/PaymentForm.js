@@ -86,6 +86,8 @@ const PaymentForm = props => {
     const handleSubmit = async event => {
         event.preventDefault();
         let apiErrorsTmp = [];
+        let paymentSuccessfulTmp = false;
+        let saveSuccessfulTmp = false;
 
         // do payment
         // use +number to convert string to number
@@ -96,9 +98,8 @@ const PaymentForm = props => {
                 CVV: +cvv,
                 amount: +rental.amount,
             });
-            setPaymentSuccessful(payRes === null);
+            paymentSuccessfulTmp = payRes === null;
         } catch (err) {
-            setPaymentSuccessful(false);
             apiErrorsTmp.push("There was an issue with your payment. Please try again.")
             console.error(err);
         }
@@ -107,14 +108,16 @@ const PaymentForm = props => {
         try {
             const saveRes = await API.saveRental(rental);
             const saveJson = await saveRes.json();
-            setSaveSuccessful(saveJson && saveJson.id && !isNaN(saveJson.id));  // id of the newly added rental
+            saveSuccessfulTmp = saveJson && saveJson.id && !isNaN(saveJson.id);  // id of the newly added rental
         } catch (err) {
-            setSaveSuccessful(false);
             apiErrorsTmp.push("There was an issue while making your reservation. Please try again.")
             console.error(err);
         }
 
         setApiErrors(apiErrorsTmp);
+        setPaymentSuccessful(paymentSuccessfulTmp);
+        setSaveSuccessful(saveSuccessfulTmp);
+        paymentSuccessfulTmp && saveSuccessfulTmp && setRental(null);
     }
 
     return (
@@ -181,7 +184,6 @@ const PaymentForm = props => {
                 <Button
                     type={"submit"}
                     variant={"primary"}
-                    onClick={() => paymentSuccessful && saveSuccessful && setRental(null)}
                 >
                     Pay now
                 </Button>
