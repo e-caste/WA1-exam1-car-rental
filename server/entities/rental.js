@@ -9,7 +9,9 @@ class Rental {
         endDay,
         carCategory,
         driversAge,
+        driversAgeSpecific,
         extraDrivers,
+        extraDriversSpecific,
         estimatedKilometers,
         insurance,
         canceled,
@@ -22,7 +24,9 @@ class Rental {
         this.endDay = endDay; // moment(endDay);
         this.carCategory = carCategory;
         this.driversAge = driversAge;
+        this.driversAgeSpecific = driversAgeSpecific;
         this.extraDrivers = extraDrivers;
+        this.extraDriversSpecific = extraDriversSpecific;
         this.estimatedKilometers = estimatedKilometers;
         this.insurance = insurance;
         this.canceled = canceled;
