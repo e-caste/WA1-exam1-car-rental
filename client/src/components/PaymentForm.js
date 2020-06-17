@@ -114,8 +114,7 @@ const PaymentForm = props => {
             console.error(err);
         }
 
-        if (apiErrorsTmp.length > 0)
-            setApiErrors(apiErrorsTmp);
+        setApiErrors(apiErrorsTmp);
     }
 
     return (
