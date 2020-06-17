@@ -167,16 +167,13 @@ const ConfiguratorForm = props => {
 
                 const categoryCars = props.cars.filter(car => car.category === categoryTmp);
                 const freeCarIdsInSelectedPeriod = categoryCars.map(car => car.id);
-                // the following warnings about moment are to be ignored, moment works as expected
-                const start = moment(startingDayTmp);
-                const end = moment(endDayTmp);
                 // set freeCarIdsInSelectedPeriod
                 rentals
                     .filter(r => r.carCategory === categoryTmp)
                     .filter(r => !r.canceled)
                     .forEach(r => {
                         // if this rental overlaps with the selected time period, remove the corresponding carId from freeCarIdsInSelectedPeriod
-                        if (!(moment(r.endDay).isBefore(start) || moment(r.startingDay).isAfter(end)))
+                        if (!(moment(r.endDay).isBefore(startingDayDate) || moment(r.startingDay).isAfter(endDayDate)))
                             freeCarIdsInSelectedPeriod.splice(freeCarIdsInSelectedPeriod.indexOf(r.carId, 1));
                     });
                 fewCategoryVehiclesRemainingMultiplier = freeCarIdsInSelectedPeriod.length < (0.1 * categoryCars.length) ? 0.10 : 0;
