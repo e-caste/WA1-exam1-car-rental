@@ -165,20 +165,21 @@ const ConfiguratorForm = props => {
                 extraDriversMultiplier = extraDriversTmp ? 0.15 : 0;
                 insuranceMultiplier = insuranceTmp ? 0.20 : 0;
 
-                // TODO: fix cars are assigned more than once in the same period
                 const categoryCars = props.cars.filter(car => car.category === categoryTmp);
-                const bookedCarIdsInSelectedPeriod = [...new Set(rentals
-                    .filter(r => r.category === categoryTmp)
-                    .filter(r => {
-                        const start = moment(startingDayTmp);
-                        const end = moment(endDayTmp);
-                        const initialOverlap = moment(r.endDay).isBetween(start, end);
-                        const middleOverlap = moment(r.startingDay).isSameOrBefore(start) && moment(r.endDay).isSameOrAfter(end);
-                        const endingOverlap = moment(r.startingDay).isBetween(start, end);
-                        return initialOverlap || middleOverlap || endingOverlap;
-                    })
-                    .map(r => r.carId))];
-                fewCategoryVehiclesRemainingMultiplier = bookedCarIdsInSelectedPeriod.length > (0.9 * categoryCars.length) ? 0.10 : 0;
+                const freeCarIdsInSelectedPeriod = categoryCars.map(car => car.id);
+                // the following warnings about moment are to be ignored, moment works as expected
+                const start = moment(startingDayTmp);
+                const end = moment(endDayTmp);
+                // set freeCarIdsInSelectedPeriod
+                rentals
+                    .filter(r => r.carCategory === categoryTmp)
+                    .forEach(r => {
+                        if (!r.canceled)
+                            // if this rental overlaps with the selected time period, remove the corresponding carId from freeCarIdsInSelectedPeriod
+                            if (!(moment(r.endDay).isBefore(start) || moment(r.startingDay).isAfter(end)))
+                                freeCarIdsInSelectedPeriod.splice(freeCarIdsInSelectedPeriod.indexOf(r.carId, 1));
+                    });
+                fewCategoryVehiclesRemainingMultiplier = freeCarIdsInSelectedPeriod.length < (0.1 * categoryCars.length) ? 0.10 : 0;
 
                 frequentCustomerMultiplier = rentals
                     .filter(r => r.userId === authUser.id)
@@ -189,20 +190,21 @@ const ConfiguratorForm = props => {
                     console.log()  // separate info blocks
                     console.log("Duration: " + durationMultiplier + " days")
                     console.log("Category: " + categoryTmp, "Multi: " + categoryMultiplier)
+                    console.log("Cars of that category: " + categoryCars.length)
                     console.log("KmPerDay: " + kmPerDayTmp, "Multi: " + kmPerDayMultiplier)
                     console.log("Age: " + driversAgeTmp, "Multi: " + driversAgeMultiplier)
                     console.log("Extra drivers: " + extraDriversTmp, "Multi: " + extraDriversMultiplier)
                     console.log("Insurance: " + insuranceTmp, "Multi: " + insuranceMultiplier)
-                    console.log("Vehicles: " + bookedCarIdsInSelectedPeriod, "Multi: " + fewCategoryVehiclesRemainingMultiplier)
+                    console.log("Vehicles: " + freeCarIdsInSelectedPeriod || "none", "Multi: " + fewCategoryVehiclesRemainingMultiplier)
                     console.log("Frequent: " + frequentCustomerMultiplier)
                     console.log("Price without multi: " + durationMultiplier * categoryMultiplier)
                     console.log("Final multi: " + (1 + kmPerDayMultiplier + driversAgeMultiplier + extraDriversMultiplier + insuranceMultiplier + fewCategoryVehiclesRemainingMultiplier + frequentCustomerMultiplier))
                 }
-                true && debugLog();
+                // debugLog();
 
                 // at least 1 car available
-                if (bookedCarIdsInSelectedPeriod.length < categoryCars.length) {
-                    setCar(categoryCars.filter(c => !bookedCarIdsInSelectedPeriod.includes(c.id))[0]);
+                if (freeCarIdsInSelectedPeriod.length > 0) {
+                    setCar(categoryCars.filter(c => freeCarIdsInSelectedPeriod.includes(c.id))[0]);
                     setAmount(
                         categoryMultiplier *
                         durationMultiplier *
