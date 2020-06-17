@@ -5,6 +5,7 @@ import {Alert, Button, Jumbotron, Spinner, Table} from "react-bootstrap";
 import moment from "moment";
 import Rental from "./rentalslist/Rental";
 import {Redirect} from "react-router-dom";
+import RentalsTable from "./rentalslist/RentalsTable";
 
 const RentalsList = props => {
 
@@ -21,8 +22,9 @@ const RentalsList = props => {
 
     // load rentals of currently logged user at component mount
     useEffect(() => {
-        API.getRentalsByUserId(authUser.id)
-            .then(rentals => setRentals(rentals));
+        if (authUser)
+            API.getRentalsByUserId(authUser.id)
+                .then(rentals => setRentals(rentals));
     }, []);
 
     // separate rentals into future, current and past when rentals are loaded
@@ -106,73 +108,22 @@ const RentalsList = props => {
             <Spinner animation="border" variant="warning" /> :
             <div>
                 {future.length > 0 &&
-                <div>
-                    <h2 className={"ml-2"}>Future</h2>
-                    <Table responsive striped borderless>
-                        <thead>
-                            <tr>
-                                <th>From</th>
-                                <th>Until</th>
-                                <th>Category</th>
-                                <th>Age</th>
-                                <th>Extra drivers</th>
-                                <th>Km/day</th>
-                                <th>Insurance</th>
-                                <th>Paid</th>
-                                <th>Canceled</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {future.map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
-                        </tbody>
-                    </Table>
-                </div>
+                    <RentalsTable
+                        title={"Future"}
+                        rentals={future.map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
+                    />
                 }
                 {current.length > 0 &&
-                <div>
-                    <h2 className={"ml-2"}>Current</h2>
-                    <Table responsive striped borderless>
-                        <thead>
-                        <tr>
-                            <th>From</th>
-                            <th>Until</th>
-                            <th>Category</th>
-                            <th>Age</th>
-                            <th>Extra drivers</th>
-                            <th>Km/day</th>
-                            <th>Insurance</th>
-                            <th>Paid</th>
-                            <th>Canceled</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {current.map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
-                        </tbody>
-                    </Table>
-                </div>
+                    <RentalsTable
+                        title={"Current"}
+                        rentals={current.map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                    />
                 }
                 {past.length > 0 &&
-                <div>
-                    <h2 className={"ml-2"}>History</h2>
-                    <Table responsive striped borderless>
-                        <thead>
-                        <tr>
-                            <th>From</th>
-                            <th>Until</th>
-                            <th>Category</th>
-                            <th>Age</th>
-                            <th>Extra drivers</th>
-                            <th>Km/day</th>
-                            <th>Insurance</th>
-                            <th>Paid</th>
-                            <th>Canceled</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {past.map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
-                        </tbody>
-                    </Table>
-                </div>
+                    <RentalsTable
+                        title={"History"}
+                        rentals={past.map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                    />
                 }
             </div>
             }
