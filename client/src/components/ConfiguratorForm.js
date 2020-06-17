@@ -183,6 +183,7 @@ const ConfiguratorForm = props => {
 
                 frequentCustomerMultiplier = rentals
                     .filter(r => r.userId === authUser.id)
+                    .filter(r => !r.canceled)
                     .filter(r => moment(r.endDay).isBefore(moment()))
                     .length >= 3 ? -0.10 : 0;
 
