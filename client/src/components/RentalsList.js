@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
-import {Alert, Button, Jumbotron, Spinner, Table} from "react-bootstrap";
+import {Alert, Button, Jumbotron, Spinner} from "react-bootstrap";
 import moment from "moment";
 import Rental from "./rentalslist/Rental";
 import {Redirect} from "react-router-dom";
@@ -22,10 +22,9 @@ const RentalsList = props => {
 
     // load rentals of currently logged user at component mount
     useEffect(() => {
-        if (authUser)
-            API.getRentalsByUserId(authUser.id)
-                .then(rentals => setRentals(rentals));
-    }, []);
+        API.getRentalsByUserId(authUser.id)
+            .then(rentals => setRentals(rentals));
+    }, [authUser]);
 
     // separate rentals into future, current and past when rentals are loaded
     useEffect(() => {

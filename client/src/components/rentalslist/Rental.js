@@ -1,6 +1,5 @@
-import React, {useState} from "react";
+import React from "react";
 import {Button} from "react-bootstrap";
-import API from "../../api/API";
 
 
 const Rental = props => {

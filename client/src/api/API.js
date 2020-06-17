@@ -1,6 +1,5 @@
 import Car from "../entities/Car";
 import Rental from "../entities/Rental";
-import {map} from "react-bootstrap/cjs/ElementChildren";
 
 const prefix = "/api";
 
