@@ -148,7 +148,7 @@ const PaymentForm = props => {
         !authUser ?
         <Redirect to={"/"} /> :
         <div id={"PaymentForm"}>
-            <Jumbotron>
+            <Jumbotron id={"jumbotron-paymentform"}>
                 <h1>Rent</h1>
             </Jumbotron>
             <Container className={"d-flex justify-content-center"}>
