@@ -13,6 +13,7 @@ import ResetPasswordForm from "./components/ResetPasswordForm";
 import ConfiguratorForm from "./components/ConfiguratorForm";
 import PaymentForm from "./components/PaymentForm";
 import RentalsList from "./components/RentalsList";
+import Footer from "./components/Footer";
 
 
 const App = () => {
@@ -83,8 +84,8 @@ const App = () => {
     return (
         <div className="App">
             <AuthContext.Provider value={value}>
-                <Header/>
-                <Container fluid>
+                <Container fluid className={"d-flex flex-column min-vh-100"}>
+                    <Header />
                     <Switch>
                         <Route exact path={"/"} render={() => <CarsList cars={cars}/>}/>
                         <Route path={"/login"} render={() => <LoginForm/>}/>
@@ -96,6 +97,7 @@ const App = () => {
                         {/*redirect all other routes to the root page*/}
                         <Route path={"/"} render={() => <Redirect to={"/"} />}/>
                     </Switch>
+                    <Footer />
                 </Container>
             </AuthContext.Provider>
         </div>
