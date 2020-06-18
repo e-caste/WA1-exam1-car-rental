@@ -1,11 +1,16 @@
 import React from "react";
-// import {Card, ListGroup} from "react-bootstrap";
+import {Card} from "react-bootstrap";
 
 const Car = props =>
-        <tr>
-            <td>{props.car.category}</td>
-            <td>{props.car.brand}</td>
-            <td>{props.car.model}</td>
-        </tr>
+    <Card>
+        <Card.Img
+            src={`cars/${props.car.brand.toLowerCase()}-${props.car.model.replace(" ", "-").toLowerCase()}.jpg`}
+            alt={`${props.car.brand} ${props.car.model}`}
+        />
+        <Card.ImgOverlay>
+            <Card.Title>{`${props.car.brand} ${props.car.model}`}</Card.Title>
+            <Card.Subtitle>{props.car.category}</Card.Subtitle>
+        </Card.ImgOverlay>
+    </Card>
 
 export default Car;
