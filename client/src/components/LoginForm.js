@@ -37,7 +37,7 @@ const LoginForm = props => {
     return(authUser ?
             <Redirect to={"/"}/> :
             (<div id={"LoginForm"}>
-                <Jumbotron>
+                <Jumbotron id={"jumbotron-loginform"}>
                     <h1>Login</h1>
                 </Jumbotron>
                 <Form
