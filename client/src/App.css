@@ -16,3 +16,8 @@
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("/jumbotron/delorean-configure.jpg") no-repeat fixed;
   background-size: 100%;
 }
+
+#jumbotron-paymentform {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("/jumbotron/dollars-payment.jpg") no-repeat fixed;
+  background-size: 100%;
+}
