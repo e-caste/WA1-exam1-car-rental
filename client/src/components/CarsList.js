@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Col, Jumbotron, Spinner, Row, Table} from "react-bootstrap";
+import {Col, Jumbotron, Spinner, Row, CardColumns} from "react-bootstrap";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Car from "./carslist/Car";
@@ -85,20 +85,10 @@ const CarsList = props => {
                             />
                         </Col>
                     </Row>
-                    {/*TODO: use cards, add fields from db*/}
-                    <Table responsive striped borderless >
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Brand</th>
-                                <th>Model</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {/*list of cars sorted in the DAO in the backend*/}
-                            {shownCars.map((car, idx) => <Car key={idx} car={car} />)}
-                        </tbody>
-                    </Table>
+                    <CardColumns className={"mt-3"}>
+                        {/*list of cars sorted in the DAO in the backend*/}
+                        {shownCars.map((car, idx) => <Car key={idx} car={car} />)}
+                    </CardColumns>
                 </div>
             }
         </div>
