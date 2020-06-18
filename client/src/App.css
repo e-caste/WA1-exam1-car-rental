@@ -8,6 +8,10 @@
   font-family: "BTTF", serif;
 }
 
+#header-title {
+  font-family: "BTTF", serif;
+}
+
 #jumbotron-carslist {
   background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url("/jumbotron/delorean-carslist.jpg") no-repeat fixed;
   background-size: 100%;
