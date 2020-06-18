@@ -30,6 +30,7 @@ const ConfiguratorForm = props => {
     const [userErrors, setUserErrors] = useState([]);
     const [driversAgeMsg, setDriversAgeMsg] = useState("");
     const [amount, setAmount] = useState((rental && +rental.amount) || -1);
+    const [availableCars, setAvailableCars] = useState((rental && rental.availableCars) || -1);
     const [car, setCar] = useState((rental && rental.car) || null);
 
     // load rentals at componentDidMount
@@ -209,6 +210,7 @@ const ConfiguratorForm = props => {
                             freeCarIdsInSelectedPeriod.splice(freeCarIdsInSelectedPeriod.indexOf(r.carId, 1));
                     });
                 fewCategoryVehiclesRemainingMultiplier = freeCarIdsInSelectedPeriod.length < (0.1 * categoryCars.length) ? 0.10 : 0;
+                setAvailableCars(freeCarIdsInSelectedPeriod.length);
 
                 frequentCustomerMultiplier = rentals
                     .filter(r => r.userId === authUser.id)
@@ -348,32 +350,39 @@ const ConfiguratorForm = props => {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <Form.Check
-                            id={"form-insurance"}
-                            type={"checkbox"}
-                            label={"Additional insurance"}
-                            checked={insurance}
-                            className={"mb-3"}
-                        />
-                    </Col>
-                    <Col />
+                <Row className={"justify-content-center"}>
+                    <Form.Check
+                        id={"form-insurance"}
+                        type={"checkbox"}
+                        label={"Additional insurance"}
+                        checked={insurance}
+                        className={"mb-3"}
+                    />
                 </Row>
             </Form>
             {userErrors.length > 0 &&
                 userErrors.map((err, idx) => <Alert key={idx} variant={"danger"}>{err}</Alert>)
             }
+            {userErrors.length === 0 && amount === -1 &&
+                <Alert variant={"warning"}>
+                    Please enter all the required information to see our solution for you.
+                </Alert>
+            }
             {userErrors.length === 0 && amount !== -1 &&
                 <div id={"calculated-price"}>
-                    <Row className={"mt-3"}>
+                    <Row className={"justify-content-center"}>
+                        <Alert variant={"info"}>
+                            Number of available cars in selected period: {availableCars}
+                        </Alert>
+                        <Alert variant={"info"} className={"ml-3"}>Your rental's price: {amount
+                            .toLocaleString(
+                                "it-IT",
+                                {style: "currency", currency: "EUR"})}
+                        </Alert>
+                    </Row>
+                    <Row className={"mt-2"}>
                         <Col />
                         <Col>
-                            <Alert variant={"info"}>Your rental's price: {amount
-                                .toLocaleString(
-                                    "it-IT",
-                                    {style: "currency", currency: "EUR"})}
-                            </Alert>
                             <Button variant={"outline-primary"} block onClick={
                                 () => setRental({
                                     startingDay,
@@ -386,6 +395,7 @@ const ConfiguratorForm = props => {
                                     estimatedKilometers: kmPerDay,
                                     insurance,
                                     car,  // to maintain carId and carCategory
+                                    availableCars,
                                     carId: car.id,
                                     userId: authUser.id,
                                     canceled: false,
