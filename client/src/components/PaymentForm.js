@@ -1,13 +1,16 @@
 import React, {useContext, useState} from "react";
 import {AuthContext} from "../auth/AuthContext";
-import {Alert, Button, Col, Form, Jumbotron} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Jumbotron, Row} from "react-bootstrap";
 import API from "../api/API";
-import {Redirect, Link} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 
 const PaymentForm = props => {
 
     // context variables
     const {authUser, rental, setRental, details, setDetails} = useContext(AuthContext);
+
+    // to navigate back to /rent
+    const {push} = useHistory();
 
     // state variables
     const [name, setName] = useState((details && details.name) || "");
@@ -148,80 +151,93 @@ const PaymentForm = props => {
             <Jumbotron>
                 <h1>Rent</h1>
             </Jumbotron>
-            <Form
-                method={"POST"}
-                onChange={handleChange}
-                onSubmit={handleSubmit}
-            >
-                <Form.Label>Please enter your credit card information</Form.Label>
-                <Form.Row className={"mb-3"}>
-                    <Col>
-                        <Form.Control
-                            id={"form-name"}
-                            type={"text"}
-                            placeholder={"Your name"}
-                            value={name}
-                            required
-                            autoFocus
-                        />
-                    </Col>
-                    <Col>
-                        <Form.Control
-                            id={"form-surname"}
-                            type={"text"}
-                            placeholder={"Your surname"}
-                            value={surname}
-                            required
-                        />
-                    </Col>
-                </Form.Row>
-                <Form.Row className={"mb-3"}>
-                    <Col>
-                        <Form.Control
-                            id={"form-creditcard"}
-                            type={"creditcard"}
-                            placeholder={"Your credit card number"}
-                            value={creditCard}
-                            required
-                        />
-                    </Col>
-                    <Col>
-                        <Form.Control
-                            id={"form-cvv"}
-                            type={"text"}
-                            placeholder={"CVV"}
-                            value={cvv}
-                            required
-                        />
-                    </Col>
-                </Form.Row>
-                <Button
-                    variant={"outline-secondary"}
-                    className={"mr-3"}
-                >
-                    <Link to={"/rent"}>Back to configurator</Link>
-                </Button>
-                {formValidated() && userErrors.length === 0 &&
-                <Button
-                    type={"submit"}
-                    variant={"primary"}
-                >
-                    Pay now
-                </Button>
-                }
-                {userErrors.length > 0 &&
-                    <div className={"mt-4"}>
-                        {userErrors.map((err, idx) => <Alert key={idx} variant={"danger"}>{err}</Alert>)}
-                    </div>
-                }
-            </Form>
-            {paymentSuccessful !== null && saveSuccessful !== null && (
-                paymentSuccessful && saveSuccessful ?
-                <Redirect to={"/rentals"} /> :
-                <div className={"mt-4"}>
-                    {apiErrors.map((err, idx) => <Alert key={idx} variant={"danger"} className={"mt-4"}>{err}</Alert>)}
-                </div>
-            )}
+            <Container className={"d-flex justify-content-center"}>
+                <Col xs={12}>
+                    <Form
+                        method={"POST"}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
+                    >
+                        <Form.Label>Please enter your credit card information:</Form.Label>
+                        <Form.Row className={"mb-3"}>
+                            <Col>
+                                <Form.Control
+                                    id={"form-name"}
+                                    type={"text"}
+                                    placeholder={"Your name"}
+                                    value={name}
+                                    required
+                                    autoFocus
+                                />
+                            </Col>
+                            <Col>
+                                <Form.Control
+                                    id={"form-surname"}
+                                    type={"text"}
+                                    placeholder={"Your surname"}
+                                    value={surname}
+                                    required
+                                />
+                            </Col>
+                        </Form.Row>
+                        <Form.Row className={"mb-3"}>
+                            <Col>
+                                <Form.Control
+                                    id={"form-creditcard"}
+                                    type={"creditcard"}
+                                    placeholder={"Your credit card number"}
+                                    value={creditCard}
+                                    required
+                                />
+                            </Col>
+                            <Col>
+                                <Form.Control
+                                    id={"form-cvv"}
+                                    type={"text"}
+                                    placeholder={"CVV"}
+                                    value={cvv}
+                                    required
+                                />
+                            </Col>
+                        </Form.Row>
+                        <Row>
+                            <Col>
+                                <Button
+                                    variant={"outline-secondary"}
+                                    onClick={() => push("/rent")}
+                                    block
+                                >
+                                    Back to configurator
+                                </Button>
+                            </Col>
+                            {formValidated() && userErrors.length === 0 ?
+                            <Col>
+                                <Button
+                                    type={"submit"}
+                                    variant={"primary"}
+                                    block
+                                >
+                                    Pay now
+                                </Button>
+                            </Col> :
+                            <Col />
+                            }
+                        </Row>
+                        {userErrors.length > 0 &&
+                            <div className={"mt-4"}>
+                                {userErrors.map((err, idx) => <Alert key={idx} variant={"danger"}>{err}</Alert>)}
+                            </div>
+                        }
+                    </Form>
+                    {paymentSuccessful !== null && saveSuccessful !== null && (
+                        paymentSuccessful && saveSuccessful ?
+                        <Redirect to={"/rentals"} /> :
+                        <div className={"mt-4"}>
+                            {apiErrors.map((err, idx) => <Alert key={idx} variant={"danger"} className={"mt-4"}>{err}</Alert>)}
+                        </div>
+                    )}
+                </Col>
+            </Container>
         </div>
     );
 }
