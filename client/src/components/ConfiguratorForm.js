@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Redirect, Link} from "react-router-dom";
-import {Alert, Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Jumbotron, Row} from "react-bootstrap";
 import moment from "moment";
 
 import {AuthContext} from "../auth/AuthContext";
@@ -263,151 +263,151 @@ const ConfiguratorForm = props => {
             <Jumbotron>
                 <h1>Configure</h1>
             </Jumbotron>
-            <Form
-                method={"POST"}
-                onChange={handleChange}
-            >
-                <Row>
-                    <Col>
-                        <Form.Group controlId={"form-category"}>
-                            <Form.Label>Car category:</Form.Label>
-                            <Form.Control
-                                as={"select"}
-                                value={category}
-                                required
-                            >
-                                <option selected disabled value={""}>Select category</option>
-                                <option>A</option>
-                                <option>B</option>
-                                <option>C</option>
-                                <option>D</option>
-                                <option>E</option>
-                            </Form.Control>
-                            <Form.Text className={"text-muted"}>
-                                A for maximum luxury, E for minimum spendings
-                            </Form.Text>
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId={"form-kmperday"}>
-                            <Form.Label>Estimated kilometers per day:</Form.Label>
-                            <Form.Control
-                                as={"select"}
-                                value={kmPerDay}
-                            >
-                                <option selected disabled value={""}>Select kilometers range</option>
-                                <option>{kmPerDayLUT.under50}</option>
-                                <option>{kmPerDayLUT.between50and150}</option>
-                                <option>{kmPerDayLUT.over150}</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Group controlId={"form-startingday"}>
-                            <Form.Label>From day:</Form.Label>
-                            <Form.Control
-                                type={"date"}
-                                value={startingDay}
-                                required
-                            />
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId={"form-endday"}>
-                            <Form.Label>Until day:</Form.Label>
-                            <Form.Control
-                                type={"date"}
-                                value={endDay}
-                                required
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Form.Group controlId={"form-driversage"}>
-                            <Form.Label>Driver's age:</Form.Label>
-                            <Form.Control
-                                type={"number"}
-                                value={driversAgeSpecific}
-                                placeholder={"Enter a number"}
-                                required
-                            />
-                            {/*driversAgeMsg && <Form.Text className={"text-muted"}>{driversAgeMsg}</Form.Text>*/}
-                        </Form.Group>
-                    </Col>
-                    <Col>
-                        <Form.Group controlId={"form-extradrivers"}>
-                            <Form.Label>Number of extra drivers:</Form.Label>
-                            <Form.Control
-                                type={"number"}
-                                value={extraDriversSpecific}
-                                placeholder={"Enter a number"}
-                                required
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-                <Row className={"justify-content-center"}>
-                    <Form.Check
-                        id={"form-insurance"}
-                        type={"checkbox"}
-                        label={"Additional insurance"}
-                        checked={insurance}
-                        className={"mb-3"}
-                    />
-                </Row>
-            </Form>
-            {userErrors.length > 0 &&
-                userErrors.map((err, idx) => <Alert key={idx} variant={"danger"}>{err}</Alert>)
-            }
-            {userErrors.length === 0 && amount === -1 &&
-                <Alert variant={"warning"}>
-                    Please enter all the required information to see our solution for you.
-                </Alert>
-            }
-            {userErrors.length === 0 && amount !== -1 &&
-                <div id={"calculated-price"}>
-                    <Row className={"justify-content-center"}>
-                        <Alert variant={"info"}>
+            <Container className={"d-flex justify-content-center"}>
+                <Col xs={12}>
+                    <Form
+                        method={"POST"}
+                        onChange={handleChange}
+                    >
+                                <Row>
+                                    <Col>
+                                        <Form.Group controlId={"form-category"}>
+                                            <Form.Label>Car category:</Form.Label>
+                                            <Form.Control
+                                                as={"select"}
+                                                value={category}
+                                                required
+                                            >
+                                                <option selected disabled value={""}>Select category</option>
+                                                <option>A</option>
+                                                <option>B</option>
+                                                <option>C</option>
+                                                <option>D</option>
+                                                <option>E</option>
+                                            </Form.Control>
+                                            <Form.Text className={"text-muted"}>
+                                                A for maximum luxury, E for minimum spendings
+                                            </Form.Text>
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group controlId={"form-kmperday"}>
+                                            <Form.Label>Estimated kilometers per day:</Form.Label>
+                                            <Form.Control
+                                                as={"select"}
+                                                value={kmPerDay}
+                                            >
+                                                <option selected disabled value={""}>Select kilometers range</option>
+                                                <option>{kmPerDayLUT.under50}</option>
+                                                <option>{kmPerDayLUT.between50and150}</option>
+                                                <option>{kmPerDayLUT.over150}</option>
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group controlId={"form-startingday"}>
+                                            <Form.Label>From day:</Form.Label>
+                                            <Form.Control
+                                                type={"date"}
+                                                value={startingDay}
+                                                required
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group controlId={"form-endday"}>
+                                            <Form.Label>Until day:</Form.Label>
+                                            <Form.Control
+                                                type={"date"}
+                                                value={endDay}
+                                                required
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group controlId={"form-driversage"}>
+                                            <Form.Label>Driver's age:</Form.Label>
+                                            <Form.Control
+                                                type={"number"}
+                                                value={driversAgeSpecific}
+                                                placeholder={"Enter a number"}
+                                                required
+                                            />
+                                            {/*driversAgeMsg && <Form.Text className={"text-muted"}>{driversAgeMsg}</Form.Text>*/}
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group controlId={"form-extradrivers"}>
+                                            <Form.Label>Number of extra drivers:</Form.Label>
+                                            <Form.Control
+                                                type={"number"}
+                                                value={extraDriversSpecific}
+                                                placeholder={"Enter a number"}
+                                                required
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row className={"justify-content-center"}>
+                                    <Form.Check
+                                        id={"form-insurance"}
+                                        type={"checkbox"}
+                                        label={"Additional insurance"}
+                                        checked={insurance}
+                                        className={"mb-3"}
+                                    />
+                                </Row>
+
+                    </Form>
+                    {userErrors.length > 0 &&
+                    userErrors.map((err, idx) => <Alert key={idx} variant={"danger"}>{err}</Alert>)
+                    }
+                    {userErrors.length === 0 && amount === -1 &&
+                    <Alert variant={"warning"}>
+                        Please enter all the required information to see our solution for you.
+                    </Alert>
+                    }
+                    {userErrors.length === 0 && amount !== -1 &&
+                    <div id={"calculated-price"}>
+                        <Alert variant={"info"} className={"text-center"}>
                             Number of available cars in selected period: {availableCars}
-                        </Alert>
-                        <Alert variant={"info"} className={"ml-3"}>Your rental's price: {amount
+                            {" | "}Your rental's price: {amount
                             .toLocaleString(
                                 "it-IT",
                                 {style: "currency", currency: "EUR"})}
                         </Alert>
-                    </Row>
-                    <Row className={"mt-2"}>
-                        <Col />
-                        <Col>
-                            <Button variant={"outline-primary"} block onClick={
-                                () => setRental({
-                                    startingDay,
-                                    endDay,
-                                    carCategory: category,
-                                    driversAge,
-                                    driversAgeSpecific,
-                                    extraDrivers,
-                                    extraDriversSpecific,
-                                    estimatedKilometers: kmPerDay,
-                                    insurance,
-                                    car,  // to maintain carId and carCategory
-                                    availableCars,
-                                    carId: car.id,
-                                    userId: authUser.id,
-                                    canceled: false,
-                                    amount: amount.toFixed(2),
-                            })}>
-                                <Link to={"/payment"}>Rent!</Link>
-                            </Button>
-                        </Col>
-                        <Col />
-                    </Row>
-                </div>
-            }
+                        <Container className={"d-flex justify-content-center"}>
+                            <Col xs={5}>
+                                <Button variant={"outline-primary"} block onClick={
+                                    () => setRental({
+                                        startingDay,
+                                        endDay,
+                                        carCategory: category,
+                                        driversAge,
+                                        driversAgeSpecific,
+                                        extraDrivers,
+                                        extraDriversSpecific,
+                                        estimatedKilometers: kmPerDay,
+                                        insurance,
+                                        car,  // to maintain carId and carCategory
+                                        availableCars,
+                                        carId: car.id,
+                                        userId: authUser.id,
+                                        canceled: false,
+                                        amount: amount.toFixed(2),
+                                    })}>
+                                    <Link to={"/payment"}>Rent!</Link>
+                                </Button>
+                            </Col>
+                        </Container>
+                    </div>
+                    }
+                </Col>
+            </Container>
         </div>
     );
 }
