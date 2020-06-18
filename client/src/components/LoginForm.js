@@ -38,7 +38,7 @@ const LoginForm = props => {
             <Redirect to={"/"}/> :
             (<div id={"LoginForm"}>
                 <Jumbotron id={"jumbotron-loginform"}>
-                    <h1>Login</h1>
+                    <h1>login</h1>
                 </Jumbotron>
                 <Form
                     method={"POST"}

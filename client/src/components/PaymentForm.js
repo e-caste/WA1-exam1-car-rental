@@ -149,7 +149,7 @@ const PaymentForm = props => {
         <Redirect to={"/"} /> :
         <div id={"PaymentForm"}>
             <Jumbotron id={"jumbotron-paymentform"}>
-                <h1>Rent</h1>
+                <h1>rent</h1>
             </Jumbotron>
             <Container className={"d-flex justify-content-center"}>
                 <Col xs={12}>

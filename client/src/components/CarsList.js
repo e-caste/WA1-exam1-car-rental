@@ -56,7 +56,7 @@ const CarsList = props => {
     return (
         <div id={"CarsList"}>
             <Jumbotron id={"jumbotron-carslist"}>
-                <h1>Our cars</h1>
+                <h1>our cars</h1>
             </Jumbotron>
             {!props.cars &&
                 <Spinner animation="border" variant="warning" />

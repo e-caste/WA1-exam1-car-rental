@@ -264,7 +264,7 @@ const ConfiguratorForm = props => {
         <Redirect to={"/"} /> :
         <div id={"ConfiguratorForm"}>
             <Jumbotron id={"jumbotron-configuratorform"}>
-                <h1>Configure</h1>
+                <h1>configure</h1>
             </Jumbotron>
             <Container className={"d-flex justify-content-center"}>
                 <Col xs={12}>

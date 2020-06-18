@@ -115,7 +115,7 @@ const RentalsList = props => {
         <Redirect to={"/"} /> :
         <div id={"RentalsList"}>
             <Jumbotron id={"jumbotron-rentalslist"}>
-                <h1>Your rentals</h1>
+                <h1>your rentals</h1>
             </Jumbotron>
             {alert}
             {!rentals ?
