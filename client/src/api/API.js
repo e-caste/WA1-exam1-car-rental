@@ -125,21 +125,8 @@ async function saveRental(rental) {
         userId,
         amount,
     } = rental;
+
     // convert tri-state and boolean values to acceptable SQLite int values
-    switch (driversAge) {
-        case "under 25":
-            driversAge = 0;
-            break;
-        case "between 26 and 64":
-            driversAge = 1;
-            break;
-        case "over 65":
-            driversAge = 2;
-            break;
-        default:
-            break;
-    }
-    extraDrivers = extraDrivers ? 1 : 0;
     switch (estimatedKilometers) {
         case kmPerDayLUT.under50:
             estimatedKilometers = 0;
@@ -154,6 +141,7 @@ async function saveRental(rental) {
             break;
     }
     insurance = insurance ? 1 : 0;
+
     return new Promise((resolve, reject) => {
         fetch(prefix + "/rentals", {
             method: "POST",
