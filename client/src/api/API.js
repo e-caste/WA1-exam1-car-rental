@@ -140,6 +140,7 @@ async function saveRental(rental) {
         default:
             break;
     }
+    extraDrivers = extraDrivers ? 1 : 0;
     insurance = insurance ? 1 : 0;
 
     return new Promise((resolve, reject) => {
