@@ -2,7 +2,7 @@ import React from "react";
 import {Card} from "react-bootstrap";
 
 const Car = props =>
-    <Card>
+    <Card className={"text-white"}>
         <Card.Img
             src={`cars/${props.car.brand.toLowerCase()}-${props.car.model.replace(" ", "-").toLowerCase()}.jpg`}
             alt={`${props.car.brand} ${props.car.model}`}
