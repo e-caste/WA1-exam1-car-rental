@@ -114,7 +114,7 @@ const RentalsList = props => {
         !authUser ?
         <Redirect to={"/"} /> :
         <div id={"RentalsList"}>
-            <Jumbotron>
+            <Jumbotron id={"jumbotron-rentalslist"}>
                 <h1>Your rentals</h1>
             </Jumbotron>
             {alert}
