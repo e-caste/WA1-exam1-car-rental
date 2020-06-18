@@ -21,3 +21,8 @@
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("/jumbotron/dollars-payment.jpg") no-repeat fixed;
   background-size: 100%;
 }
+
+#jumbotron-rentalslist {
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url("/jumbotron/delorean-rentals.jpg") no-repeat fixed;
+  background-size: 100%;
+}
