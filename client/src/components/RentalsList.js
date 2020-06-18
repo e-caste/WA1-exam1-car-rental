@@ -4,7 +4,7 @@ import API from "../api/API";
 import {Alert, Button, Col, Container, Jumbotron, Spinner} from "react-bootstrap";
 import moment from "moment";
 import Rental from "./rentalslist/Rental";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import RentalsTable from "./rentalslist/RentalsTable";
 
 const RentalsList = props => {
@@ -19,6 +19,9 @@ const RentalsList = props => {
 
     // context variables
     const {authUser} = useContext(AuthContext);
+
+    // go to /rent if no rentals
+    const {push} = useHistory();
 
     // load rentals of currently logged user at component mount
     useEffect(() => {
@@ -123,23 +126,40 @@ const RentalsList = props => {
                     {!rentals ?
                     <Spinner animation="border" variant="warning" /> :
                     <div>
-                        {future.length > 0 &&
-                        <RentalsTable
-                            title={"Future"}
-                            rentals={future.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
-                        />
-                        }
-                        {current.length > 0 &&
-                        <RentalsTable
-                            title={"Current"}
-                            rentals={current.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
-                        />
-                        }
-                        {past.length > 0 &&
-                        <RentalsTable
-                            title={"History"}
-                            rentals={past.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
-                        />
+                        {rentals.length === 0 ?
+                            <Container className={"d-flex justify-content-center"}>
+                                <Col xs={4}>
+                                    <h2>No rentals yet...</h2>
+                                    <Button
+                                        variant={"primary"}
+                                        className={"mt-4"}
+                                        onClick={() => push("/rent")}
+                                        block
+                                    >
+                                        Rent a car!
+                                    </Button>
+                                </Col>
+                            </Container> :
+                            <div>
+                            {future.length > 0 &&
+                                <RentalsTable
+                                    title={"Future"}
+                                    rentals={future.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
+                                />
+                            }
+                            {current.length > 0 &&
+                                <RentalsTable
+                                    title={"Current"}
+                                    rentals={current.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                                />
+                            }
+                            {past.length > 0 &&
+                                <RentalsTable
+                                    title={"History"}
+                                    rentals={past.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                                />
+                            }
+                        </div>
                         }
                     </div>
                     }
