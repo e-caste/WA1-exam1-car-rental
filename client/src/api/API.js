@@ -1,5 +1,6 @@
 import Car from "../entities/Car";
 import Rental from "../entities/Rental";
+import {kmPerDayLUT} from "../components/utils/luts";
 
 const prefix = "/api";
 
@@ -140,13 +141,13 @@ async function saveRental(rental) {
     }
     extraDrivers = extraDrivers ? 1 : 0;
     switch (estimatedKilometers) {
-        case "less than 50 km":
+        case kmPerDayLUT.under50:
             estimatedKilometers = 0;
             break;
-        case "between 50 and 150 km":
+        case kmPerDayLUT.between50and150:
             estimatedKilometers = 1;
             break;
-        case "over 150 km":
+        case kmPerDayLUT.over150:
             estimatedKilometers = 2;
             break;
         default:
