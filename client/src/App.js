@@ -1,3 +1,5 @@
+import "./App.css";
+
 import React, {useState, useEffect, useMemo} from 'react';
 import {Container} from "react-bootstrap";
 import {Route, Redirect, Switch} from "react-router-dom";
