@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Redirect, Link} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import {Alert, Button, Col, Container, Form, Jumbotron, Row} from "react-bootstrap";
 import moment from "moment";
 
@@ -12,6 +12,9 @@ const ConfiguratorForm = props => {
 
     // context variables
     const {authUser, rental, setRental} = useContext(AuthContext);
+
+    // to navigate to /payment
+    const {push} = useHistory();
 
     // state variables
     const [rentals, setRentals] = useState([]);
@@ -382,25 +385,28 @@ const ConfiguratorForm = props => {
                         </Alert>
                         <Container className={"d-flex justify-content-center"}>
                             <Col xs={5}>
-                                <Button variant={"outline-primary"} block onClick={
-                                    () => setRental({
-                                        startingDay,
-                                        endDay,
-                                        carCategory: category,
-                                        driversAge,
-                                        driversAgeSpecific,
-                                        extraDrivers,
-                                        extraDriversSpecific,
-                                        estimatedKilometers: kmPerDay,
-                                        insurance,
-                                        car,  // to maintain carId and carCategory
-                                        availableCars,
-                                        carId: car.id,
-                                        userId: authUser.id,
-                                        canceled: false,
-                                        amount: amount.toFixed(2),
-                                    })}>
-                                    <Link to={"/payment"}>Rent!</Link>
+                                <Button variant={"primary"} block onClick={
+                                    () => {
+                                        setRental({
+                                            startingDay,
+                                            endDay,
+                                            carCategory: category,
+                                            driversAge,
+                                            driversAgeSpecific,
+                                            extraDrivers,
+                                            extraDriversSpecific,
+                                            estimatedKilometers: kmPerDay,
+                                            insurance,
+                                            car,  // to maintain carId and carCategory
+                                            availableCars,
+                                            carId: car.id,
+                                            userId: authUser.id,
+                                            canceled: false,
+                                            amount: amount.toFixed(2),
+                                        });
+                                        push("/payment");
+                                    }}>
+                                    Rent!
                                 </Button>
                             </Col>
                         </Container>
