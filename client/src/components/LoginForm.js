@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, Jumbotron, Row} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {AuthContext} from "../auth/AuthContext";
 import {useHistory} from "react-router-dom";
@@ -45,38 +45,42 @@ const LoginForm = props => {
                     onChange={handleChange}
                     onSubmit={event => handleSubmit(event, handleLogin)}
                 >
-                    <Form.Group controlId="form-email">
-                        <Form.Control
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            required
-                            autoFocus
-                        />
-                        <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                        </Form.Text>
-                    </Form.Group>
-                    <Form.Group controlId="form-password">
-                        <Form.Control
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            required
-                        />
-                    </Form.Group>
-                    <Row>
-                        <Col>
-                            <Button variant="primary" type="submit" className={"pl-10"}>
-                                Login
-                            </Button>
+                    <Container className={"d-flex justify-content-center"}>
+                        <Col xs={7}>
+                            <Form.Group controlId="form-email">
+                                <Form.Control
+                                    type="email"
+                                    placeholder="Email"
+                                    value={email}
+                                    required
+                                    autoFocus
+                                />
+                                <Form.Text className="text-muted">
+                                    We'll never share your email with anyone else.
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Group controlId="form-password">
+                                <Form.Control
+                                    type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    required
+                                />
+                            </Form.Group>
+                            <Row>
+                                <Col>
+                                    <Button block variant={"primary"} type={"submit"}>
+                                        Login
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button block variant={"link"} onClick={() => push("/resetpassword")}>
+                                        Forgot your password?
+                                    </Button>
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col>
-                            <Button variant={"link"} onClick={() => push("/resetpassword")}>
-                                Forgot your password?
-                            </Button>
-                        </Col>
-                    </Row>
+                    </Container>
                 </Form>
             </div>)
     );
