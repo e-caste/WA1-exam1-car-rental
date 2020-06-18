@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import {Button, Col, Form, Jumbotron, Row} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {AuthContext} from "../auth/AuthContext";
-import {Link} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 const LoginForm = props => {
 
@@ -12,6 +12,7 @@ const LoginForm = props => {
 
     // context variables
     const {authUser, handleLogin} = useContext(AuthContext);
+    const {push} = useHistory();
 
     const handleChange = event => {
         const t = event.target;
@@ -71,10 +72,8 @@ const LoginForm = props => {
                             </Button>
                         </Col>
                         <Col>
-                            <Button variant={"link"}>
-                                <Link to={"/resetpassword"}>
-                                    Forgot your password?
-                                </Link>
+                            <Button variant={"link"} onClick={() => push("/resetpassword")}>
+                                Forgot your password?
                             </Button>
                         </Col>
                     </Row>
