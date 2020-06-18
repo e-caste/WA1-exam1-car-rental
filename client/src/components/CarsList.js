@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Col, Jumbotron, Spinner, Row, CardColumns} from "react-bootstrap";
+import {Col, Jumbotron, Spinner, Row, CardColumns, Container} from "react-bootstrap";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import Car from "./carslist/Car";
@@ -65,32 +65,36 @@ const CarsList = props => {
             }
             {props.cars &&
                 <div id={"CarsView"}>
-                    <Row>
-                        {/*see docs at https://react-select.com/home*/}
-                        <Col>
-                            <Select
-                                placeholder={"Select brands..."}
-                                options={brandOptions}
-                                onChange={handleBrandChange}
-                                isMulti
-                                name={"brands"}
-                                components={makeAnimated()}
-                            />
+                    <Container>
+                        <Col xs={16}>
+                            <Row>
+                                {/*see docs at https://react-select.com/home*/}
+                                <Col>
+                                    <Select
+                                        placeholder={"Select brands..."}
+                                        options={brandOptions}
+                                        onChange={handleBrandChange}
+                                        isMulti
+                                        name={"brands"}
+                                        components={makeAnimated()}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Select
+                                        placeholder={"Select categories..."}
+                                        options={categoryOptions}
+                                        onChange={handleCategoryChange}
+                                        isMulti name={"categories"}
+                                        components={makeAnimated()}
+                                    />
+                                </Col>
+                            </Row>
+                            <CardColumns className={"mt-3"}>
+                                {/*list of cars sorted in the DAO in the backend*/}
+                                {shownCars.map((car, idx) => <Car key={idx} car={car} />)}
+                            </CardColumns>
                         </Col>
-                        <Col>
-                            <Select
-                                placeholder={"Select categories..."}
-                                options={categoryOptions}
-                                onChange={handleCategoryChange}
-                                isMulti name={"categories"}
-                                components={makeAnimated()}
-                            />
-                        </Col>
-                    </Row>
-                    <CardColumns className={"mt-3"}>
-                        {/*list of cars sorted in the DAO in the backend*/}
-                        {shownCars.map((car, idx) => <Car key={idx} car={car} />)}
-                    </CardColumns>
+                    </Container>
                 </div>
             }
         </div>
