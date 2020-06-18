@@ -335,7 +335,7 @@ const ConfiguratorForm = props => {
                                 placeholder={"Enter a number"}
                                 required
                             />
-                            {driversAgeMsg && <Form.Text className={"text-muted"}>{driversAgeMsg}</Form.Text>}
+                            {/*driversAgeMsg && <Form.Text className={"text-muted"}>{driversAgeMsg}</Form.Text>*/}
                         </Form.Group>
                     </Col>
                     <Col>
