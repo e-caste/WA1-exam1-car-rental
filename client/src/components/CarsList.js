@@ -50,7 +50,9 @@ const CarsList = props => {
             result = result.filter(car => shownBrands.includes(car.brand));
         if (shownCategories.length > 0)
             result = result.filter(car => shownCategories.includes(car.category));
-        setShownCars(result);
+        // filter unique cars based on brand+model to only show different cars in the CarsList
+        setShownCars(result
+            .filter((car, index, self) => self.findIndex(c => c.brand === car.brand && c.model === car.model) === index));
     }, [shownBrands, shownCategories, props.cars]);
 
     return (
