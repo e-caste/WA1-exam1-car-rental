@@ -1,5 +1,6 @@
 const rentalDao = require("../dao/rental_dao");
 const carDao = require("../dao/car_dao");
+const kmPerDayLUT = require("./luts").kmPerDayLUT;
 const moment = require("moment");
 
 exports.priceCheck = async (amount, rental) => {
@@ -42,13 +43,13 @@ exports.priceCheck = async (amount, rental) => {
     }
 
     switch (rental.estimatedKilometers) {
-        case "less than 50 km":
+        case kmPerDayLUT.under50:
             kmPerDayMultiplier = -0.05;
             break;
-        case "between 50 and 150 km":
+        case kmPerDayLUT.between50and150:
             kmPerDayMultiplier = 0;
             break;
-        case "over 150 km":
+        case kmPerDayLUT.over150:
             kmPerDayMultiplier = 0.05;
             break;
         default:
