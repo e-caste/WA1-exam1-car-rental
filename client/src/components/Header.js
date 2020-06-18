@@ -16,7 +16,7 @@ const Header = props => {
     return (
         <Navbar bg={"warning"} collapseOnSelect expand={"md"} sticky={"top"}>
             <Navbar.Brand id={"header-title"}>
-                <Link to={"/"}>
+                <Link to={"/"} onClick={() => setShowButton(true)}>
                     <img src={"back-to-the-rental.svg"} width={30} height={30} alt={"logo"}/>
                 </Link>
                 {' '}BACK TO THE RENTAL
