@@ -2,12 +2,13 @@
 
 import React, {useContext} from "react";
 import {AuthContext} from "../auth/AuthContext";
-import {Navbar, Nav, NavDropdown} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Button, Navbar, Nav, NavDropdown} from "react-bootstrap";
+import {Link, useHistory} from "react-router-dom";
 
 const Header = props => {
 
     const {authUser, handleLogout} = useContext(AuthContext);
+    const {push} = useHistory();
 
     return (
         <Navbar bg={"warning"} collapseOnSelect expand={"md"} sticky={"top"}>
@@ -20,15 +21,20 @@ const Header = props => {
 
             <div className="ml-auto">
                 {!authUser &&
-                <Link to={"/login"}>Login</Link>
+                <Button
+                    variant={"outline-dark"}
+                    onClick={() => push("/login")}
+                >
+                    Login
+                </Button>
                 }
                 {authUser &&
                 <Nav>
-                    <NavDropdown title={`Welcome ${authUser.name || "user"}!`} id={"UserDropdown"}>
-                        <NavDropdown.Item><Link to={"/rent"}>Rent a car</Link></NavDropdown.Item>
-                        <NavDropdown.Item><Link to={"/rentals"}>Your rentals</Link></NavDropdown.Item>
+                    <NavDropdown title={`Welcome ${authUser.name || "back"}!`} id={"UserDropdown"}>
+                        <NavDropdown.Item onClick={() => push("/rent")}>Rent a car</NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => push("/rentals")}>Your rentals</NavDropdown.Item>
                         <NavDropdown.Divider/>
-                        <NavDropdown.Item onClick={handleLogout}><Link to={"/logout"}>Logout</Link></NavDropdown.Item>
+                        <NavDropdown.Item onClick={() => {push("/logout"); handleLogout();}}>Logout</NavDropdown.Item>
                     </NavDropdown>
                 </Nav>
                 }
