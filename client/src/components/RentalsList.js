@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
-import {Alert, Button, Jumbotron, Spinner} from "react-bootstrap";
+import {Alert, Button, Col, Container, Jumbotron, Spinner} from "react-bootstrap";
 import moment from "moment";
 import Rental from "./rentalslist/Rental";
 import {Redirect} from "react-router-dom";
@@ -117,30 +117,34 @@ const RentalsList = props => {
             <Jumbotron id={"jumbotron-rentalslist"}>
                 <h1>your rentals</h1>
             </Jumbotron>
-            {alert}
-            {!rentals ?
-            <Spinner animation="border" variant="warning" /> :
-            <div>
-                {future.length > 0 &&
-                    <RentalsTable
-                        title={"Future"}
-                        rentals={future.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
-                    />
-                }
-                {current.length > 0 &&
-                    <RentalsTable
-                        title={"Current"}
-                        rentals={current.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
-                    />
-                }
-                {past.length > 0 &&
-                    <RentalsTable
-                        title={"History"}
-                        rentals={past.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
-                    />
-                }
-            </div>
-            }
+            <Container>
+                <Col xs={16}>
+                    {alert}
+                    {!rentals ?
+                    <Spinner animation="border" variant="warning" /> :
+                    <div>
+                        {future.length > 0 &&
+                        <RentalsTable
+                            title={"Future"}
+                            rentals={future.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={confirmCancel} />)}
+                        />
+                        }
+                        {current.length > 0 &&
+                        <RentalsTable
+                            title={"Current"}
+                            rentals={current.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                        />
+                        }
+                        {past.length > 0 &&
+                        <RentalsTable
+                            title={"History"}
+                            rentals={past.sort((r1, r2) => dateSorter(r1, r2)).map((r, idx) => <Rental key={idx} rental={r} cancel={null} />)}
+                        />
+                        }
+                    </div>
+                    }
+                </Col>
+            </Container>
         </div>
     );
 }
