@@ -64,6 +64,8 @@ const App = () => {
                 .catch(err => console.error(err));
             setAuthUser(null);
             setAuthErr(null);
+            setRental(null);
+            setDetails(null);
         }
 
         return {
