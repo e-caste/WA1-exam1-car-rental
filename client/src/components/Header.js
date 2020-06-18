@@ -15,11 +15,11 @@ const Header = props => {
 
     return (
         <Navbar bg={"warning"} collapseOnSelect expand={"md"} sticky={"top"}>
-            <Navbar.Brand>
+            <Navbar.Brand id={"header-title"}>
                 <Link to={"/"}>
                     <img src={"back-to-the-rental.svg"} width={30} height={30} alt={"logo"}/>
                 </Link>
-                {' '}Back to the rental
+                {' '}BACK TO THE RENTAL
             </Navbar.Brand>
 
             <div className="ml-auto">
