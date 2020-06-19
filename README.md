@@ -1,11 +1,15 @@
-# Exam #12345: "Exam Title"
-## Student: s123456 LASTNAME FIRSTNAME 
+# Exam #1: "Car Rental"
+## Student: s280124 Castelli Enrico 
 
 ## React client application routes
 
-- Route `/`: page content and purpose
-- Route `/something/:param`: page content and purpose, param specification
-- ...
+- Route `/`: home page with view of unique available cars; two filters allow to choose multiple brands and categories dynamically
+- Route `/login`: login form
+- Route `/logout`: redirects to home page after deleting the authentication cookie
+- Route `/resetpassword`: demo, no mail server required in this project
+- Route `/rent`: configurator form, dynamically displays the number of available cars for a period of time and a category, plus the price given a set of parameters; allows to proceed to payment once filled
+- Route `/payment`: payment form, dynamically shows "Pay now" button once all details are entered
+- Route `/rentals`: allows an authenticated user to see all their reservations, and to cancel the future reservations
 
 ## REST API server
 
