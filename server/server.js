@@ -179,7 +179,7 @@ app.post(prefix + "/rentals/:rentalId", (req, res) => {
 
 // to make a reservation
 // POST /rentals
-// request: {startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId, canceled, amount}
+// request: {startingDay, endDay, carCategory, driversAge, driversAgeSpecific, extraDrivers, extraDriversSpecific, estimatedKilometers, insurance, carId, userId, canceled, amount}
 // response:
 //  500 - server error
 //  401 - authentication error
