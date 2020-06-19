@@ -268,7 +268,7 @@ app.get(prefix + "/rentals", (req, res) => {
 });
 
 // POST /payment
-// request: {fullName, cardNumber, CVV, amount}
+// request: {"details": {fullName, cardNumber, CVV, amount}, "rental": {startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, userId}}
 // response:
 //  401 - authentication error
 //  400 - missing details from request
