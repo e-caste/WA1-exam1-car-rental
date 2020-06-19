@@ -13,16 +13,46 @@
 
 ## REST API server
 
-- POST `/login`
-  - request parameters and request body content
-  - response body content
-- GET `/api/something`
-  - request parameters
-  - response body content
-- POST `/api/something`
-  - request parameters and request body content
-  - response body content
-- ...
+- POST `/api/user/login`
+  - request parameters: none
+  - request body: `{email, password}`
+  - response body: `{id, name, email}`
+- POST `/api/user/logout`
+  - request parameters: none
+  - request body: none
+  - response body: none
+- GET `/api/cars/:carId`
+  - request parameters: `carId`
+  - request body: none
+  - response body: one car object `{id, category, brand, model, optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}`
+- GET `/api/cars`
+  - request parameters: none
+  - request body: none
+  - response body: list of car objects `[{id, category, brand, model, optional[description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]}, ...]`
+- GET `/api/user` (check if user is logged in)
+  - request parameters: none
+  - request body: none
+  - response body: `{id, name, email}`
+- POST `/api/rentals/:rentalId` (cancel rental)
+  - request parameters: `rentalId`
+  - request body: none
+  - response body: none
+- POST `/api/rentals`
+  - request parameters: none
+  - request body: `{startingDay, endDay, carCategory, driversAge, driversAgeSpecific, extraDrivers, extraDriversSpecific, estimatedKilometers, insurance, carId, userId, canceled, amount}`
+  - response body: `{newId}`
+- GET `/api/rentals/:userId`
+  - request parameters: `userId`
+  - request body: none
+  - response body: list of rentals objects `[{id, startingDay, endDay, carCategory, driversAge, driversAgeSpecific, extraDrivers, extraDriversSpecific, estimatedKilometers, insurance, carId, userId}, ...]`
+- GET `/api/rentals`
+  - request parameters: none
+  - request body: none
+  - response body: list of rentals objects `[{id, startingDay, endDay, carCategory, driversAge, driversAgeSpecific, extraDrivers, extraDriversSpecific, estimatedKilometers, insurance, carId, userId}, ...]`
+- POST `/api/payment`
+  - request parameters: none
+  - request body: `{"details": {fullName, cardNumber, CVV, amount}, "rental": {startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, userId}}`
+  - response body: none
 
 ## Server database
 
