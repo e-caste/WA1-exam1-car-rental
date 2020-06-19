@@ -178,17 +178,17 @@ const ConfiguratorForm = props => {
                         break;
                 }
 
-                if (driversAgeSpecificTmp <= 25) {
+                if (driversAgeSpecificTmp < 25) {
                     setDriversAge(0);
                     setDriversAgeMsg(driversAgeLUT.under25);
                     driversAgeMultiplier = 0.05;
                 }
-                else if (driversAgeSpecificTmp > 25 && driversAgeSpecificTmp < 65) {
+                else if (driversAgeSpecificTmp >= 25 && driversAgeSpecificTmp <= 65) {
                     setDriversAge(1);
                     setDriversAgeMsg(driversAgeLUT.between26and64);
                     driversAgeMultiplier = 0;
                 }
-                else if (driversAgeSpecificTmp >= 65) {
+                else if (driversAgeSpecificTmp > 65) {
                     setDriversAge(2);
                     setDriversAgeMsg(driversAgeLUT.over65);
                     driversAgeMultiplier = 0.10;
