@@ -56,9 +56,25 @@
 
 ## Server database
 
-- Table `users` - contains xx yy zz
-- Table `something` - contains ww qq ss
-- ...
+- Table `CARS` - contains `id, category, brand, model, [description, kilometers, year, fuel, value, kmperlitre, passengers, stickshift]` where the fields between [] were initially added for future use, and:
+  - `category` can be the strings "A", "B", "C", "D", "E"
+  - `brand` is a string
+  - `model` is a string
+- Table `RENTALS` - contains `id, startingday, endday, carcategory, driversage, driversagespecific, extradrivers, extradriversspecific, estimatedkilometers, insurance, carid, userid, canceled, amount` where:
+  - `startingday` and `endday` are strings for out-of-the-box compatibility with client-side library `moment.js`
+  - `carcategory` can be the strings "A", "B", "C", "D", "E"
+  - `driversage` is a tri-state integer (0, 1, 2) for under 25, between 25 and 65, over 65
+  - `driversagespecific` is the integer age value
+  - `extradrivers` is an integer boolean (0, 1)
+  - `extradriversspecific` is the integer number of extra drivers
+  - `estimatedkilometers` is a tri-state integer (0, 1, 2) for under 50, between 50 and 150, over 150
+  - `insurance` is an integer boolean (0, 1)
+  - `canceled` is an integer boolean (0, 1)
+  - `amount` is a numeric value
+- Table `USERS` - contains `id, email, name, hash`, where:
+  - `email` is a string
+  - `name` is an optional string
+  - `hash` is the string corresponding to the user's password encrypted with `bcrypt`
 
 ## Main React Components
 
