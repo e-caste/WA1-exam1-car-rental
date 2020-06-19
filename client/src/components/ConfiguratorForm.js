@@ -5,7 +5,7 @@ import moment from "moment";
 
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
-import {driversAgeLUT, kmPerDayLUT} from "./utils/luts";
+import {driversAgeLUT, kmPerDayLUT} from "../utils/luts";
 
 
 const ConfiguratorForm = props => {

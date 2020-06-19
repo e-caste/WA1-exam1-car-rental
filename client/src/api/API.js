@@ -1,6 +1,6 @@
 import Car from "../entities/Car";
 import Rental from "../entities/Rental";
-import {kmPerDayLUT} from "../components/utils/luts";
+import {kmPerDayLUT} from "../utils/luts";
 
 const prefix = "/api";
 
