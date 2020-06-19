@@ -6,6 +6,6 @@ exports.kmPerDayLUT = {
 
 exports.driversAgeLUT = {
     under25: "under 25",
-    between26and64: "between 26 and 64",
+    between26and64: "between 25 and 65",
     over65: "over 65",
 }
