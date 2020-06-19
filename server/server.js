@@ -234,7 +234,7 @@ app.post(prefix + "/rentals", (req, res) => {
 //  404 - no rentals found
 //  400 - bad request type not found
 //  200 - list of rental objects:
-//        {id, startingDay, endDay, carCategory, driversAge, extraDrivers, estimatedKilometers, insurance, carId, userId}
+//        {id, startingDay, endDay, carCategory, driversAge, driversAgeSpecific, extraDrivers, extraDriversSpecific, estimatedKilometers, insurance, carId, userId}
 app.get(prefix + "/rentals/:userId", (req, res) => {
     rentalDao.getRentalsById(req.params.userId)
         .then(rentals => {
