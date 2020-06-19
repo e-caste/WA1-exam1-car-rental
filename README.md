@@ -94,7 +94,7 @@
 
 ## Screenshot
 
-![Configurator Screenshot](./img/screenshot.jpg)
+![Configurator Screenshot](./img/configurator_screenshot.png)
 
 ## Test users
 Format: email, password (is frequent customer)  
