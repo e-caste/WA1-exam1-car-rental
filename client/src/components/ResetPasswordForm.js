@@ -28,7 +28,11 @@ const ResetPasswordForm = props => {
                     Go back?
                 </Button>
             </Row>
-            <Navbar fixed={"bottom"} className={"text-center justify-content-center"}>
+            <Navbar
+                id={"footer-resetpasswordform"}
+                fixed={"bottom"}
+                className={"text-center justify-content-center"}
+            >
                 <Navbar.Text>
                     <h6 className={"text-muted"}>
                         I am not in any way affiliated with the website linked above.
