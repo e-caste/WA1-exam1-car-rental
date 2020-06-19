@@ -78,11 +78,19 @@
 
 ## Main React Components
 
-- `ListOfSomething` (in `List.js`): component purpose and main functionality
-- `GreatButton` (in `GreatButton.js`): component purpose and main functionality
-- ...
+- `App` (in `App.js`): maintains cars and user-related state variables and manages routes
+- `CarsList` (in `components/CarsList.js`): displays the list of available cars in the home page
+- `Car` (in `components/carslist/Car.js`): displays information about a single car
+- `LoginForm` (in `components/LoginForm.js`): displays the login form
+- `ResetPasswordForm` (in `components/ResetPasswordForm.js`): displays a demo page
+- `ConfiguratorForm` (in `components/ConfiguratorForm.js`): displays the rental configurator form
+- `PaymentForm` (in `components/PaymentForm.js`): displays the payment form
+- `RentalsList` (in `components/RentalsList.js`): manages the authenticated user's rentals state and separates them into the future, current, and past categories
+- `RentalsTable` (in `components/rentalslist/RentalsTable.js`): displays the `RentalsList` data in a responsive table
+- `Rental` (in `components/rentalslist/Rental.js`): displays a single row of `RentalTable`
+- `Header` (in `components/Header.js`): displays the app header with contextual buttons
+- `Footer` (in `components/Footer.js`): displays a demo app footer
 
-(only _main_ components, minor ones may be skipped)
 
 ## Screenshot
 
