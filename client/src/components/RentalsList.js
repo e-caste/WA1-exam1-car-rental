@@ -18,7 +18,7 @@ const RentalsList = props => {
     const [alert, setAlert] = useState(null);
 
     // context variables
-    const {authUser} = useContext(AuthContext);
+    const {authUser, handleAuthorizationError} = useContext(AuthContext);
 
     // go to /rent if no rentals
     const {push} = useHistory();
@@ -26,7 +26,8 @@ const RentalsList = props => {
     // load rentals of currently logged user at component mount
     useEffect(() => {
         authUser && API.getRentalsByUserId(authUser.id)
-            .then(rentals => setRentals(rentals));
+            .then(rentals => setRentals(rentals))
+            .catch(err => handleAuthorizationError(err));
     }, [authUser]);
 
     // separate rentals into future, current and past when rentals are loaded
@@ -99,6 +100,7 @@ const RentalsList = props => {
             })
             .catch(err => {
                 setAlert(errorAlert);
+                handleAuthorizationError(err);
                 console.error(err);
             });
     }
