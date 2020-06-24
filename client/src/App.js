@@ -20,6 +20,7 @@ const App = () => {
 
     // context values managed as App state
     const [authUser, setAuthUser] = useState(null);
+    const [loginError, setLoginError] = useState(null);
     const [rental, setRental] = useState(null);
     const [details, setDetails] = useState(null);
 
@@ -63,20 +64,25 @@ const App = () => {
         // saying they change at every render
         const handleLogin = (email, password) => {
             API.login(email, password)
-                .then(user => setAuthUser(user))
-                .catch(err => handleAuthorizationError());
+                .then(user => {
+                    setAuthUser(user);
+                    setLoginError(null);
+                })
+                .catch(err => setLoginError(err));
         }
 
         const handleLogout = () => {
             API.logout()
                 .catch(err => console.error(err));
             setAuthUser(null);
+            setLoginError(null);
             setRental(null);
             setDetails(null);
         }
 
         return {
             authUser,
+            loginError,
             handleLogin,
             handleLogout,
             handleAuthorizationError,
@@ -85,7 +91,7 @@ const App = () => {
             details,
             setDetails,
         }
-    }, [authUser, rental, details]);
+    }, [authUser, loginError, rental, details]);
 
     return (
         <div className="App">
