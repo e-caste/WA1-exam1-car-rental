@@ -20,7 +20,6 @@ const App = () => {
 
     // context values managed as App state
     const [authUser, setAuthUser] = useState(null);
-    const [authErr, setAuthErr] = useState(null);
     const [rental, setRental] = useState(null);
     const [details, setDetails] = useState(null);
 
@@ -64,14 +63,12 @@ const App = () => {
             API.logout()
                 .catch(err => console.error(err));
             setAuthUser(null);
-            setAuthErr(null);
             setRental(null);
             setDetails(null);
         }
 
         return {
             authUser,
-            authErr,
             handleLogin,
             handleLogout,
             rental,
@@ -79,7 +76,7 @@ const App = () => {
             details,
             setDetails,
         }
-    }, [authUser, authErr, rental, details]);
+    }, [authUser, rental, details]);
 
     return (
         <div className="App">
