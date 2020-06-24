@@ -13,7 +13,7 @@ const userDao = require("./dao/user_dao");
 const priceChecker = require("./utils/price_checker")
 
 const jwtSecret = require("./secret").jwtSecret;
-const expireTime = 300;  // 5 minutes
+const expireTime = 900;  // seconds - 15 minutes
 
 // setup app dependencies
 const port = 3001;
