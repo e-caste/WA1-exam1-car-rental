@@ -15,3 +15,10 @@ export const loginErrorLUT = {
     password: "Invalid password",
     default: "Server error",
 }
+
+export const serverErrorLUT = {
+    authentication: "Authentication error",
+    missingParameter: "Missing parameter from request body",
+    generic: "Server error",
+    unavailable: "Server unavailable",
+}
