@@ -14,6 +14,7 @@ import ConfiguratorForm from "./components/ConfiguratorForm";
 import PaymentForm from "./components/PaymentForm";
 import RentalsList from "./components/RentalsList";
 import Footer from "./components/Footer";
+import {serverErrorLUT} from "./utils/luts";
 
 
 const App = () => {
@@ -36,12 +37,12 @@ const App = () => {
             .then(user => setAuthUser(user))
             .catch(err => {
                 switch (err) {
-                    case "Server unavailable":
-                    case "Server error":
+                    case serverErrorLUT.unavailable:
+                    case serverErrorLUT.generic:
                         console.error(err);
                         break;
                     default:
-                    case "Authentication error":
+                    case serverErrorLUT.authentication:
                         break;
                 }
             })
