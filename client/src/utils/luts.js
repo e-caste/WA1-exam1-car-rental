@@ -9,3 +9,9 @@ export const driversAgeLUT = {
     between26and64: "between 25 and 65",
     over65: "over 65",
 }
+
+export const loginErrorLUT = {
+    email: "Email not found",
+    password: "Invalid password",
+    default: "Server error",
+}
