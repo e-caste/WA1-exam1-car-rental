@@ -1,5 +1,5 @@
 # Exam #1: "Car Rental"
-[![Node version](https://img.shields.io/badge/node.js-v12-green)]() [![React.js version](https://img.shields.io/npm/v/react?label=React.js&logo=React)]()
+[![Node version](https://img.shields.io/badge/node.js-v12-green?logo=node.js)]() [![React.js version](https://img.shields.io/npm/v/react?label=React.js&logo=React)]()
 
 ## Student: s280124 Castelli Enrico 
 
