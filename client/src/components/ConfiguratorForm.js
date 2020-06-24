@@ -41,7 +41,7 @@ const ConfiguratorForm = props => {
         API.getAllRentals()
             .then(rentals => setRentals(rentals))
             .catch(err => {
-                handleAuthorizationError();
+                handleAuthorizationError(err);
                 console.error(err);
             });
     }, []);
