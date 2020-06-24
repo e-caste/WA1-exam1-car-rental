@@ -51,7 +51,10 @@ const App = () => {
             .then(cars => setCars(cars))
     }, []);
 
-    const handleAuthorizationError = () => push("/login");
+    const handleAuthorizationError = err => {
+        if (err && err.status && err.status === 401)
+            push("/login");
+    }
 
     // prevent context value always updating
     const value = useMemo(() => {
