@@ -11,7 +11,7 @@ import {driversAgeLUT, kmPerDayLUT} from "../utils/luts";
 const ConfiguratorForm = props => {
 
     // context variables
-    const {authUser, rental, setRental} = useContext(AuthContext);
+    const {authUser, handleAuthorizationError, rental, setRental} = useContext(AuthContext);
 
     // to navigate to /payment
     const {push} = useHistory();
@@ -40,7 +40,10 @@ const ConfiguratorForm = props => {
     useEffect(() => {
         API.getAllRentals()
             .then(rentals => setRentals(rentals))
-            .catch(err => console.error(err));
+            .catch(err => {
+                handleAuthorizationError();
+                console.error(err);
+            });
     }, []);
 
     const handleChange = event => {
