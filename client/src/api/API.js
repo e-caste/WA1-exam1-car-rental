@@ -1,6 +1,6 @@
 import Car from "../entities/Car";
 import Rental from "../entities/Rental";
-import {kmPerDayLUT, loginErrorLUT} from "../utils/luts";
+import {kmPerDayLUT, loginErrorLUT, serverErrorLUT} from "../utils/luts";
 
 const prefix = "/api";
 
@@ -13,11 +13,11 @@ async function isLoggedIn() {
                 if (res.ok)
                     resolve(res.json());
                 else if (res.status === 401)
-                    reject("Authentication error");
+                    reject(serverErrorLUT.authentication);
                 else
-                    reject("Server error")
+                    reject(serverErrorLUT.generic)
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -39,7 +39,7 @@ async function login(email, password) {
                 else  // should not happen, but if it does:
                     reject(loginErrorLUT.default)
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -50,9 +50,9 @@ async function logout() {
                 if (res.ok)
                     resolve(null);
                 else // should not happen
-                    reject("Server error")
+                    reject(serverErrorLUT.generic)
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -66,9 +66,9 @@ async function getAllCars() {
                     resolve([]);
                 res.json()
                     .then(json => resolve(json.map(car => Car.from(car))))
-                    .catch(err => reject("Server error"));
+                    .catch(err => reject(serverErrorLUT.generic));
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -79,15 +79,15 @@ async function getCarById(carId) {
                 if (res.status === 404)
                     reject(`Car with id=${carId} not found`);
                 else if (res.status === 401)
-                    reject("Authentication error");
+                    reject(serverErrorLUT.authentication);
                 else if (res.ok)
                     res.json()
                         .then(json => resolve(Car.from(json)))
-                        .catch(err => reject("Server error"));
+                        .catch(err => reject(serverErrorLUT.generic));
                 else
-                    reject("Server error");
+                    reject(serverErrorLUT.generic);
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -100,13 +100,13 @@ async function toggleCanceledByRentalId(rentalId) {
                 if (res.status === 404)
                     reject(`Rental with id=${rentalId} not found`);
                 else if (res.status === 401)
-                    reject("Authentication error");
+                    reject(serverErrorLUT.authentication);
                 else if (res.ok)
                     resolve(null);
                 else
-                    reject("Server error");
+                    reject(serverErrorLUT.generic);
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -164,15 +164,15 @@ async function saveRental(rental) {
         })
             .then(res => {
                 if (res.status === 400)
-                    reject("Missing parameter from request body");
+                    reject(serverErrorLUT.missingParameter);
                 else if (res.status === 401)
-                    reject("Authentication error");
+                    reject(serverErrorLUT.authentication);
                 else if (res.status === 500)
-                    reject("Server error");
+                    reject(serverErrorLUT.generic);
                 else
                     resolve(res);
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -183,15 +183,15 @@ async function getRentalsByUserId(userId) {
                 if (res.status === 404)
                     reject(`No rental for user with id=${userId} found`);
                 else if (res.status === 401)
-                    reject("Authentication error");
+                    reject(serverErrorLUT.authentication);
                 else if (res.ok)
                     res.json()
                         .then(json => resolve(json.map(rental => Rental.from(rental))))
-                        .catch(err => reject("Server error"));
+                        .catch(err => reject(serverErrorLUT.generic));
                 else
-                    reject("Server error");
+                    reject(serverErrorLUT.generic);
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -202,15 +202,15 @@ async function getAllRentals() {
                 if (res.status === 404)
                     reject("No rentals in database");
                 else if (res.status === 401)
-                    reject("Authentication error");
+                    reject(serverErrorLUT.authentication);
                 else if (res.ok)
                     res.json()
                         .then(json => resolve(json.map(rental => Rental.from(rental))))
-                        .catch(err => reject("Server error"));
+                        .catch(err => reject(serverErrorLUT.generic));
                 else
-                    reject("Server error");
+                    reject(serverErrorLUT.generic);
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
@@ -226,15 +226,15 @@ async function pay(data) {
             })
             .then(res => {
                 if (res.status === 401)
-                    reject("Authentication error");
+                    reject(serverErrorLUT.authentication);
                 else if (res.status === 400 || res.status === 418)
                     reject(res.body.errors)
                 else if (res.ok)
                     resolve(null)
                 else
-                    reject("Server error");
+                    reject(serverErrorLUT.generic);
             })
-            .catch(err => reject("Server unavailable"));
+            .catch(err => reject(serverErrorLUT.unavailable));
     });
 }
 
