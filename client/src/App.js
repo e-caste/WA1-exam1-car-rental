@@ -2,7 +2,7 @@ import "./App.css";
 
 import React, {useState, useEffect, useMemo} from 'react';
 import {Container} from "react-bootstrap";
-import {Route, Redirect, Switch} from "react-router-dom";
+import {Route, Redirect, Switch, useHistory} from "react-router-dom";
 
 import API from "./api/API";
 import Header from "./components/Header";
@@ -26,6 +26,9 @@ const App = () => {
     // state variables
     const [cars, setCars] = useState([]);
 
+    // go to /login at authorization error
+    const {push} = useHistory();
+
     // initial API calls, note deps=[] to only call once like componentDidMount
     useEffect(() => {
         API.isLoggedIn()
@@ -48,6 +51,8 @@ const App = () => {
             .then(cars => setCars(cars))
     }, []);
 
+    const handleAuthorizationError = () => push("/login");
+
     // prevent context value always updating
     const value = useMemo(() => {
 
@@ -56,7 +61,7 @@ const App = () => {
         const handleLogin = (email, password) => {
             API.login(email, password)
                 .then(user => setAuthUser(user))
-                .catch(err => setAuthErr(err));
+                .catch(err => handleAuthorizationError());
         }
 
         const handleLogout = () => {
@@ -71,6 +76,7 @@ const App = () => {
             authUser,
             handleLogin,
             handleLogout,
+            handleAuthorizationError,
             rental,
             setRental,
             details,
