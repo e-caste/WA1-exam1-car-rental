@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {Button, Col, Container, Form, Jumbotron, Row} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Jumbotron, Row} from "react-bootstrap";
 import {Redirect} from "react-router-dom";
 import {AuthContext} from "../auth/AuthContext";
 import {useHistory} from "react-router-dom";
@@ -11,7 +11,7 @@ const LoginForm = props => {
     const [password, setPassword] = useState("");
 
     // context variables
-    const {authUser, handleLogin} = useContext(AuthContext);
+    const {authUser, loginError, handleLogin} = useContext(AuthContext);
     const {push} = useHistory();
 
     const handleChange = event => {
@@ -79,6 +79,7 @@ const LoginForm = props => {
                                     </Button>
                                 </Col>
                             </Row>
+                            {loginError && <Alert variant={"danger"} className={"text-center"}>{loginError}</Alert>}
                         </Col>
                     </Container>
                 </Form>
