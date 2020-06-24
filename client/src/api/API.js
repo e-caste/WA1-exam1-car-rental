@@ -1,6 +1,6 @@
 import Car from "../entities/Car";
 import Rental from "../entities/Rental";
-import {kmPerDayLUT} from "../utils/luts";
+import {kmPerDayLUT, loginErrorLUT} from "../utils/luts";
 
 const prefix = "/api";
 
@@ -33,11 +33,11 @@ async function login(email, password) {
                 if (res.ok)
                     resolve(res.json());
                 else if (res.status === 404)
-                    reject("Email not found")
+                    reject(loginErrorLUT.email)
                 else if (res.status === 401)
-                    reject("Invalid password")
+                    reject(loginErrorLUT.password)
                 else  // should not happen, but if it does:
-                    reject("Server error")
+                    reject(loginErrorLUT.default)
             })
             .catch(err => reject("Server unavailable"));
     });
