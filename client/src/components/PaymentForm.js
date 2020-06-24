@@ -7,7 +7,7 @@ import {Redirect, useHistory} from "react-router-dom";
 const PaymentForm = props => {
 
     // context variables
-    const {authUser, rental, setRental, details, setDetails} = useContext(AuthContext);
+    const {authUser, rental, setRental, details, setDetails, handleAuthorizationError} = useContext(AuthContext);
 
     // to navigate back to /rent
     const {push} = useHistory();
@@ -122,7 +122,8 @@ const PaymentForm = props => {
         });
             paymentSuccessfulTmp = payRes === null;
         } catch (err) {
-            apiErrorsTmp.push("There was an issue with your payment. Please try again.")
+            apiErrorsTmp.push("There was an issue with your payment. Please try again.");
+            handleAuthorizationError(err);
             console.error(err);
         }
 
@@ -132,7 +133,8 @@ const PaymentForm = props => {
             const saveJson = await saveRes.json();
             saveSuccessfulTmp = saveJson && saveJson.id && !isNaN(saveJson.id);  // id of the newly added rental
         } catch (err) {
-            apiErrorsTmp.push("There was an issue while making your reservation. Please try again.")
+            apiErrorsTmp.push("There was an issue while making your reservation. Please try again.");
+            handleAuthorizationError(err);
             console.error(err);
         }
 
