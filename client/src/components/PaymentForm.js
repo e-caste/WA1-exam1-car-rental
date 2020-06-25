@@ -173,7 +173,7 @@ const PaymentForm = props => {
                                     id={"form-name"}
                                     type={"text"}
                                     placeholder={"Your name"}
-                                    value={name}
+                                    defaultValue={name}
                                     required
                                     autoFocus
                                 />
@@ -183,7 +183,7 @@ const PaymentForm = props => {
                                     id={"form-surname"}
                                     type={"text"}
                                     placeholder={"Your surname"}
-                                    value={surname}
+                                    defaultValue={surname}
                                     required
                                 />
                             </Col>
@@ -194,7 +194,7 @@ const PaymentForm = props => {
                                     id={"form-creditcard"}
                                     type={"creditcard"}
                                     placeholder={"Your credit card number"}
-                                    value={creditCard}
+                                    defaultValue={creditCard}
                                     required
                                 />
                             </Col>
@@ -203,7 +203,7 @@ const PaymentForm = props => {
                                     id={"form-cvv"}
                                     type={"text"}
                                     placeholder={"CVV"}
-                                    value={cvv}
+                                    defaultValue={cvv}
                                     required
                                 />
                             </Col>

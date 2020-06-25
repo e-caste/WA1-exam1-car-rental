@@ -285,10 +285,10 @@ const ConfiguratorForm = props => {
                                             <Form.Label>Car category:</Form.Label>
                                             <Form.Control
                                                 as={"select"}
-                                                value={category}
+                                                defaultValue={category}
                                                 required
                                             >
-                                                <option selected disabled value={""}>Select category</option>
+                                                <option disabled value={""}>Select category</option>
                                                 <option>A</option>
                                                 <option>B</option>
                                                 <option>C</option>
@@ -305,9 +305,9 @@ const ConfiguratorForm = props => {
                                             <Form.Label>Estimated kilometers per day:</Form.Label>
                                             <Form.Control
                                                 as={"select"}
-                                                value={kmPerDay}
+                                                defaultValue={kmPerDay}
                                             >
-                                                <option selected disabled value={""}>Select kilometers range</option>
+                                                <option disabled value={""}>Select kilometers range</option>
                                                 <option>{kmPerDayLUT.under50}</option>
                                                 <option>{kmPerDayLUT.between50and150}</option>
                                                 <option>{kmPerDayLUT.over150}</option>
@@ -321,7 +321,7 @@ const ConfiguratorForm = props => {
                                             <Form.Label>From day:</Form.Label>
                                             <Form.Control
                                                 type={"date"}
-                                                value={startingDay}
+                                                defaultValue={startingDay}
                                                 required
                                             />
                                         </Form.Group>
@@ -331,7 +331,7 @@ const ConfiguratorForm = props => {
                                             <Form.Label>Until day:</Form.Label>
                                             <Form.Control
                                                 type={"date"}
-                                                value={endDay}
+                                                defaultValue={endDay}
                                                 required
                                             />
                                         </Form.Group>
@@ -343,7 +343,7 @@ const ConfiguratorForm = props => {
                                             <Form.Label>Driver's age:</Form.Label>
                                             <Form.Control
                                                 type={"number"}
-                                                value={driversAgeSpecific}
+                                                defaultValue={driversAgeSpecific}
                                                 placeholder={"Enter a number"}
                                                 required
                                             />
@@ -355,7 +355,7 @@ const ConfiguratorForm = props => {
                                             <Form.Label>Number of extra drivers:</Form.Label>
                                             <Form.Control
                                                 type={"number"}
-                                                value={extraDriversSpecific}
+                                                defaultValue={extraDriversSpecific}
                                                 placeholder={"Enter a number"}
                                                 required
                                             />
@@ -367,7 +367,7 @@ const ConfiguratorForm = props => {
                                         id={"form-insurance"}
                                         type={"checkbox"}
                                         label={"Additional insurance"}
-                                        checked={insurance}
+                                        defaultChecked={insurance}
                                         className={"mb-3"}
                                     />
                                 </Row>

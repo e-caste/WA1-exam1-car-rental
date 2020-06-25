@@ -51,7 +51,7 @@ const LoginForm = props => {
                                 <Form.Control
                                     type="email"
                                     placeholder="Email"
-                                    value={email}
+                                    defaultValue={email}
                                     required
                                     autoFocus
                                 />
@@ -63,7 +63,7 @@ const LoginForm = props => {
                                 <Form.Control
                                     type="password"
                                     placeholder="Password"
-                                    value={password}
+                                    defaultValue={password}
                                     required
                                 />
                             </Form.Group>
