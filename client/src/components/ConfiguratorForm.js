@@ -31,7 +31,9 @@ const ConfiguratorForm = props => {
 
     // output variables
     const [userErrors, setUserErrors] = useState([]);
-    const [driversAgeMsg, setDriversAgeMsg] = useState("");
+    // disable no-unused-var warning
+    // eslint-disable-next-line
+    const [driversAgeMsg, setDriversAgeMsg] = useState("");  // unused
     const [amount, setAmount] = useState((rental && +rental.amount) || -1);
     const [availableCars, setAvailableCars] = useState((rental && rental.availableCars) || -1);
     const [car, setCar] = useState((rental && rental.car) || null);
@@ -44,7 +46,7 @@ const ConfiguratorForm = props => {
                 handleAuthorizationError(err);
                 console.error(err);
             });
-    }, []);
+    }, [handleAuthorizationError]);
 
     const handleChange = event => {
         // clone state variables to immediately show relevant errors and output
@@ -224,6 +226,8 @@ const ConfiguratorForm = props => {
                     .filter(r => moment(r.endDay).isBefore(moment()))
                     .length >= 3 ? -0.10 : 0;
 
+                // disable no-unused-var warning
+                // eslint-disable-next-line
                 const debugLog = () => {
                     console.log()  // separate info blocks
                     console.log("Duration: " + durationMultiplier + " days")

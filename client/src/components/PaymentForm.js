@@ -27,7 +27,7 @@ const PaymentForm = props => {
     useEffect(() => {
         API.isLoggedIn()
             .catch(err => handleAuthorizationError(err));
-    }, []);
+    }, [handleAuthorizationError]);
 
     const handleChange = event => {
         // clone state variable to immediately show relevant errors

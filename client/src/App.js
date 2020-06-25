@@ -95,7 +95,7 @@ const App = () => {
             details,
             setDetails,
         }
-    }, [authUser, loginError, rental, details]);
+    }, [authUser, loginError, rental, details, push]);
 
     return (
         <div className="App">
