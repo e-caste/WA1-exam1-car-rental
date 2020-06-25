@@ -28,7 +28,7 @@ const RentalsList = props => {
         authUser && API.getRentalsByUserId(authUser.id)
             .then(rentals => setRentals(rentals))
             .catch(err => handleAuthorizationError(err));
-    }, [authUser]);
+    }, []);
 
     // separate rentals into future, current and past when rentals are loaded
     useEffect(() => {
