@@ -77,8 +77,11 @@ const App = () => {
         }
 
         const handleAuthorizationError = err => {
-            if (err && err.status && err.status === 401)
+            if (err === serverErrorLUT.authentication) {
+                setAuthUser(null);
+                setLoginError(null);
                 push("/login");
+            }
         }
 
         return {
