@@ -110,3 +110,5 @@ Format: email, password (is frequent customer)
 
 ## Known warnings
 You may see in the console some warnings related to the `AutosizeInput` and `Select` components of the `react-select` library, used in the `CarsList` component, due to its use of some deprecated code. This has been tested to not impact the functionality of the web application in any tangible way.
+
+When the authentication cookie gets deleted, either at user logout or at expiration time, a warning will be logged to the console. This has been ignored following a professor's reply on Slack.
