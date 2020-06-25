@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../auth/AuthContext";
 import API from "../api/API";
-import {Alert, Button, Col, Container, Jumbotron, Spinner} from "react-bootstrap";
+import {Alert, Button, Col, Container, Jumbotron, Modal, Spinner} from "react-bootstrap";
 import moment from "moment";
 import Rental from "./rentalslist/Rental";
 import {Redirect, useHistory} from "react-router-dom";
@@ -124,7 +124,13 @@ const RentalsList = props => {
             </Jumbotron>
             <Container>
                 <Col xs={16}>
-                    {alert}
+                    <Modal
+                        show={alert !== null}
+                        onHide={() => setAlert(null)}
+                        dialogAs={Alert}
+                    >
+                        {alert}
+                    </Modal>
                     {!rentals ?
                     <Spinner animation="border" variant="warning" /> :
                     <div>
