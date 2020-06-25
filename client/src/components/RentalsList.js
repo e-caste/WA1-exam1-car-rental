@@ -125,6 +125,7 @@ const RentalsList = props => {
             <Container>
                 <Col xs={16}>
                     <Modal
+                        id={"modal-rentalslist"}
                         show={alert !== null}
                         onHide={() => setAlert(null)}
                         dialogAs={Alert}
