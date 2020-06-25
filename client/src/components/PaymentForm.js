@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../auth/AuthContext";
 import {Alert, Button, Col, Container, Form, Jumbotron, Row} from "react-bootstrap";
 import API from "../api/API";
@@ -22,6 +22,12 @@ const PaymentForm = props => {
     const [apiErrors, setApiErrors] = useState([]);
     const [paymentSuccessful, setPaymentSuccessful] = useState(null);
     const [saveSuccessful, setSaveSuccessful] = useState(null);
+
+    // redirect to /login if cookie expired
+    useEffect(() => {
+        API.isLoggedIn()
+            .catch(err => handleAuthorizationError(err));
+    }, []);
 
     const handleChange = event => {
         // clone state variable to immediately show relevant errors
