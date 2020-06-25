@@ -107,3 +107,6 @@ Format: email, password (is frequent customer)
 * carla.espinoza@hotmail.com, dominican35
 * percival.ulysses.cox@icloud.com, Jackie
 * b.kelso@sacredheart.com, Johnny1942
+
+## Known warnings
+You may see in the console some warnings related to the Autosize and Select components of the react-select library, used in the CarsList component, due to its use of some deprecated code. This has been tested to not impact the functionality of the web application in any tangible way.
