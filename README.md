@@ -109,4 +109,4 @@ Format: email, password (is frequent customer)
 * b.kelso@sacredheart.com, Johnny1942
 
 ## Known warnings
-You may see in the console some warnings related to the Autosize and Select components of the react-select library, used in the CarsList component, due to its use of some deprecated code. This has been tested to not impact the functionality of the web application in any tangible way.
+You may see in the console some warnings related to the `AutosizeInput` and `Select` components of the `react-select` library, used in the `CarsList` component, due to its use of some deprecated code. This has been tested to not impact the functionality of the web application in any tangible way.
