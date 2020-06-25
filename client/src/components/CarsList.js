@@ -84,7 +84,8 @@ const CarsList = props => {
                                         placeholder={"Select categories..."}
                                         options={categoryOptions}
                                         onChange={handleCategoryChange}
-                                        isMulti name={"categories"}
+                                        isMulti
+                                        name={"categories"}
                                         components={makeAnimated()}
                                     />
                                 </Col>
