@@ -27,7 +27,10 @@ const PaymentForm = props => {
     useEffect(() => {
         API.isLoggedIn()
             .catch(err => handleAuthorizationError(err));
-    }, [handleAuthorizationError]);
+    // remove warning for missing handleAuthorizationError dependency -> only check at form didMount, not at each change
+    // also handleAuthorizationError never changes, so no issue here
+    // eslint-disable-next-line
+    }, []);
 
     const handleChange = event => {
         // clone state variable to immediately show relevant errors
