@@ -126,6 +126,10 @@ const ConfiguratorForm = props => {
 
         // show errors
         setUserErrors(userErrorsTmp);
+        // reset amount to default value to show missing values alert if user removes a previously entered value from a field
+        if (userErrorsTmp.length > 0)
+            setAmount(-1);
+
         // calculate and show price
         if (userErrorsTmp.length === 0) {
             if ( // if all inputs are set
