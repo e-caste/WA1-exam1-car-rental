@@ -11,7 +11,7 @@
 - Route `/resetpassword`: demo, no mail server required in this project
 - Route `/rent`: configurator form, dynamically displays the number of available cars for a period of time and a category, plus the price given a set of parameters; allows to proceed to payment once filled
 - Route `/payment`: payment form, dynamically shows "Pay now" button once all details are entered
-- Route `/rentals`: allows an authenticated user to see all their reservations, and to cancel the future reservations
+- Route `/rentals`: allows an authenticated user to see all their reservations, and to cancel their future reservations
 
 ## REST API server
 
