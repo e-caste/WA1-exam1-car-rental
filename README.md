@@ -112,3 +112,6 @@ Format: email, password (is frequent customer)
 You may see in the console some warnings related to the `AutosizeInput` and `Select` components of the `react-select` library, used in the `CarsList` component, due to its use of some deprecated code. This has been tested to not impact the functionality of the web application in any tangible way.
 
 When the authentication cookie gets deleted, either at user logout or at expiration time, a warning will be logged to the console. This has been ignored following a professor's reply on Slack.
+
+A warning about `findDOMNode` deprecation in `StrictMode` may appear in the console when loading the website or when loading a user's rentals: this originates in the `react-bootstrap`'s `Modal` used to display dialogs in the `RentalsList` component, and has been tested to not cause any noticeable issues.
+
