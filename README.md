@@ -115,3 +115,7 @@ When the authentication cookie gets deleted, either at user logout or at expirat
 
 A warning about `findDOMNode` deprecation in `StrictMode` may appear in the console when loading the website or when loading a user's rentals: this originates in the `react-bootstrap`'s `Modal` used to display dialogs in the `RentalsList` component, and has been tested to not cause any noticeable issues.
 
+## Requirements
+This project was tested on macOS 10.15 and Ubuntu 20.04 with Firefox 77. All features work correctly in Firefox, and it has been tested that some features don't work as expected in Chrome (e.g. required fields are not required by the browser) and Safari (e.g. not all images are correctly loaded). These issues have not been fixed since multi-platform compatibility was not explicitly required for this exam.
+
+It is expected that the `nodemon` package is installed globally on the target machine (`npm i -g nodemon`), and it was not included in the dependencies section of the server's `package.json`.
